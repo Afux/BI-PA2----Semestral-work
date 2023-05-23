@@ -1,0 +1,24 @@
+
+#ifndef SEMESTRALWORK_CDIR_H
+#define SEMESTRALWORK_CDIR_H
+
+#include "CItem.h"
+
+class CDir: public CItem{
+public:
+    vector<CItem*>m_items;
+
+    virtual void Copy( CItem *item ) override;
+    virtual void Copy(vector<CItem*>) override;
+    virtual void Delete( CItem *item ) override;
+    virtual void Delete(vector<CItem*> items) override;
+    virtual void Move( CItem *item , string dest) override;
+    virtual void Move(vector<CItem*>,string dest ) override;
+    virtual unsigned int GetSize() override;
+    virtual void SetDate(u_int year, u_int month, u_int day) override;
+    virtual void Deduplicate() override;
+
+};
+
+
+#endif //SEMESTRALWORK_CDIR_H
