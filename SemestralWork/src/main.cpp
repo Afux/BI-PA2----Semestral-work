@@ -18,6 +18,7 @@ using directory_iterator = std::filesystem::directory_iterator;
 
 
 int main() {
+    /*
     CWindow win(CSize(100,30,1,1),0,"WIND");
     win.TESTING.push_back("/CZ");
     win.TESTING.push_back("/DFS");
@@ -26,6 +27,9 @@ int main() {
     win.TESTING.push_back("gggg");
 
     win.ReadKey();
+     */
+    CManager man(CSize(100,30,1,1),"MAN",0);
+    man.Print();
     /*
    moveto(1,5);
    system("clear");

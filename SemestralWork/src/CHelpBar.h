@@ -1,7 +1,7 @@
 
 #ifndef SEMESTRALWORK_CHELPBAR_H
 #define SEMESTRALWORK_CHELPBAR_H
-using namespace std;
+
 #include "CSize.h"
 #include "iostream"
 #include "vector"
@@ -9,8 +9,12 @@ using namespace std;
 
 class CHelpBar: public CAbsWidnow{
 public:
-    vector<string> m_Content;
-   virtual void Print() override;
+    CHelpBar(CSize size, unsigned int Selected, std::string Name);
+
+    CHelpBar();
+
+    std::vector<std::string> m_Content;
+    void Print() override;
 };
 
 
