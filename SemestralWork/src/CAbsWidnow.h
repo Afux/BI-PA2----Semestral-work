@@ -4,7 +4,7 @@
 #define SEMESTRALWORK_CABSWIDNOW_H
 #include "iostream"
 #include "CSize.h"
-
+using namespace std;
 class CAbsWidnow {
 public:
     CAbsWidnow(CSize size, unsigned int Selected, std::string Name);

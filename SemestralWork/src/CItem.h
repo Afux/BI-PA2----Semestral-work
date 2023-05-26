@@ -6,32 +6,32 @@
 #include "CPermission.h"
 #include "vector"
 
-using namespace std;
 
 class CItem {
-    CItem(string name, string path,string type, CDate date,unsigned int size);
+
 
 public:
-    string m_Name;
-    string m_Path;
-    string m_Type;
-    CDate m_Date;
+    CItem(std::string path,unsigned int size);
+    std::string m_Name;
+    std::string m_Path;
+   // CDate m_Date;
     unsigned int m_Size;
-    vector<CPermission> m_Permisions;
+    std:: vector<CPermission> m_Permisions;
+    virtual void Print()=0;
+
 private:
 protected:
 
-    virtual void Print()=0;
     virtual void Copy( CItem *item )=0;
-    virtual void Copy(vector<CItem*>)=0;
+    virtual void Copy(std::vector<CItem*>)=0;
     virtual void Delete( CItem *item )=0;
-    virtual void Delete(vector<CItem*> items)=0;
-    virtual void Move( CItem *item , string dest)=0;
-    virtual void Move(vector<CItem*>,string dest )=0;
+    virtual void Delete(std::vector<CItem*> items)=0;
+    virtual void Move( CItem *item , std::string dest)=0;
+    virtual void Move(std::vector<CItem*>,std::string dest )=0;
 
     void Rename( CItem *item );
 
-    void Rename(vector<CItem*> items);
+    void Rename(std::vector<CItem*> items);
 
     virtual unsigned int GetSize()=0;
     virtual void SetDate(u_int year, u_int month, u_int day)=0;

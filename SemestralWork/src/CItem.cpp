@@ -1,11 +1,13 @@
 
 #include "CItem.h"
+#include "filesystem"
+namespace fs = std::filesystem;
 
-
-
-CItem::CItem(string name, string path, string type, CDate date, unsigned int size) {
-    m_Name=name;
-    m_Path=path;
-    m_Date=date;
+CItem::CItem(std::string path, unsigned int size):m_Path(path) {
+    m_Name=fs::path(m_Path).filename();
     m_Size=size;
+    m_Path=path;
+
 }
+
+

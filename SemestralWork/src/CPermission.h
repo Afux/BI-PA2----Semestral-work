@@ -4,13 +4,12 @@
 #define SEMESTRALWORK_CPERMISSION_H
 #include "iostream"
 
-using namespace std;
 class CPermission {
 public:
-    string m_type;
+    std::string m_type;
     void DeletePermision();
-    string GetPermision();
-    void SetPermision( string type );
+    std::string GetPermision();
+    void SetPermision( std::string type );
 };
 
 

@@ -3,10 +3,11 @@
 #define SEMESTRALWORK_CFILE_H
 
 #include "CItem.h"
-
+using namespace std;
 class CFile: public CItem{
 public:
-    CFile* Concat(vector<CItem*> items);
+    CFile(std::string path,unsigned int size);
+   // CFile* Concat(vector<CItem*> items);
     virtual void Print() override;
     virtual void Copy( CItem *item ) override;
     virtual void Copy(vector<CItem*>) override;

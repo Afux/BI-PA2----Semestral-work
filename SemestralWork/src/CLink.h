@@ -2,7 +2,7 @@
 #ifndef SEMESTRALWORK_CLINK_H
 #define SEMESTRALWORK_CLINK_H
 #include "CItem.h"
-
+using namespace std;
 class CLink:public CItem {
 public:
     CItem* m_toFile;

@@ -9,7 +9,7 @@
 #include "CInputDialog.h"
 #include "CConfirmDialog.h"
 #include "CAbsWidnow.h"
-
+using namespace std;
 class CWindow: public CAbsWidnow{
 public:
     CWindow( CSize size, unsigned int Selected, std::string Name);
