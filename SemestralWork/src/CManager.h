@@ -13,6 +13,7 @@ public:
     CWindow * m_ActivePanel;
       CHelpBar m_HelpBar;
     void Print() override;
+    void Run();
 
 };
 

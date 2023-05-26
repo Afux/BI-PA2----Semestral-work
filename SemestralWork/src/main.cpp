@@ -29,7 +29,7 @@ int main() {
     win.ReadKey();
      */
     CManager man(CSize(100,30,1,1),"MAN",0);
-    man.Print();
+    man.Run();
     /*
    moveto(1,5);
    system("clear");

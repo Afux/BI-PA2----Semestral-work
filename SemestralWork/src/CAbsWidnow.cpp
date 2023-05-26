@@ -19,7 +19,7 @@ void CAbsWidnow::moveto(int x, int y) {
 CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, std::string Name): m_Size(size),m_Selected(Selected),m_Name(Name){}
 
 void CAbsWidnow::ReadKey() {
-    Refresh();
+   // Refresh();
 
     termios term;
     tcgetattr(STDIN_FILENO, &term);
@@ -28,7 +28,9 @@ void CAbsWidnow::ReadKey() {
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
     char c;
-    while(std::cin >> c) {
+    std::cin >> c;
+
+
         switch(c) {
             case 'w':
             case 'W':
@@ -38,10 +40,11 @@ void CAbsWidnow::ReadKey() {
             case 'S':
                 m_Selected++;
                 break;
-        }
-        Refresh();
 
-    }
+        }
+
+
+
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
