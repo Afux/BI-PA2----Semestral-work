@@ -14,7 +14,7 @@ public:
     CItem(std::string path,unsigned int size);
     std::string m_Name;
     std::string m_Path;
-   // CDate m_Date;
+    //CDate m_Date;
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
@@ -33,10 +33,10 @@ protected:
 
     void Rename(std::vector<CItem*> items);
 
-    virtual unsigned int GetSize()=0;
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
     virtual void Deduplicate()=0;
 
+    virtual void UpdateSize()=0;
 };
 
 

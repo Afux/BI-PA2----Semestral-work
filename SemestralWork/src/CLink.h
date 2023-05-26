@@ -13,7 +13,7 @@ public:
     virtual void Delete(vector<CItem*> items) override;
     virtual void Move( CItem *item , string dest) override;
     virtual void Move(vector<CItem*>,string dest ) override;
-    virtual unsigned int GetSize() override;
+    virtual void UpdateSize() override;
     virtual void SetDate(u_int year, u_int month, u_int day) override;
     virtual void Deduplicate() override;
 };

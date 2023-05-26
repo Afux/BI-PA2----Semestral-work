@@ -1,5 +1,6 @@
 
 #include "CFile.h"
+#include "filesystem"
 
 CFile::CFile(std::string path, unsigned int size) : CItem(path, size) {
 
@@ -34,8 +35,8 @@ void CFile::Move(vector<CItem *>, string dest) {
 
 }
 
-unsigned int CFile::GetSize() {
-    return 0;
+void CFile::UpdateSize() {
+    m_Size=filesystem::file_size(m_Path);
 }
 
 void CFile::SetDate(u_int year, u_int month, u_int day) {
