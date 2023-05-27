@@ -5,11 +5,10 @@
 using namespace rang;
 void CWindow::Print() {
 
-    if(m_Selected>=TESTING.size()){
+    if(m_Selected>=m_Items->size()){
         m_Selected=0;
     }
     //clear();
-
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     for (int i =1; i < m_Size.m_Width; ++i) {
         cout<<"-";
@@ -35,12 +34,12 @@ void CWindow::Print() {
     for (int i = 1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
-    for (int i = 0; i < TESTING.size() ; ++i) {
-        moveto(m_Size.m_PosX+2,m_Size.m_PosY+4+i);
 
+    for (auto i = 0; i < m_Items->size() ; ++i) {
+        moveto(m_Size.m_PosX+2,m_Size.m_PosY+4+i);
         if(i==m_Selected){
 
-            cout << bg::blue<<TESTING[i]<< setw(m_Size.m_Width-TESTING[i].size())
+            cout << bg::blue<<m_Items->at(i)->m_Name<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
                  <<style::reset;
 
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
@@ -57,11 +56,11 @@ void CWindow::Print() {
 
 
         else{
-            cout <<TESTING[i]<<setw(m_Size.m_Width-TESTING[i].size());
+            cout <<m_Items->at(i)->m_Name<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<"|";
             moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
-            cout <<222;
+            cout <<m_Items->at(i)->m_Size;
             moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<"|";
             moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
@@ -77,7 +76,7 @@ void CWindow::Print() {
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
-    cout <<TESTING[m_Selected];
+    cout <<m_Items->at(m_Selected)->m_Name;
     moveto(2,m_Size.m_Height+1);
 
 }

@@ -23,12 +23,12 @@ CDir::CDir( std::string path, unsigned int size,CDir * parr) : CItem(path, size)
            m_items.emplace_back(tmp);
        }
        else if(dirEntry.is_symlink()){
-           cout<<"Link"<<endl;
+          // cout<<"Link"<<endl;
        }
        // std::cout << dirEntry << std::endl;
 
     }
-    cout<<"-------------"<<endl;
+    //cout<<"-------------"<<endl;
 }
 
 void CDir::Copy(CItem *item) {
@@ -61,7 +61,7 @@ void CDir::Move(std::vector<CItem *>, std::string dest) {
 void CDir::UpdateSize() {
     m_Size=0;
     for (int i = 0; i <m_items.size() ; ++i) {
-        m_Size+=filesystem::file_size(m_items[i]->m_Path);
+        m_Size+=m_items[i]->m_Size;
     }
 }
 
@@ -75,9 +75,11 @@ void CDir::Deduplicate() {
 
 void CDir::Print() {
     cout<<"/"<<m_Name;
+    /*
     if(m_parr!=NULL)
-        cout<<" My parr "<<m_parr->m_Name<<endl;
+       cout<<" My parr "<<m_parr->m_Name<<endl;
     for (int i = 0; i < m_items.size() ; ++i) {
         m_items[i]->Print();
     }
+     */
 }

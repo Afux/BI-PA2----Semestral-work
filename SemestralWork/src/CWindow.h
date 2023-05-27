@@ -14,9 +14,9 @@ class CWindow: public CAbsWidnow{
 public:
     CWindow( CSize size, unsigned int Selected, std::string Name);
     std::string m_CurrPath;
-    vector<CItem*>   m_Items;
+    vector<CItem*>   *m_Items;
     vector<CItem*> m_Selecteditems;
-    vector<std::string> TESTING;
+    //vector<std::string> TESTING;
 
     // CInputDialog  m_InputDialog;
 

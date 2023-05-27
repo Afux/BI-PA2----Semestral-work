@@ -5,6 +5,8 @@
 #include "CWindow.h"
 #include "CHelpBar.h"
 #include "CAbsWidnow.h"
+#include "CDir.h"
+
 class CManager: public CAbsWidnow{
 public:
     CManager( CSize size,std::string Name, unsigned int Selected);
@@ -12,6 +14,7 @@ public:
     CWindow m_RightPanel;
     CWindow * m_ActivePanel;
       CHelpBar m_HelpBar;
+      CDir m_Start;
     void Print() override;
     void Run();
 

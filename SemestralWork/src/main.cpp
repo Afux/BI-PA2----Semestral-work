@@ -30,9 +30,9 @@ int main() {
     win.ReadKey();
      */
     CManager man(CSize(100,30,1,1),"MAN",0);
-  //  man.Run();
-    CDir uf("/home/afu/PA1/df",2,NULL);
-   uf.Print();
+    man.Run();
+   // CDir uf("/home/afu/PA1/df",2,NULL);
+  // uf.Print();
     /*
    moveto(1,5);
    system("clear");
