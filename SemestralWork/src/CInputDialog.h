@@ -15,7 +15,8 @@ public:
     std::string m_ButtonLabel;
     CItem * m_SelectedItem;
     std::string  m_input;
-     void Print() override;
+    void Print() override;
+    void ReadKey() override;
 
 };
 

@@ -15,6 +15,7 @@ public:
 
     std::vector<std::string> m_Content;
     void Print() override;
+    void ReadKey() override;
 };
 
 

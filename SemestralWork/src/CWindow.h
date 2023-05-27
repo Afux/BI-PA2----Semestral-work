@@ -9,14 +9,18 @@
 #include "CInputDialog.h"
 #include "CConfirmDialog.h"
 #include "CAbsWidnow.h"
+#include "CDir.h"
 using namespace std;
 class CWindow: public CAbsWidnow{
 public:
-    CWindow( CSize size, unsigned int Selected, std::string Name);
+    CWindow( CSize size, unsigned int Selected, std::string Name,string Path);
     std::string m_CurrPath;
     vector<CItem*>   *m_Items;
     vector<CItem*> m_Selecteditems;
     //vector<std::string> TESTING;
+    CDir m_StartDir;
+
+    CDir m_currDir;
 
     // CInputDialog  m_InputDialog;
 
@@ -24,7 +28,9 @@ public:
     //CMenu m_Menu;
     CItem* m_CurrFile;
     void Print() override;
+    void ReadKey() override;
     void Run();
+    void Enter();
 
 
 };

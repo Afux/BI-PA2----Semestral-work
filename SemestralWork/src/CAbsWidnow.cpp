@@ -16,39 +16,9 @@ void CAbsWidnow::moveto(int x, int y) {
 
 }
 
-CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, std::string Name): m_Size(size),m_Selected(Selected),m_Name(Name){}
-
-void CAbsWidnow::ReadKey() {
-   // Refresh();
-
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-
-    term.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-    char c;
-    std::cin >> c;
+CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, std::string Name, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Name(Name),m_Scene(Scene){}
 
 
-        switch(c) {
-            case 'w':
-            case 'W':
-                m_Selected--;
-                break;
-            case 's':
-            case 'S':
-                m_Selected++;
-                break;
-
-        }
-
-
-
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-}
 
 void CAbsWidnow::Refresh() {
         clear();

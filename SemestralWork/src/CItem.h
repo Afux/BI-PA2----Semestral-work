@@ -18,6 +18,8 @@ public:
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
+    virtual void Open(std::vector<CItem*> **item)=0;
+
 
 private:
 protected:
@@ -28,7 +30,9 @@ protected:
     virtual void Delete(std::vector<CItem*> items)=0;
     virtual void Move( CItem *item , std::string dest)=0;
     virtual void Move(std::vector<CItem*>,std::string dest )=0;
-
+    virtual std::string RemoveDialog()=0;
+    virtual std::string CreateDialog()=0;
+    virtual std::string RenameDialog()=0;
     void Rename( CItem *item );
 
     void Rename(std::vector<CItem*> items);

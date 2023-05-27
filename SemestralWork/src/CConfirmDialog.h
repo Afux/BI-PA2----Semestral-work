@@ -12,7 +12,12 @@ public:
     std::string m_Label;
     std::string m_File_name;
     CItem * m_SelectedItem;
+    vector<std::string > m_Content;
     void Print() override;
+    void ReadKey() override;
+    void Enter();
+    CAbsWidnow * m_lastActive;
+
 };
 
 

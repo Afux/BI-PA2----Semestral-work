@@ -10,7 +10,7 @@ void CWindow::Print() {
     }
     //clear();
     moveto(m_Size.m_PosX,m_Size.m_PosY);
-    for (int i =1; i < m_Size.m_Width; ++i) {
+    for (size_t i =1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
@@ -20,7 +20,7 @@ void CWindow::Print() {
     moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+2);
     cout<<"  Modify  ";
 
-    for (int i =1; i < m_Size.m_Height*0.8; ++i) {
+    for (size_t i =1; i < m_Size.m_Height*0.8; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
         moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,i);
@@ -31,21 +31,26 @@ void CWindow::Print() {
         cout<<"|";
         moveto(m_Size.m_PosX,i);
     }
-    for (int i = 1; i < m_Size.m_Width; ++i) {
+    for (size_t i = 1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
 
-    for (auto i = 0; i < m_Items->size() ; ++i) {
+    for (size_t i = 0; i < m_Items->size() ; ++i) {
+        if(i==15)
+            break;
         moveto(m_Size.m_PosX+2,m_Size.m_PosY+4+i);
         if(i==m_Selected){
-
-            cout << bg::blue<<m_Items->at(i)->m_Name<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
-                 <<style::reset;
+            if(i==0)
+                cout << bg::blue<<"/.."<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
+                     <<style::reset;
+            else
+                cout << bg::blue<<m_Items->at(i)->m_Name<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
+                     <<style::reset;
 
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<bg::blue<<"|"<<style::reset;
             moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
-            cout << bg::blue<<222<<style::reset;
+            cout << bg::blue<<m_Items->at(i)->m_Size<<style::reset;
             moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<bg::blue<<"|"<<style::reset;
             moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
@@ -56,7 +61,10 @@ void CWindow::Print() {
 
 
         else{
-            cout <<m_Items->at(i)->m_Name<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+            if(i==0)
+                cout <<"/.."<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+            else
+                cout <<m_Items->at(i)->m_Name<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<"|";
             moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
@@ -71,7 +79,7 @@ void CWindow::Print() {
 
     }
     moveto(m_Size.m_PosX,m_Size.m_Height*0.7);
-    for (int i = 1; i < m_Size.m_Width; ++i) {
+    for (size_t i = 1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
@@ -81,8 +89,10 @@ void CWindow::Print() {
 
 }
 
-CWindow::CWindow(CSize size, unsigned int Selected, std::string Name)
-:  CAbsWidnow(size, Selected, Name){}
+CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
+:  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL)),m_currDir(m_StartDir){
+   m_Items=&m_currDir.m_currItems;
+}
 
 void CWindow::Run() {
     int i=0;
@@ -93,4 +103,11 @@ void CWindow::Run() {
     }
 
 
+}
+
+void CWindow::ReadKey() {}
+
+void CWindow::Enter() {
+    m_Items->at(m_Selected)->Open(&m_Items);
+    //m_currDir=dynamic_cast<CDir&>(*m_Items->at(m_Selected));
 }

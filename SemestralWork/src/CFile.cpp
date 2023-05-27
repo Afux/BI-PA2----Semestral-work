@@ -46,3 +46,19 @@ void CFile::SetDate(u_int year, u_int month, u_int day) {
 void CFile::Deduplicate() {
 
 }
+
+std::string CFile::RemoveDialog() {
+    return std::string();
+}
+
+std::string CFile::CreateDialog() {
+    return std::string();
+}
+
+std::string CFile::RenameDialog() {
+    return std::string();
+}
+
+void CFile::Open(std::vector<CItem*> **item) {
+
+}

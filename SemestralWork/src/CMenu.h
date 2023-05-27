@@ -16,6 +16,7 @@ public:
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;
     void Print() override;
+    void ReadKey() override;
 };
 
 

@@ -6,6 +6,8 @@ using namespace std;
 class CLink:public CItem {
 public:
     CItem* m_toFile;
+    virtual void Open(std::vector<CItem*> **item)override;
+
     virtual void Print()override;
     virtual void Copy( CItem *item ) override;
     virtual void Copy(vector<CItem*>) override;
@@ -16,6 +18,9 @@ public:
     virtual void UpdateSize() override;
     virtual void SetDate(u_int year, u_int month, u_int day) override;
     virtual void Deduplicate() override;
+    virtual std::string RemoveDialog() override;
+    virtual std::string CreateDialog() override;
+    virtual std::string RenameDialog() override;
 };
 
 
