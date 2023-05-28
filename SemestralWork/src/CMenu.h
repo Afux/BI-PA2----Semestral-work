@@ -12,11 +12,13 @@ class CMenu: public CAbsWidnow{
 public:
     CMenu(CSize size, unsigned int Selected, std::string Name);
     vector<string> m_Content;
+    CAbsWidnow * m_lastActive;
     CItem * m_SelectedItem{};
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;
     void Print() override;
     void ReadKey() override;
+    void Enter();
 };
 
 

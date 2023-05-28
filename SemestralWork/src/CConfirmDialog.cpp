@@ -14,8 +14,9 @@ m_Content.push_back("[No]");
 }
 
 void CConfirmDialog::Print() {
-    m_Scene= this;
-
+    if(m_Selected>=m_Content.size()){
+        m_Selected=0;
+    }
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
         moveto(m_Size.m_PosX,i);
@@ -96,8 +97,8 @@ void CConfirmDialog::ReadKey() {
 
 void CConfirmDialog::Enter() {
   if(m_Selected==0){
-      m_Scene=m_lastActive;
-      m_lastActive->m_Scene=m_lastActive;
+      //m_Scene=m_lastActive;
+     m_lastActive->m_Scene=m_lastActive;
 
 
   }

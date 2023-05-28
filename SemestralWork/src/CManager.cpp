@@ -36,8 +36,8 @@ m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,s
 void CManager::Run() {
 
     while (1){
-        m_ActivePanel->Print();
-        m_ActivePanel->ReadKey();
+       m_Scene->Print();
+        m_Scene->ReadKey();
 
         // Refresh();
     }
@@ -70,15 +70,20 @@ void CManager::ReadKey() {
         case 'd':
         case 'D':
             m_Confirm.m_lastActive= this;
-            m_ActivePanel=&m_Confirm;
+            m_Scene=&m_Confirm;
           //  m_Scene=&m_Confirm;
-
             break;
         case 'e':
         case 'E':
             m_ActiveWindow->Enter();
             break;
-
+        case 'm':
+        case 'M':
+            m_Menu.m_lastActive= this;
+            m_Scene=&m_Menu;
+        case 'i':
+        case 'I':
+            m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected)->Delete(NULL);
 
     }
 

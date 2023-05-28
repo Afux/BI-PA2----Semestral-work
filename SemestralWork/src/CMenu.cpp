@@ -2,7 +2,9 @@
 #include "CMenu.h"
 #include "rang.hpp"
 #include <iomanip>
-
+#include <unistd.h>
+#include <termios.h>
+#include <iostream>
 using namespace rang;
 CMenu::CMenu(CSize size, unsigned int Selected, std::string Name)
 :  CAbsWidnow(size, Selected, Name, this) {
@@ -17,6 +19,9 @@ CMenu::CMenu(CSize size, unsigned int Selected, std::string Name)
 }
 
 void CMenu::Print() {
+    if(m_Selected>=m_Content.size()){
+        m_Selected=0;
+    }
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
         moveto(m_Size.m_PosX,i);
@@ -66,5 +71,39 @@ void CMenu::Print() {
 }
 
 void CMenu::ReadKey() {
+    termios term;
+    tcgetattr(STDIN_FILENO, &term);
+
+    term.c_lflag &= ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+    char c;
+    std::cin >> c;
+
+
+    switch(c) {
+        case 'a':
+        case 'A':
+            m_Selected--;
+            break;
+        case 'd':
+        case 'D':
+            m_Selected++;
+            break;
+        case 'q':
+            Enter();
+            break;
+
+
+    }
+
+
+
+    term.c_lflag |= ECHO | ICANON;
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+void CMenu::Enter() {
+
+        m_lastActive->m_Scene=m_lastActive;
 
 }
