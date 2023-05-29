@@ -7,7 +7,6 @@
 #include "CConfirmDialog.h"
 #include "CInputDialog.h"
 #include "CAbsWidnow.h"
-
 class CMenu: public CAbsWidnow{
 public:
     CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow * lastActive);

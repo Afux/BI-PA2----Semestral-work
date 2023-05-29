@@ -117,3 +117,7 @@ CWindow *CManager::NextWind() {
 }
 
 
+
+
+
+

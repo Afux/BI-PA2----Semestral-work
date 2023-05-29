@@ -118,6 +118,8 @@ void CMenu::Enter() {
         case 2:
             m_inputDialog.m_lastActive=m_lastActive;
             m_inputDialog.Run();
+
+            m_inputDialog.m_input;
             break;
         case 3:
             m_inputDialog.m_lastActive=m_lastActive;
