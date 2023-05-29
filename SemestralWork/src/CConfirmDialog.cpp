@@ -106,3 +106,11 @@ void CConfirmDialog::Enter() {
       m_lastActive->m_Scene=m_lastActive;
 
 }
+void CConfirmDialog::Run() {
+    while (1){
+        Print();
+        ReadKey();
+        clear();
+    }
+
+}

@@ -8,6 +8,9 @@ CHelpBar::CHelpBar(CSize size, unsigned int Selected, std::string Name) : CAbsWi
     m_Content.push_back("Copy");
     m_Content.push_back("Create");
     m_Content.push_back("MKDIR");
+    m_Content.push_back("Move");
+    m_Content.push_back("Quit");
+
 
 
 

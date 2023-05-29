@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <cstdlib>
 
-using directory_iterator = std::filesystem::directory_iterator;
+using directory_iterator = std::filesystem::recursive_directory_iterator;
 
 
 
@@ -29,18 +29,21 @@ int main() {
 
     win.ReadKey();
      */
+
     CManager man(CSize(100,30,1,1),"MAN",0);
     man.Run();
    // CDir uf("/home/afu/PA1/df",2,NULL);
   // uf.Print();
     /*
+     *  for (const auto& dirEntry : filesystem::recursive_directory_iterator ("/")){
+       // std::cerr << dirEntry << std::endl;
+        //string s=dirEntry.path();
+    }
+    cout<<"Hello"<<endl;
    moveto(1,5);
    system("clear");
    // std::cout << std::flush;
-   for (const auto& dirEntry : filesystem::directory_iterator ("/home/afu/PA1/genDATA")){
-       std::cout << dirEntry << std::endl;
-      string s=dirEntry.path();
-   }
+
    moveto(100,5);
    cout<<"HEHE"<<endl;
  for (const auto& dirEntry : filesystem::directory_iterator ("/home/afu/PA1/PT2"))

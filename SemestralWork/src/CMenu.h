@@ -10,9 +10,10 @@
 
 class CMenu: public CAbsWidnow{
 public:
-    CMenu(CSize size, unsigned int Selected, std::string Name);
+    CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow * lastActive);
     vector<string> m_Content;
     CAbsWidnow * m_lastActive;
+    CInputDialog m_inputDialog;
     CItem * m_SelectedItem{};
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;

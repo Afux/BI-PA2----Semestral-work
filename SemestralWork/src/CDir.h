@@ -9,7 +9,7 @@ public:
     CDir(std::string path,unsigned int size,CDir* Parr);
     std::vector<CItem*>m_items;
     std::vector<CItem*>m_currItems;
-
+    //std::map<std::string,CItem*> m_items;
     CDir * m_parr;
     virtual void Open(std::vector<CItem*> **item)override;
 

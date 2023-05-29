@@ -6,8 +6,9 @@
 #include <termios.h>
 #include <iostream>
 using namespace rang;
-CMenu::CMenu(CSize size, unsigned int Selected, std::string Name)
-:  CAbsWidnow(size, Selected, Name, this) {
+CMenu::CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow* lastActive)
+:  CAbsWidnow(size, Selected, Name, this),m_lastActive(lastActive),
+   m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2),0,"Menu")){
     m_Content.push_back("Deduplicate file");
     m_Content.push_back("Concat files");
     m_Content.push_back("Remove by Regex");
@@ -82,15 +83,16 @@ void CMenu::ReadKey() {
 
 
     switch(c) {
-        case 'a':
-        case 'A':
+        case 'W':
+        case 'w':
             m_Selected--;
             break;
-        case 'd':
-        case 'D':
+        case 'S':
+        case 's':
             m_Selected++;
             break;
-        case 'q':
+        case 'e':
+        case 'E':
             Enter();
             break;
 
@@ -103,7 +105,32 @@ void CMenu::ReadKey() {
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 void CMenu::Enter() {
+    switch (m_Selected) {
+        case 0:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.Run();
 
-        m_lastActive->m_Scene=m_lastActive;
+            break;
+        case 1:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.Run();
+            break;
+        case 2:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.Run();
+            break;
+        case 3:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.Run();
+            break;
+        case 4:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.Run();
+            break;
+        case 5:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_lastActive->m_Scene=m_lastActive;
+            break;
+    }
 
 }

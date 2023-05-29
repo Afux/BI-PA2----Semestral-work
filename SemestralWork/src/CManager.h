@@ -19,14 +19,21 @@ public:
     CInputDialog m_Input;
     CConfirmDialog m_Confirm;
     CWindow *m_ActiveWindow;
-
+    bool m_runFlag;
     CAbsWidnow * m_ActivePanel;
+
    // CDir m_Start;
 
 
     void Print() override;
     void Run();
     void ReadKey() override;
+     void Copy( CItem *item );
+     void Copy(vector<CItem*>);
+     void Delete( CItem *item );
+     void Delete(vector<CItem*> items) ;
+     void Move( CItem *item , string dest) ;
+     void Move(vector<CItem*>,string dest ) ;
     CWindow *NextWind();
 
 };

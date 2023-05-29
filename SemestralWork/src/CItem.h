@@ -5,6 +5,7 @@
 #include "CDate.h"
 #include "CPermission.h"
 #include "vector"
+#include "map"
 
 
 class CItem {
@@ -20,6 +21,7 @@ public:
     virtual void Print()=0;
     virtual void Open(std::vector<CItem*> **item)=0;
     virtual void Delete( CItem *item )=0;
+    virtual void Move( CItem *item , std::string dest)=0;
 
 
 private:
@@ -28,7 +30,6 @@ protected:
     virtual void Copy( CItem *item )=0;
     virtual void Copy(std::vector<CItem*>)=0;
     virtual void Delete(std::vector<CItem*> items)=0;
-    virtual void Move( CItem *item , std::string dest)=0;
     virtual void Move(std::vector<CItem*>,std::string dest )=0;
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog()=0;

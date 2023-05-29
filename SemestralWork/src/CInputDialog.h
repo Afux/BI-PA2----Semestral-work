@@ -15,8 +15,13 @@ public:
     std::string m_ButtonLabel;
     CItem * m_SelectedItem;
     std::string  m_input;
+    vector<std::string > m_Content;
     void Print() override;
     void ReadKey() override;
+    void Enter();
+    void Run();
+    CAbsWidnow * m_lastActive;
+
 
 };
 
