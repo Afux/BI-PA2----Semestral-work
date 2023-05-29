@@ -30,11 +30,11 @@ public:
     void Run();
     void ReadKey() override;
      void Copy( CItem *item, std::string to);
-     void Copy( CItem *item,vector<CItem*> items,std::string to);
+     void Copy( std::string reg,CItem *item,std::string to);
      void Delete( CItem *item);
-     void Delete(vector<CItem*> items) ;
+     void Delete(std::string reg,CItem *item,string to) ;
      void Move( CItem *item , std::string dest) ;
-     void Move( CItem *item,vector<CItem*>,std::string dest ) ;
+     void Move( std::string reg,CItem *item,std::string dest ) ;
     CWindow *NextWind();
 
 };

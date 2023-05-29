@@ -49,30 +49,33 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
 }
 
 
-void CDir::Copy(std::vector<CItem*>) {
-   // std::filesystem::copy(m_Path, dest, std::filesystem::copy_options::recursive);
+void CDir::Copy(std::vector<CItem*> items, std::string to) {
 
-}
-
-void CDir::Copy(CItem *item) {
-    /*
     for (auto & item : items) {
-        std::filesystem::copy(item->m_Path, dest, std::filesystem::copy_options::recursive);
+        std::filesystem::copy(item->m_Path, to, std::filesystem::copy_options::recursive);
 
     }
-     */
+
 }
 
-void CDir::Move(CItem *item, std::string dest) {
+void CDir::Copy(std::string to) {
+    std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
+
+}
+
+void CDir::Move(std::string dest) {
     std::filesystem::copy(m_Path, dest, std::filesystem::copy_options::recursive);
-    Delete(this);
+    Delete();
 }
 
 void CDir::Delete(std::vector<CItem *> items) {
+    for (auto & item : items) {
+        fs::remove_all(item->m_Path);
 
+    }
 }
 
-void CDir::Delete(CItem *item) {
+void CDir::Delete() {
     fs::remove_all(m_Path);
 }
 
@@ -109,11 +112,11 @@ std::string CDir::RemoveDialog() {
     return std::string();
 }
 
-std::string CDir::CreateDialog() {
+std::string CDir::CreateDialog(std::string NewName) {
     return std::string();
 }
 
-std::string CDir::RenameDialog() {
+std::string CDir::RenameDialog(std::string NewName) {
     return std::string();
 }
 

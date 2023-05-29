@@ -9,18 +9,18 @@ public:
     virtual void Open(std::vector<CItem*> **item)override;
 
     virtual void Print()override;
-    virtual void Copy( CItem *item ) override;
-    virtual void Copy(vector<CItem*>) override;
-    virtual void Delete( CItem *item ) override;
+    virtual void Copy(vector<CItem*> items, std::string to ) override;
+    virtual void Copy(std::string to) override;
+    virtual void Delete() override;
     virtual void Delete(vector<CItem*> items) override;
-    virtual void Move( CItem *item , string dest) override;
+    virtual void Move( string dest) override;
     virtual void Move(vector<CItem*>,string dest ) override;
     virtual void UpdateSize() override;
     virtual void SetDate(u_int year, u_int month, u_int day) override;
     virtual void Deduplicate() override;
     virtual std::string RemoveDialog() override;
-    virtual std::string CreateDialog() override;
-    virtual std::string RenameDialog() override;
+    virtual std::string CreateDialog(std::string NewName) override;
+    virtual std::string RenameDialog(std::string NewName) override;
 };
 
 

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>
+#include <regex>
+
 void CManager::Print() {
     clear();
 
@@ -17,7 +19,7 @@ void CManager::Print() {
 
 CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected, Name,this),
 m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height+1),0,"BAR")),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home/afu")),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home/afu/PA1/df")),
 m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/home/afu/PA1/df")),
 m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1),0,"Menu", this)),
 m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu")),
@@ -76,9 +78,10 @@ void CManager::ReadKey() {
             m_Scene=&m_Confirm;
             break;
         case '3':
-            m_Input.m_Label="Enter path";
-            m_Input.m_lastActive= this;
-            m_Scene=&m_Input;
+            //m_Input.m_Label="Enter path";
+            //m_Input.m_lastActive= this;
+           // m_Scene=&m_Input;
+            Move("(a)(.*)",&m_ActiveWindow->m_currDir,"/home/afu/PA1/df/copyhere");
             break;
         case '4':
             m_Input.m_Label="Enter file name";
@@ -104,7 +107,6 @@ void CManager::ReadKey() {
     }
 
 
-
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
@@ -114,6 +116,55 @@ CWindow *CManager::NextWind() {
         return &m_RightPanel;
     else
         return &m_LeftPanel;
+}
+
+void CManager::Copy(CItem *item, std::string to) {
+    item->Copy(to);
+}
+
+void CManager::Copy(std::string reg,CItem *item,std::string to) {
+    vector<CItem*> items;
+    regex r(reg);
+    for (auto & m_Item : *m_ActiveWindow->m_Items) {
+        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
+            items.push_back(m_Item);
+            // m_runFlag= false;
+        }
+    }
+    item->Copy(items,to);
+}
+
+
+void CManager::Delete(CItem *item) {
+    item->Delete();
+}
+
+void CManager::Delete(std::string reg,CItem* item,string to) {
+    vector<CItem*> items;
+    regex r(reg);
+    for (auto & m_Item : *m_ActiveWindow->m_Items) {
+        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
+            items.push_back(m_Item);
+        }
+    }
+    item->Delete(items);
+
+}
+
+void CManager::Move(CItem *item, std::string dest) {
+    item->Move(dest);
+
+}
+
+void CManager::Move(std::string reg,CItem *item, std::string dest) {
+   vector<CItem*> items;
+   regex r(reg);
+    for (auto & m_Item : *m_ActiveWindow->m_Items) {
+        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
+            items.push_back(m_Item);
+        }
+    }
+    item->Move(items,dest);
 }
 
 

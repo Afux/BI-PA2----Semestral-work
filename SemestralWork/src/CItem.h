@@ -20,23 +20,21 @@ public:
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
     virtual void Open(std::vector<CItem*> **item)=0;
-    virtual void Delete( CItem *item )=0;
-    virtual void Move( CItem *item , std::string dest)=0;
-
+    virtual void Delete()=0;
+    virtual void Delete(std::vector<CItem*> items)=0;
+    virtual void Move(std::string dest)=0;
+    virtual void Move(std::vector<CItem*> items,std::string dest )=0;
+    virtual void Copy( std::string dest )=0;
+    virtual void Copy(std::vector<CItem*> items, std::string dest)=0;
 
 private:
 protected:
 
-    virtual void Copy( CItem *item )=0;
-    virtual void Copy(std::vector<CItem*>)=0;
-    virtual void Delete(std::vector<CItem*> items)=0;
-    virtual void Move(std::vector<CItem*>,std::string dest )=0;
-    virtual std::string RemoveDialog()=0;
-    virtual std::string CreateDialog()=0;
-    virtual std::string RenameDialog()=0;
-    void Rename( CItem *item );
 
-    void Rename(std::vector<CItem*> items);
+    virtual std::string RemoveDialog()=0;
+    virtual std::string CreateDialog(std::string NewName)=0;
+    virtual std::string RenameDialog(std::string NewName)=0;
+
 
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
     virtual void Deduplicate()=0;
