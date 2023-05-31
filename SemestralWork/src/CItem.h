@@ -1,12 +1,12 @@
 
 #ifndef SEMESTRALWORK_CITEM_H
 #define SEMESTRALWORK_CITEM_H
+
 #include "iostream"
 #include "CDate.h"
 #include "CPermission.h"
 #include "vector"
 #include "map"
-
 
 class CItem {
 
@@ -16,6 +16,7 @@ public:
     std::string m_Name;
     std::string m_Path;
     //CDate m_Date;
+
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;

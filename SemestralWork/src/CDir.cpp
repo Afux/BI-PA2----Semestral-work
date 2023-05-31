@@ -1,6 +1,8 @@
 
 #include "CDir.h"
 #include "CFile.h"
+#include "CLink.h"
+
 #include "filesystem"
 using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
@@ -8,6 +10,20 @@ using namespace std;
 
 CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),m_parr(Parr) {
 
+    try {
+        fs::path filePath(m_Path);
+        fs::file_status fileStatus = fs::status(filePath);
+        if (fs::status_known(fileStatus)) {
+
+        }
+        else {
+           
+        }
+
+    }
+    catch (const fs::filesystem_error& e) {
+        cout<<"D"<<endl;
+    }
     if(Parr!=NULL){
         m_items.emplace_back(m_parr);
         m_currItems.emplace_back(m_parr);
@@ -17,9 +33,18 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
         m_currItems.emplace_back(this);
     }
 
+    for (const auto& dirEntry : filesystem::directory_iterator (m_Path,std::filesystem::directory_options::skip_permission_denied)){
+      //  cout<<dirEntry.path()<<endl;
+         if(dirEntry.is_symlink()){
+            string s=dirEntry.path();
+            CLink * temp = new CLink( CLink(s,2, this));
+            temp->UpdateSize();
+            CItem *tmp= temp;
+            m_items.emplace_back(tmp);
+            m_currItems.emplace_back(tmp);
 
-    for (const auto& dirEntry : filesystem::directory_iterator (path)){
-       if(dirEntry.is_directory()){
+        }
+       else if(dirEntry.is_directory()){
              string s=dirEntry.path();
              CDir * temp = new CDir( CDir(s,22, this));
              temp->UpdateSize();
@@ -30,6 +55,7 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
              m_currItems.emplace_back(tmp);
 
        }
+
        else if(dirEntry.is_regular_file()){
            string s=dirEntry.path();
            CFile * temp = new CFile( CFile(s,2));
@@ -38,10 +64,9 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
            m_items.emplace_back(tmp);
            m_currItems.emplace_back(tmp);
 
+
        }
-       else if(dirEntry.is_symlink()){
-          // cout<<"Link"<<endl;
-       }
+
        // std::cout << dirEntry << std::endl;
 
     }
@@ -123,3 +148,43 @@ std::string CDir::RenameDialog(std::string NewName) {
 void CDir::Open(std::vector<CItem*> **items) {
     *items= &m_items;
 }
+
+std::vector<std::string> CDir::parseString(const string &input, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string::size_type start = 0;
+    std::string::size_type end = input.find(delimiter);
+
+    while (end != std::string::npos) {
+        tokens.push_back(input.substr(start, end - start));
+        start = end + 1;
+        end = input.find(delimiter, start);
+    }
+
+
+    tokens.push_back(input.substr(start));
+
+    return tokens;
+}
+
+
+
+std::vector<CItem *> *CDir::FindDir(const string &path) {
+    vector<string > tempPaths= parseString(path,'/');
+    std::vector<CItem*>*curr=&this->m_items;
+
+    for (int i = 0; i < curr->size(); ++i) {
+        for (int j = 0; j < tempPaths.size(); ++j) {
+
+            if(curr->at(i)->m_Name==tempPaths[j]){
+
+                curr->at(i)->Open(&curr);
+                tempPaths.erase(tempPaths.begin());
+                i=0;
+                break;
+            }
+        }
+    }
+    return curr;
+}
+
+

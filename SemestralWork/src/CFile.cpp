@@ -7,7 +7,7 @@ CFile::CFile(std::string path, unsigned int size) : CItem(path, size) {
 }
 
 void CFile::Print() {
-    cout<<m_Name<<endl;
+    cout<<m_Name;
 
 }
 

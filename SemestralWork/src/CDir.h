@@ -3,7 +3,6 @@
 #define SEMESTRALWORK_CDIR_H
 
 #include "CItem.h"
-
 class CDir: public CItem{
 public:
     CDir(std::string path,unsigned int size,CDir* Parr);
@@ -11,6 +10,7 @@ public:
     std::vector<CItem*>m_currItems;
     //std::map<std::string,CItem*> m_items;
     CDir * m_parr;
+    std::vector<CItem*>* FindDir(const std::string& path);
     virtual void Open(std::vector<CItem*> **item)override;
 
     virtual void Copy(std::vector<CItem*> items, std::string to ) override;
@@ -26,7 +26,7 @@ public:
     virtual std::string RemoveDialog() override;
     virtual std::string CreateDialog(std::string NewName) override;
     virtual std::string RenameDialog(std::string NewName) override;
-
+    std::vector<std::string> parseString(const std::string& input, char delimiter);
 };
 
 

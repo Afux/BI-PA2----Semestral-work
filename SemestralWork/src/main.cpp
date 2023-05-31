@@ -31,27 +31,36 @@ int main() {
      */
 
     CManager man(CSize(100,30,1,1),"MAN",0);
-    man.Run();
-   // CDir uf("/home/afu/PA1/df",2,NULL);
+  man.Run();
+  /*
+   CDir uf("/",2,NULL);
+    vector<CItem*>   *m_Items;
+    m_Items=uf.FindDir("/home/afu/PA1/df");
+    for (int i = 0; i < m_Items->size() ; ++i) {
+       m_Items->at(i)->Print();
+       cout<<endl;
+    }
+    */
   // uf.Print();
     /*
-     *  for (const auto& dirEntry : filesystem::recursive_directory_iterator ("/")){
-       // std::cerr << dirEntry << std::endl;
-        //string s=dirEntry.path();
-    }
-    cout<<"Hello"<<endl;
-   moveto(1,5);
-   system("clear");
-   // std::cout << std::flush;
+         for (const auto& dirEntry : filesystem::recursive_directory_iterator ("/home/afu/PA1/df")){
+           std::cout << dirEntry << std::endl;
+           //string s=dirEntry.path();
+       }
 
-   moveto(100,5);
-   cout<<"HEHE"<<endl;
- for (const auto& dirEntry : filesystem::directory_iterator ("/home/afu/PA1/PT2"))
-       std::cout << dirEntry << std::endl;
+       cout<<"Hello"<<endl;
+      moveto(1,5);
+      system("clear");
+      // std::cout << std::flush;
 
-    moveto(1,30);
-*/
+      moveto(100,5);
+      cout<<"HEHE"<<endl;
+    for (const auto& dirEntry : filesystem::directory_iterator ("/home/afu/PA1/PT2"))
+          std::cout << dirEntry << std::endl;
+
+       moveto(1,30);
+   */
 
 
-
+    return 0;
 }

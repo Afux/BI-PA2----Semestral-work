@@ -5,6 +5,8 @@
 using namespace std;
 class CLink:public CItem {
 public:
+    CLink(std::string path,unsigned int size,CItem* toFile);
+
     CItem* m_toFile;
     virtual void Open(std::vector<CItem*> **item)override;
 

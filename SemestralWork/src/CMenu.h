@@ -7,6 +7,7 @@
 #include "CConfirmDialog.h"
 #include "CInputDialog.h"
 #include "CAbsWidnow.h"
+
 class CMenu: public CAbsWidnow{
 public:
     CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow * lastActive);
@@ -14,6 +15,7 @@ public:
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
     CItem * m_SelectedItem{};
+    CM
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;
     void Print() override;

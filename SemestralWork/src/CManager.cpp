@@ -8,19 +8,16 @@
 
 void CManager::Print() {
     clear();
-
     m_LeftPanel.Print();
     m_RightPanel.Print();
-    //m_Menu.Print();
-    //m_Confirm.Print();
     m_HelpBar.Print();
 
 }
 
 CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected, Name,this),
 m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height+1),0,"BAR")),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home/afu/PA1/df")),
-m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/home/afu/PA1/df")),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/")),
+m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/")),
 m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1),0,"Menu", this)),
 m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu")),
 m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu"))
@@ -68,6 +65,11 @@ void CManager::ReadKey() {
         case 'n':
             m_ActiveWindow=NextWind();
             break;
+        case 'e':
+        case 'E':
+            m_ActiveWindow->Enter();
+            break;
+
         case '1':
         case '+':
             m_Menu.m_lastActive= this;

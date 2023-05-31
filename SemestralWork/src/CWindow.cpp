@@ -14,7 +14,7 @@ void CWindow::Print() {
         cout<<"-";
     }
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
-    cout<<"  NAME  "<<m_Selected;
+    cout<<"  NAME  ";
     moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+2);
     cout<<"  SIZE  ";
     moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+2);
@@ -43,9 +43,13 @@ void CWindow::Print() {
             if(i==0)
                 cout << bg::blue<<"/.."<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
                      <<style::reset;
-            else
-                cout << bg::blue<<m_Items->at(i)->m_Name<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
-                     <<style::reset;
+            else{
+                cout << bg::blue;
+                m_Items->at(i)->Print();
+                cout<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
+                    <<style::reset;
+            }
+
 
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<bg::blue<<"|"<<style::reset;
@@ -63,8 +67,11 @@ void CWindow::Print() {
         else{
             if(i==0)
                 cout <<"/.."<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
-            else
-                cout <<m_Items->at(i)->m_Name<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+            else{
+                m_Items->at(i)->Print();
+                cout<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+            }
+
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i);
             cout<<"|";
             moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+i);
@@ -84,14 +91,15 @@ void CWindow::Print() {
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
-    cout <<m_Items->at(m_Selected)->m_Name;
+    cout <<m_Items->at(m_Selected)->m_Name<<" "<<m_currDir.m_Path;
     moveto(2,m_Size.m_Height+1);
 
 }
 
 CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
 :  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL)),m_currDir(m_StartDir){
-   m_Items=&m_currDir.m_currItems;
+
+   m_Items=m_currDir.FindDir("/home/afu/PA1/df");
 }
 
 void CWindow::Run() {
