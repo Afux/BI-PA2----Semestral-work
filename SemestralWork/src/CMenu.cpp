@@ -120,7 +120,7 @@ void CMenu::Enter() {
         case 1:
             m_inputDialog.m_lastActive=m_lastActive;
             m_inputDialog.op=2;
-            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.m_Label="Enter Regex n:l";
 
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
@@ -128,21 +128,23 @@ void CMenu::Enter() {
         case 2:
             m_inputDialog.m_lastActive=m_lastActive;
             m_inputDialog.op=3;
-            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.m_Label="Enter Regex n:l";
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
 
             break;
         case 3:
             m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=4;
-            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.op=13;
+            m_inputDialog.m_Label="Enter name and link n:l";
+
+            m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;
         case 4:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=5;
+
+            m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;
@@ -154,7 +156,8 @@ void CMenu::Enter() {
             break;
         case 6:
             m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=7;
+            m_inputDialog.op=13;
+            m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;

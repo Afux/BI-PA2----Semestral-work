@@ -64,7 +64,6 @@ void CInputDialog::Print() {
     }
 
 
-
 }
 
 void CInputDialog::ReadKey() {
@@ -74,6 +73,8 @@ void CInputDialog::ReadKey() {
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     moveto(m_Size.m_PosX+4,m_Size.m_PosY+8);
     std::getline(std::cin, m_input);
+    parseString(m_input,':');
+
     Enter();
    // m_lastActive->m_Scene=m_lastActive;
 
@@ -87,10 +88,10 @@ void CInputDialog::Enter() {
                 Delete(m_input,m_items);
                 break;
             case 2:
-                Copy(m_input,"",m_items);
+                Copy(m_reg,m_path,m_items);
                 break;
             case 3:
-                Move(m_input,"",m_items);
+                Move(m_reg,m_path,m_items);
                 break;
             case 4:
                 //Create();
@@ -111,13 +112,13 @@ void CInputDialog::Enter() {
                 Move(m_SelectedItem,m_input);
                 break;
             case 10:
-                //MakeFile
+                CreateFile(m_input,m_items);
                 break;
             case 12:
-                //MKDIR
+                CreateFolder(m_input,m_items);
                 break;
             case 13:
-                //MKLink
+                CreateLink(m_input,m_SelectedItem,m_items);
                 break;
 
         }
@@ -133,6 +134,22 @@ void CInputDialog::Run() {
         ReadKey();
         //clear();
 
+
+}
+
+void CInputDialog::parseString(const string &input, char delimiter) {
+    std::string::size_type start = 0;
+    std::string::size_type end = input.find(delimiter);
+
+    while (end != std::string::npos) {
+        m_reg=input.substr(start, end - start);
+
+        start = end + 1;
+        end = input.find(delimiter, start);
+    }
+
+
+    m_path=input.substr(start);
 
 }
 

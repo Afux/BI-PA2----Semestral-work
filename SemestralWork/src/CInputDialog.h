@@ -15,6 +15,8 @@ public:
     std::string m_ButtonLabel;
     CItem * m_SelectedItem;
     std::string  m_input;
+    std::string  m_reg;
+    std::string m_path;
     vector<std::string > m_Content;
     CManager * m_manager;
     void Print() override;
@@ -24,6 +26,8 @@ public:
     int op;
     CAbsWidnow * m_lastActive;
     vector<CItem*> *m_items;
+    void parseString(const std::string& input, char delimiter);
+
 
 };
 

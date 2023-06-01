@@ -30,17 +30,20 @@ int main() {
     win.ReadKey();
      */
 
+
     CManager man(CSize(100,30,1,1),"MAN",0);
-  man.Run();
-  /*
-   CDir uf("/",2,NULL);
-    vector<CItem*>   *m_Items;
-    m_Items=uf.FindDir("/home/afu/PA1/df");
-    for (int i = 0; i < m_Items->size() ; ++i) {
-       m_Items->at(i)->Print();
-       cout<<endl;
-    }
-    */
+    man.Run();
+    /*
+      CDir uf("/home/afu/PA1/df/TESTER/CreatedFold",2,NULL,NULL);
+
+
+      vector<CItem*>   *m_Items;
+      m_Items=uf.FindDir("/home/afu/PA1/df");
+      for (int i = 0; i < m_Items->size() ; ++i) {
+         m_Items->at(i)->Print();
+         cout<<endl;
+      }
+      */
   // uf.Print();
     /*
          for (const auto& dirEntry : filesystem::recursive_directory_iterator ("/home/afu/PA1/df")){

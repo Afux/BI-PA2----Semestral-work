@@ -15,6 +15,7 @@ public:
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
     vector<CItem*> *m_items;
+    CItem * m_selectedItem;
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;
     void Print() override;

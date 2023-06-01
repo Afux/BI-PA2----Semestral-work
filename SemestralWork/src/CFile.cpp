@@ -1,9 +1,13 @@
 
 #include "CFile.h"
 #include "filesystem"
+#include <fstream>
+namespace fs = std::filesystem;
 
 CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
-
+    if(!fs::exists(path)) {
+        std::ofstream { path };
+    }
 }
 
 void CFile::Print() {
@@ -13,29 +17,23 @@ void CFile::Print() {
 
 void CFile::Copy(string to) {
     std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
-
 }
 
-void CFile::Copy(vector<CItem *> items, string to) {
-
-}
+void CFile::Copy(vector<CItem *> items, string to) {}
 
 void CFile::Delete() {
     std::filesystem::remove_all(m_Path);
-}
-
-void CFile::Delete(vector<CItem *> items) {
 
 }
+
+void CFile::Delete(vector<CItem *> items) {}
 
 void CFile::Move(string dest) {
-    std::filesystem::copy(m_Path, dest, std::filesystem::copy_options::recursive);
+    Copy(dest);
     Delete();
 }
 
-void CFile::Move(vector<CItem *> items, string dest) {
-
-}
+void CFile::Move(vector<CItem *> items, string dest) {}
 
 void CFile::UpdateSize() {
     m_Size=filesystem::file_size(m_Path);
@@ -64,6 +62,9 @@ std::string CFile::RenameDialog(std::string NewName) {
     return tmp;
 }
 
-void CFile::Open(std::vector<CItem*> **item) {
+void CFile::Open(std::vector<CItem*> **item) {}
 
+CItem *CFile::Clone() {
+    CItem *tmp = ( new CFile(*this));
+    return tmp;
 }

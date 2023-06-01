@@ -5,6 +5,10 @@
 #include "iostream"
 #include "CSize.h"
 #include "CItem.h"
+#include "CDir.h"
+#include "CFile.h"
+#include "CLink.h"
+
 using namespace std;
 class CAbsWidnow {
 public:
@@ -29,6 +33,10 @@ public:
     void Delete(std::string reg,vector<CItem*> *Items) ;
     void Move( CItem *item , std::string dest) ;
     void Move(std::string reg, std::string dest,vector<CItem*> *Items) ;
+
+    void CreateFolder(std::string name,vector<CItem*> *Items);
+    void CreateFile(std::string name,vector<CItem*> *Items);
+    void CreateLink(std::string name,CItem * to,vector<CItem*> *Items);
 
 protected:
 private:

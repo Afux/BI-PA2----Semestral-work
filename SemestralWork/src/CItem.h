@@ -15,7 +15,7 @@ public:
     std::string m_Name;
     std::string m_Path;
     //CDate m_Date;
-
+  //  virtual void Add()=0;
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
@@ -27,6 +27,7 @@ public:
     virtual void Copy( std::string dest )=0;
     virtual void Copy(std::vector<CItem*> items, std::string dest)=0;
     CItem* m_inFolder;
+    virtual CItem* Clone()=0;
 private:
 protected:
 

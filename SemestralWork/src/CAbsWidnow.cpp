@@ -68,7 +68,7 @@ void CAbsWidnow::Move(std::string reg, std::string dest,vector<CItem*> *Items) {
     regex r(reg);
     if(Items->size()>1) {
         CItem *item = Items->at(1)->m_inFolder;
-        for (int i = 0; i < Items->size() ; ++i) {
+        for (size_t i = 0; i < Items->size() ; ++i) {
             if (regex_match(Items->at(i)->m_Name, r) && Items->at(i) != item) {
                 items.push_back(Items->at(i));
                 //Items->erase(Items->begin()+i);
@@ -88,5 +88,32 @@ void CAbsWidnow::Refresh() {
         clear();
         Print();
 
+}
+
+void CAbsWidnow::CreateFolder(std::string name, vector<CItem *> *Items) {
+    if(Items->size()>1) {
+        CItem *item = Items->at(1)->m_inFolder;
+        CDir *temp = new CDir(CDir(item->m_Path+"/"+name,2,item,item));
+        CItem *tmp = temp;
+        Items->emplace_back(tmp);
+    }
+}
+
+void CAbsWidnow::CreateFile(std::string name, vector<CItem *> *Items) {
+    if(Items->size()>1) {
+        CItem *item = Items->at(1)->m_inFolder;
+        CFile *temp = new CFile(CFile(item->m_Path+"/"+name,2,item));
+        CItem *tmp = temp;
+        Items->emplace_back(tmp);
+    }
+}
+
+void CAbsWidnow::CreateLink(std::string name, CItem *to, vector<CItem *> *Items) {
+    if(Items->size()>1) {
+        CItem *item = Items->at(1)->m_inFolder;
+        CLink *temp = new CLink(CLink(item->m_Path+"/"+name,2,to,item));
+        CItem *tmp = temp;
+        Items->emplace_back(tmp);
+    }
 }
 
