@@ -7,12 +7,11 @@
 #include "CPermission.h"
 #include "vector"
 #include "map"
-
 class CItem {
 
 
 public:
-    CItem(std::string path,unsigned int size);
+    CItem(std::string path,unsigned int size,CItem* inFolder);
     std::string m_Name;
     std::string m_Path;
     //CDate m_Date;
@@ -27,7 +26,7 @@ public:
     virtual void Move(std::vector<CItem*> items,std::string dest )=0;
     virtual void Copy( std::string dest )=0;
     virtual void Copy(std::vector<CItem*> items, std::string dest)=0;
-
+    CItem* m_inFolder;
 private:
 protected:
 

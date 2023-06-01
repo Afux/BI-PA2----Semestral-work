@@ -2,10 +2,11 @@
 #ifndef SEMESTRALWORK_CLINK_H
 #define SEMESTRALWORK_CLINK_H
 #include "CItem.h"
+#include "CDir.h"
 using namespace std;
 class CLink:public CItem {
 public:
-    CLink(std::string path,unsigned int size,CItem* toFile);
+    CLink(std::string path,unsigned int size,CItem* toFile,CItem* parr);
 
     CItem* m_toFile;
     virtual void Open(std::vector<CItem*> **item)override;

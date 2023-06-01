@@ -8,7 +8,7 @@ using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
 using namespace std;
 
-CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),m_parr(Parr) {
+CDir::CDir( std::string path, unsigned int size,CDir* Parr,CItem* inFolder) : CItem(path, size,inFolder),m_parr(Parr) {
 
     try {
         fs::path filePath(m_Path);
@@ -25,6 +25,7 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
         cout<<"D"<<endl;
     }
     if(Parr!=NULL){
+
         m_items.emplace_back(m_parr);
         m_currItems.emplace_back(m_parr);
     }
@@ -37,7 +38,7 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
       //  cout<<dirEntry.path()<<endl;
          if(dirEntry.is_symlink()){
             string s=dirEntry.path();
-            CLink * temp = new CLink( CLink(s,2, this));
+            CLink * temp = new CLink( CLink(s,2, this, this));
             temp->UpdateSize();
             CItem *tmp= temp;
             m_items.emplace_back(tmp);
@@ -46,7 +47,7 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
         }
        else if(dirEntry.is_directory()){
              string s=dirEntry.path();
-             CDir * temp = new CDir( CDir(s,22, this));
+             CDir * temp = new CDir( CDir(s,22, this, this));
              temp->UpdateSize();
              CItem *tmp= temp;
 
@@ -58,7 +59,7 @@ CDir::CDir( std::string path, unsigned int size,CDir* Parr) : CItem(path, size),
 
        else if(dirEntry.is_regular_file()){
            string s=dirEntry.path();
-           CFile * temp = new CFile( CFile(s,2));
+           CFile * temp = new CFile( CFile(s,2, this));
            temp->UpdateSize();
            CItem *tmp= temp;
            m_items.emplace_back(tmp);
@@ -96,7 +97,6 @@ void CDir::Move(std::string dest) {
 void CDir::Delete(std::vector<CItem *> items) {
     for (auto & item : items) {
         fs::remove_all(item->m_Path);
-
     }
 }
 
@@ -108,8 +108,8 @@ void CDir::Move(std::vector<CItem *> items, std::string dest) {
     for (auto & item : items) {
         std::filesystem::copy(item->m_Path, dest, std::filesystem::copy_options::recursive);
         fs::remove_all(item->m_Path);
-
     }
+
 
 }
 

@@ -5,7 +5,7 @@
 #include "CItem.h"
 class CDir: public CItem{
 public:
-    CDir(std::string path,unsigned int size,CDir* Parr);
+    CDir(std::string path,unsigned int size,CDir* Parr,CItem* inFolder);
     std::vector<CItem*>m_items;
     std::vector<CItem*>m_currItems;
     //std::map<std::string,CItem*> m_items;

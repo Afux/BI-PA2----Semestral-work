@@ -8,6 +8,7 @@
 using namespace rang;
 CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected, std::string Name) : CAbsWidnow(size, Selected, Name,
                                                                                                  this) {
+    op=0;
 m_Content.push_back("[YES]");
 m_Content.push_back("[No]");
 
@@ -97,8 +98,17 @@ void CConfirmDialog::ReadKey() {
 
 void CConfirmDialog::Enter() {
   if(m_Selected==0){
-      //m_Scene=m_lastActive;
-     m_lastActive->m_Scene=m_lastActive;
+      switch(op){
+          case 1:
+              Delete(m_SelectedItem);
+              break;
+          case 2:
+              break;
+          case 3:
+              break;
+      }
+      op=0;
+      m_lastActive->m_Scene=m_lastActive;
 
 
   }

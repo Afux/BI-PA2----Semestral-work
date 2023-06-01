@@ -5,7 +5,6 @@
 #include <termios.h>
 #include <iostream>
 #include <regex>
-
 void CManager::Print() {
     clear();
     m_LeftPanel.Print();
@@ -41,6 +40,13 @@ void CManager::Run() {
         // Refresh();
     }
 }
+/*
+ * OP---
+ *
+ *
+ *
+ */
+
 
 void CManager::ReadKey() {
     termios term;
@@ -73,17 +79,22 @@ void CManager::ReadKey() {
         case '1':
         case '+':
             m_Menu.m_lastActive= this;
+            m_Menu.m_items=m_ActiveWindow->m_Items;
             m_Scene=&m_Menu;
             break;
         case '2':
             m_Confirm.m_lastActive= this;
+            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Confirm.op=1;
             m_Scene=&m_Confirm;
             break;
         case '3':
-            //m_Input.m_Label="Enter path";
-            //m_Input.m_lastActive= this;
-           // m_Scene=&m_Input;
-            Move("(a)(.*)",&m_ActiveWindow->m_currDir,"/home/afu/PA1/df/copyhere");
+            m_Input.m_Label="Enter path";
+            m_Input.m_lastActive= this;
+            m_Input.op=8;
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Scene=&m_Input;
+           // Move("(a)(.*)","/home/afu/PA1/df/copyhere",m_ActiveWindow->m_Items);
             break;
         case '4':
             m_Input.m_Label="Enter file name";
@@ -94,11 +105,14 @@ void CManager::ReadKey() {
         case '5':
             m_Input.m_Label="Enter folder name";
             m_Input.m_lastActive= this;
+          //  m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
             m_Scene=&m_Input;
             break;
         case '6':
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
+            m_Input.op=9;
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
             m_Scene=&m_Input;
             break;
         case '7':
@@ -113,6 +127,8 @@ void CManager::ReadKey() {
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
+
+
 CWindow *CManager::NextWind() {
     if(m_ActiveWindow==&m_LeftPanel)
         return &m_RightPanel;
@@ -120,54 +136,7 @@ CWindow *CManager::NextWind() {
         return &m_LeftPanel;
 }
 
-void CManager::Copy(CItem *item, std::string to) {
-    item->Copy(to);
-}
 
-void CManager::Copy(std::string reg,CItem *item,std::string to) {
-    vector<CItem*> items;
-    regex r(reg);
-    for (auto & m_Item : *m_ActiveWindow->m_Items) {
-        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
-            items.push_back(m_Item);
-            // m_runFlag= false;
-        }
-    }
-    item->Copy(items,to);
-}
-
-
-void CManager::Delete(CItem *item) {
-    item->Delete();
-}
-
-void CManager::Delete(std::string reg,CItem* item,string to) {
-    vector<CItem*> items;
-    regex r(reg);
-    for (auto & m_Item : *m_ActiveWindow->m_Items) {
-        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
-            items.push_back(m_Item);
-        }
-    }
-    item->Delete(items);
-
-}
-
-void CManager::Move(CItem *item, std::string dest) {
-    item->Move(dest);
-
-}
-
-void CManager::Move(std::string reg,CItem *item, std::string dest) {
-   vector<CItem*> items;
-   regex r(reg);
-    for (auto & m_Item : *m_ActiveWindow->m_Items) {
-        if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
-            items.push_back(m_Item);
-        }
-    }
-    item->Move(items,dest);
-}
 
 
 

@@ -13,14 +13,17 @@ void CWindow::Print() {
     for (size_t i =1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
+    moveto(m_Size.m_PosX+2,1);
+    cout<<m_currDir.m_Path;
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
     cout<<"  NAME  ";
     moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+2);
     cout<<"  SIZE  ";
+
     moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+2);
     cout<<"  Modify  ";
 
-    for (size_t i =1; i < m_Size.m_Height*0.8; ++i) {
+    for (size_t i =0; i < m_Size.m_Height*0.8; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
         moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,i);
@@ -91,15 +94,15 @@ void CWindow::Print() {
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
-    cout <<m_Items->at(m_Selected)->m_Name<<" "<<m_currDir.m_Path;
+    cout <<m_Items->at(m_Selected)->m_Name;
     moveto(2,m_Size.m_Height+1);
 
 }
 
 CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
-:  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL)),m_currDir(m_StartDir){
+:  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
 
-   m_Items=m_currDir.FindDir("/home/afu/PA1/df");
+   m_Items=m_currDir.FindDir("/home/afu/PA1/df/TESTER");
 }
 
 void CWindow::Run() {
@@ -117,5 +120,6 @@ void CWindow::ReadKey() {}
 
 void CWindow::Enter() {
     m_Items->at(m_Selected)->Open(&m_Items);
+    m_currDir=dynamic_cast<CDir &> ( *m_Items->at(0) );
     //m_currDir=dynamic_cast<CDir&>(*m_Items->at(m_Selected));
 }

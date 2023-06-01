@@ -6,7 +6,7 @@
 #include "CSize.h"
 #include "iostream"
 #include "CAbsWidnow.h"
-
+class CManager;
 class CInputDialog: public CAbsWidnow{
 public:
 
@@ -16,12 +16,14 @@ public:
     CItem * m_SelectedItem;
     std::string  m_input;
     vector<std::string > m_Content;
+    CManager * m_manager;
     void Print() override;
     void ReadKey() override;
     void Enter();
     void Run();
+    int op;
     CAbsWidnow * m_lastActive;
-
+    vector<CItem*> *m_items;
 
 };
 

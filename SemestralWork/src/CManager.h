@@ -10,6 +10,7 @@
 #include "CDir.h"
 
 
+
 class CManager: public CAbsWidnow{
 public:
     CManager( CSize size,std::string Name, unsigned int Selected);
@@ -29,12 +30,6 @@ public:
     void Print() override;
     void Run();
     void ReadKey() override;
-     void Copy( CItem *item, std::string to);
-     void Copy( std::string reg,CItem *item,std::string to);
-     void Delete( CItem *item);
-     void Delete(std::string reg,CItem *item,string to) ;
-     void Move( CItem *item , std::string dest) ;
-     void Move( std::string reg,CItem *item,std::string dest ) ;
     CWindow *NextWind();
 
 };

@@ -9,11 +9,14 @@ using namespace rang;
 CMenu::CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow* lastActive)
 :  CAbsWidnow(size, Selected, Name, this),m_lastActive(lastActive),
    m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2),0,"Menu")){
-    m_Content.push_back("Deduplicate file");
-    m_Content.push_back("Concat files");
     m_Content.push_back("Remove by Regex");
     m_Content.push_back("Copy by Regex");
     m_Content.push_back("Move by Regex");
+    m_Content.push_back("Create symb. link");
+    m_Content.push_back("Find by text");
+    m_Content.push_back("Concat files");
+    m_Content.push_back("Deduplicate file");
+
     m_Content.push_back("Quit");
 
 
@@ -108,27 +111,54 @@ void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
             m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=1;
+            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
 
             break;
         case 1:
             m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=2;
+            m_inputDialog.m_Label="Enter Regex";
+
+            m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;
         case 2:
             m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=3;
+            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
 
             break;
         case 3:
             m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=4;
+            m_inputDialog.m_Label="Enter Regex";
+            m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;
         case 4:
             m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=5;
+            m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;
         case 5:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=6;
+            m_inputDialog.m_items=m_items;
+            m_inputDialog.Run();
+            break;
+        case 6:
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=7;
+            m_inputDialog.m_items=m_items;
+            m_inputDialog.Run();
+            break;
+        case 7:
             m_inputDialog.m_lastActive=m_lastActive;
             m_lastActive->m_Scene=m_lastActive;
             break;

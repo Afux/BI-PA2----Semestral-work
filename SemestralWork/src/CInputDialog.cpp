@@ -2,11 +2,12 @@
 
 #include "CInputDialog.h"
 #include "rang.hpp"
-using namespace rang;
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>
+using namespace rang;
 CInputDialog::CInputDialog(CSize size, unsigned int Selected, std::string Name) : CAbsWidnow(size, Selected, Name,this) {
+    op=0;
     m_Content.push_back("[YES]");
     m_Content.push_back("[No]");
     m_Label="Zadej Vstup";
@@ -73,19 +74,56 @@ void CInputDialog::ReadKey() {
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     moveto(m_Size.m_PosX+4,m_Size.m_PosY+8);
     std::getline(std::cin, m_input);
-
-    m_lastActive->m_Scene=m_lastActive;
+    Enter();
+   // m_lastActive->m_Scene=m_lastActive;
 
 
 }
 
 void CInputDialog::Enter() {
-    if(m_Selected==0){
-        //m_Scene=m_lastActive;
+
+        switch (op) {
+            case 1:
+                Delete(m_input,m_items);
+                break;
+            case 2:
+                Copy(m_input,"",m_items);
+                break;
+            case 3:
+                Move(m_input,"",m_items);
+                break;
+            case 4:
+                //Create();
+                break;
+            case 5:
+                //Find by
+                break;
+            case 6:
+                //Conacat by
+                break;
+            case 7:
+                //Dedup by
+                break;
+            case 8:
+                Copy(m_SelectedItem,m_input);
+                break;
+            case 9:
+                Move(m_SelectedItem,m_input);
+                break;
+            case 10:
+                //MakeFile
+                break;
+            case 12:
+                //MKDIR
+                break;
+            case 13:
+                //MKLink
+                break;
+
+        }
+        op=0;
         m_lastActive->m_Scene=m_lastActive;
-    }
-    else
-        m_lastActive->m_Scene=m_lastActive;
+
 
 }
 

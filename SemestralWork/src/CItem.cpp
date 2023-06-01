@@ -3,7 +3,7 @@
 #include "filesystem"
 namespace fs = std::filesystem;
 
-CItem::CItem(std::string path, unsigned int size):m_Path(path) {
+CItem::CItem(std::string path, unsigned int size,CItem *inFolder):m_Path(path),m_inFolder(inFolder) {
     m_Name=fs::path(m_Path).filename();
     m_Size=size;
    // m_Path=path;

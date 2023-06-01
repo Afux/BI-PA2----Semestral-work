@@ -2,7 +2,7 @@
 #include "CFile.h"
 #include "filesystem"
 
-CFile::CFile(std::string path, unsigned int size) : CItem(path, size) {
+CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
 
 }
 

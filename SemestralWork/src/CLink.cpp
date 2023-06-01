@@ -1,7 +1,7 @@
 
 #include "CLink.h"
 
-CLink::CLink(std::string path, unsigned int size,CItem* toFile) : CItem(path, size),m_toFile(toFile) {
+CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
 }
 

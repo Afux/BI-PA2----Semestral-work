@@ -4,6 +4,7 @@
 #define SEMESTRALWORK_CABSWIDNOW_H
 #include "iostream"
 #include "CSize.h"
+#include "CItem.h"
 using namespace std;
 class CAbsWidnow {
 public:
@@ -17,12 +18,17 @@ public:
     CAbsWidnow* m_Scene;
 
 
-
     void Refresh();
     virtual void Print()=0;
     virtual void  ReadKey()=0;
     void clear();
     void moveto(int x = 1, int y = 1);
+    void Copy( CItem *item, std::string to);
+    void Copy( std::string reg,std::string to,vector<CItem*> *Items);
+    void Delete( CItem *item);
+    void Delete(std::string reg,vector<CItem*> *Items) ;
+    void Move( CItem *item , std::string dest) ;
+    void Move(std::string reg, std::string dest,vector<CItem*> *Items) ;
 
 protected:
 private:

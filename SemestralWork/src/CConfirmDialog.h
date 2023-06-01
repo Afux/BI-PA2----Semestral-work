@@ -17,6 +17,7 @@ public:
     void ReadKey() override;
     void Enter();
     void Run();
+    int op;
     CAbsWidnow * m_lastActive;
 
 };
