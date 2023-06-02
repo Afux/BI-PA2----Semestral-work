@@ -8,14 +8,14 @@ using namespace std;
 class CFile: public CItem{
 public:
     CFile(std::string path,unsigned int size, CItem * parr);
-   // CFile* Concat(vector<CItem*> items);
+   // CFile* Concat(std::vector< std::shared_ptr<CItem>> items);
      void Print() override;
-     void Copy(vector<CItem*> items, std::string to ) override;
+     void Copy(std::vector< std::shared_ptr<CItem>> items, std::string to ) override;
      void Copy(std::string to) override;
      void Delete() override;
-     void Delete(vector<CItem*> items) override;
+     void Delete(std::vector< std::shared_ptr<CItem>> items) override;
      void Move( string dest) override;
-     void Move(vector<CItem*>,string dest ) override;
+     void Move(std::vector< std::shared_ptr<CItem>> items,string dest ) override;
 
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;
@@ -23,8 +23,9 @@ public:
      std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
-     void Open(std::vector<CItem*> **item)override;
-    CItem* Clone() override;
+     void Open(std::vector< std::shared_ptr<CItem>> **item)override;
+    std::shared_ptr<CItem>  clone() const override;
+
 
 };
 

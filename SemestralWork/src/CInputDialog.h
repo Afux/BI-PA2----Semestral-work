@@ -25,7 +25,7 @@ public:
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
-    vector<CItem*> *m_items;
+    std::vector< std::shared_ptr<CItem>> *m_items;
     void parseString(const std::string& input, char delimiter);
 
 

@@ -19,21 +19,21 @@ void CFile::Copy(string to) {
     std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
 }
 
-void CFile::Copy(vector<CItem *> items, string to) {}
+void CFile::Copy(std::vector< std::shared_ptr<CItem>> items, string to) {}
 
 void CFile::Delete() {
     std::filesystem::remove_all(m_Path);
 
 }
 
-void CFile::Delete(vector<CItem *> items) {}
+void CFile::Delete(std::vector< std::shared_ptr<CItem>> items) {}
 
 void CFile::Move(string dest) {
     Copy(dest);
     Delete();
 }
 
-void CFile::Move(vector<CItem *> items, string dest) {}
+void CFile::Move(std::vector< std::shared_ptr<CItem>> items, string dest) {}
 
 void CFile::UpdateSize() {
     m_Size=filesystem::file_size(m_Path);
@@ -62,9 +62,11 @@ std::string CFile::RenameDialog(std::string NewName) {
     return tmp;
 }
 
-void CFile::Open(std::vector<CItem*> **item) {}
+void CFile::Open(std::vector< std::shared_ptr<CItem>> **item) {}
 
-CItem *CFile::Clone() {
-    CItem *tmp = ( new CFile(*this));
+std::shared_ptr<CItem> CFile::clone() const {
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(*this));
     return tmp;
 }
+
+

@@ -29,15 +29,18 @@ int main() {
 
     win.ReadKey();
      */
+     //CDir uf("/home/afu/PA1",2,NULL,NULL);
+     //vector<shared_ptr<CItem>> *sd=uf.FindDir("/home/afu/PA1/df");
+    //cout<<sd->size()<<endl;
+    //uf.m_items
 
 
-    CManager man(CSize(100,30,1,1),"MAN",0);
+   CManager man(CSize(100,30,1,1),"MAN",0);
     man.Run();
-    /*
-      CDir uf("/home/afu/PA1/df/TESTER/CreatedFold",2,NULL,NULL);
 
+/*
 
-      vector<CItem*>   *m_Items;
+      std::vector< std::shared_ptr<CItem>>   *m_Items;
       m_Items=uf.FindDir("/home/afu/PA1/df");
       for (int i = 0; i < m_Items->size() ; ++i) {
          m_Items->at(i)->Print();

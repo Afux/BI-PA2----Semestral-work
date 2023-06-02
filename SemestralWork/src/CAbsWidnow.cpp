@@ -22,14 +22,14 @@ void CAbsWidnow::Copy(CItem *item, std::string to) {
     item->Copy(to);
 }
 
-void CAbsWidnow::Copy(std::string reg,std::string to,vector<CItem*> *Items) {
-    vector<CItem*> items;
+void CAbsWidnow::Copy(std::string reg,std::string to,std::vector< std::shared_ptr<CItem>> *Items) {
+    std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
     if(Items->size()>1){
         CItem* item=Items->at(1)->m_inFolder;
 
         for (auto & m_Item : *Items) {
-            if(regex_match( m_Item->m_Name,r)&&m_Item!=item){
+            if(regex_match( m_Item->m_Name,r)&&m_Item.get()!=item){
                 items.push_back(m_Item);
                 // m_runFlag= false;
             }
@@ -44,13 +44,13 @@ void CAbsWidnow::Delete(CItem *item) {
     item->Delete();
 }
 
-void CAbsWidnow::Delete(std::string reg,vector<CItem*> *Items) {
-    vector<CItem*> items;
+void CAbsWidnow::Delete(std::string reg,std::vector< std::shared_ptr<CItem>> *Items) {
+    std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
     if(Items->size()>1) {
         CItem *item = Items->at(1)->m_inFolder;
         for (auto &m_Item: *Items) {
-            if (regex_match(m_Item->m_Name, r) && m_Item != item) {
+            if (regex_match(m_Item->m_Name, r) && m_Item.get() != item) {
                 items.push_back(m_Item);
             }
         }
@@ -63,13 +63,13 @@ void CAbsWidnow::Move(CItem *item, std::string dest) {
 
 }
 
-void CAbsWidnow::Move(std::string reg, std::string dest,vector<CItem*> *Items) {
-    vector<CItem*> items;
+void CAbsWidnow::Move(std::string reg, std::string dest,std::vector< std::shared_ptr<CItem>> *Items) {
+    std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
     if(Items->size()>1) {
         CItem *item = Items->at(1)->m_inFolder;
         for (size_t i = 0; i < Items->size() ; ++i) {
-            if (regex_match(Items->at(i)->m_Name, r) && Items->at(i) != item) {
+            if (regex_match(Items->at(i)->m_Name, r) && Items->at(i).get() != item) {
                 items.push_back(Items->at(i));
                 //Items->erase(Items->begin()+i);
             }
@@ -90,30 +90,35 @@ void CAbsWidnow::Refresh() {
 
 }
 
-void CAbsWidnow::CreateFolder(std::string name, vector<CItem *> *Items) {
+
+void CAbsWidnow::CreateFolder(std::string name, std::vector< std::shared_ptr<CItem>> *Items) {
     if(Items->size()>1) {
         CItem *item = Items->at(1)->m_inFolder;
-        CDir *temp = new CDir(CDir(item->m_Path+"/"+name,2,item,item));
-        CItem *tmp = temp;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item, item));
+        Items->emplace_back(tmp);
+
+    }
+}
+
+void CAbsWidnow::CreateFile(std::string name, std::vector< std::shared_ptr<CItem>> *Items) {
+    if(Items->size()>1) {
+
+        CItem *item = Items->at(1)->m_inFolder;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(item->m_Path+"/"+name, 22, item));
         Items->emplace_back(tmp);
     }
 }
 
-void CAbsWidnow::CreateFile(std::string name, vector<CItem *> *Items) {
+void CAbsWidnow::CreateLink(std::string name, CItem *to, std::vector< std::shared_ptr<CItem>> *Items) {
     if(Items->size()>1) {
+
         CItem *item = Items->at(1)->m_inFolder;
-        CFile *temp = new CFile(CFile(item->m_Path+"/"+name,2,item));
-        CItem *tmp = temp;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(item->m_Path+"/"+name, 22,to, item));
         Items->emplace_back(tmp);
     }
 }
 
-void CAbsWidnow::CreateLink(std::string name, CItem *to, vector<CItem *> *Items) {
-    if(Items->size()>1) {
-        CItem *item = Items->at(1)->m_inFolder;
-        CLink *temp = new CLink(CLink(item->m_Path+"/"+name,2,to,item));
-        CItem *tmp = temp;
-        Items->emplace_back(tmp);
-    }
+CAbsWidnow::~CAbsWidnow() {
+
 }
 

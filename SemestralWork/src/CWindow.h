@@ -15,8 +15,8 @@ class CWindow: public CAbsWidnow{
 public:
     CWindow( CSize size, unsigned int Selected, std::string Name,string Path);
     std::string m_CurrPath;
-    vector<CItem*>   *m_Items;
-    vector<CItem*> m_Selecteditems;
+    std::vector< std::shared_ptr<CItem>>   *m_Items;
+    std::vector< std::shared_ptr<CItem>> m_Selecteditems;
     //vector<std::string> TESTING;
     CDir m_StartDir;
 

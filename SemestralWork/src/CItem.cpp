@@ -11,4 +11,10 @@ CItem::CItem(std::string path, unsigned int size,CItem *inFolder):m_Path(path),m
   //  std::cout<<time_point_cast(ftime)<<std::endl
 }
 
+CItem::~CItem() {
+
+}
+
+
+
 

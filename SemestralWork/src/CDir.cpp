@@ -24,42 +24,63 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
     catch (const fs::filesystem_error& e) {
         cout<<"D"<<endl;
     }
+/*
     if(Parr!=NULL){
+       // shared_ptr<CItem> tmp = shared_ptr<CItem>(m_parr);
 
-        m_items.emplace_back(m_parr);
-        m_currItems.emplace_back(m_parr);
+       // shared_ptr<CItem> tmp = shared_ptr<CItem>( new CItem(m_parr));
+              //  auto tmp=m_parr->clone();
+
+
+
+        m_items.emplace_back(m_parr->clone());
+        m_currItems.emplace_back(m_parr->clone());
+
     }
+
     else{
-        m_items.emplace_back(this);
-        m_currItems.emplace_back(this);
+      //  auto tmp= this->clone();
+       // auto sd=make_shared<CDir*>(this);
+
+      // shared_ptr<CItem> p2(this);
+        m_items.emplace_back(std::make_shared<CDir>(*this));
+        m_currItems.emplace_back(this->clone());
     }
+*/
     if(fs::exists(path)) {
         for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
                                                                   std::filesystem::directory_options::skip_permission_denied)) {
             //  cout<<dirEntry.path()<<endl;
             if (dirEntry.is_symlink()) {
+               /*
                 string s = dirEntry.path();
                 CLink *temp = new CLink(CLink(s, 2, this, this));
                 temp->UpdateSize();
                 CItem *tmp = temp;
                 m_items.emplace_back(tmp);
                 m_currItems.emplace_back(tmp);
+                */
 
             } else if (dirEntry.is_directory()) {
                 string s = dirEntry.path();
+             /*
                 CDir *temp = new CDir(CDir(s, 22, this, this));
                 temp->UpdateSize();
                 CItem *tmp = temp;
-
+                */
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
                 m_items.emplace_back(tmp);
 
                 m_currItems.emplace_back(tmp);
 
             } else if (dirEntry.is_regular_file()) {
                 string s = dirEntry.path();
+                /*
                 CFile *temp = new CFile(CFile(s, 2, this));
                 temp->UpdateSize();
                 CItem *tmp = temp;
+                */
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
                 m_items.emplace_back(tmp);
                 m_currItems.emplace_back(tmp);
 
@@ -72,21 +93,21 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
     }
     else{
          fs::create_directory(path);
-        //vector<CItem*> *temp= FindDir(m_parr->m_Path);
+        //std::vector< std::shared_ptr<CItem>> *temp= FindDir(m_parr->m_Path);
        // temp->push_back(this);
     }
     //cout<<"-------------"<<endl;
 }
 
 
-void CDir::Copy(std::vector<CItem*> items, std::string to) {
+void CDir::Copy(std::vector< std::shared_ptr<CItem>> items, std::string to) {
     for (auto & item : items) {
         item->Copy(to);
     }
 }
 
 void CDir::Copy(std::string to) {
-    vector<CItem*> *temp= FindDir(to);
+    std::vector< std::shared_ptr<CItem>> *temp= FindDir(to);
     std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
     temp->emplace_back(this);
 }
@@ -96,7 +117,7 @@ void CDir::Move(std::string dest) {
     Delete();
 }
 
-void CDir::Delete(std::vector<CItem *> items) {
+void CDir::Delete(std::vector< std::shared_ptr<CItem>> items) {
     for (auto & item : items) {
          item->Delete();
     }
@@ -104,18 +125,18 @@ void CDir::Delete(std::vector<CItem *> items) {
 }
 
 void CDir::Delete() {
-    vector<CItem*> *temp= FindDir(m_parr->m_Path);
+    std::vector< std::shared_ptr<CItem>> *temp= FindDir(m_parr->m_Path);
     fs::remove_all(m_Path);
     if(m_parr!=NULL){
         for (size_t i = 0; i < temp->size(); ++i) {
-            if( temp->at(i)== this){
+            if( temp->at(i).get()== this){
                 temp->erase( temp->begin()+i);
             }
         }
     }
 }
 
-void CDir::Move(std::vector<CItem *> items, std::string dest) {
+void CDir::Move(std::vector< std::shared_ptr<CItem>> items, std::string dest) {
     for (auto & item : items) {
         item->Move(dest);
 
@@ -155,8 +176,23 @@ std::string CDir::RenameDialog(std::string NewName) {
     return std::string();
 }
 
-void CDir::Open(std::vector<CItem*> **items) {
+void CDir::Open(std::vector<std::shared_ptr<CItem>> **items) {
+   /*
+    if(m_parr== NULL){
+
+       fs::path filePath(m_Path);
+       CDir *temp = new CDir(CDir(filePath.parent_path(), 22, NULL, NULL));
+       temp->UpdateSize();
+       CItem *tmp = temp;
+       m_parr= tmp;
+       m_items[0]=m_parr;
+
+
+   }
+    */
     *items= &m_items;
+
+
 }
 
 std::vector<std::string> CDir::parseString(const string &input, char delimiter) {
@@ -178,15 +214,13 @@ std::vector<std::string> CDir::parseString(const string &input, char delimiter) 
 
 
 
-std::vector<CItem *> *CDir::FindDir(const string &path) {
+std::vector< std::shared_ptr<CItem>> *CDir::FindDir(const string &path) {
     vector<string > tempPaths= parseString(path,'/');
-    std::vector<CItem*>*curr=&this->m_items;
-
+    std::vector< std::shared_ptr<CItem>> *curr=&this->m_items;
     for (size_t i = 0; i < curr->size(); ++i) {
         for (size_t j = 0; j < tempPaths.size(); ++j) {
 
             if(curr->at(i)->m_Name==tempPaths[j]){
-
                 curr->at(i)->Open(&curr);
                 tempPaths.erase(tempPaths.begin());
                 i=0;
@@ -197,10 +231,16 @@ std::vector<CItem *> *CDir::FindDir(const string &path) {
     return curr;
 }
 
-CItem *CDir::Clone() {
-    CItem *tmp = ( new CDir(*this));
+std::shared_ptr<CItem> CDir::clone() const {
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(*this));
     return tmp;
 }
+
+CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {
+
+}
+
+
 
 
 

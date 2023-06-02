@@ -80,12 +80,12 @@ void CManager::ReadKey() {
         case '+':
             m_Menu.m_lastActive= this;
             m_Menu.m_items=m_ActiveWindow->m_Items;
-            m_Menu.m_selectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Menu.m_selectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Scene=&m_Menu;
             break;
         case '2':
             m_Confirm.m_lastActive= this;
-            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Confirm.op=1;
             m_Scene=&m_Confirm;
             break;
@@ -93,7 +93,7 @@ void CManager::ReadKey() {
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
             m_Input.op=8;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Scene=&m_Input;
            // Move("(a)(.*)","/home/afu/PA1/df/copyhere",m_ActiveWindow->m_Items);
             break;
@@ -102,7 +102,7 @@ void CManager::ReadKey() {
             m_Input.m_lastActive= this;
             m_Input.op=10;
             m_Input.m_items=m_ActiveWindow->m_Items;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Scene=&m_Input;
             break;
 
@@ -112,14 +112,14 @@ void CManager::ReadKey() {
             m_Input.op=12;
             m_Input.m_items=m_ActiveWindow->m_Items;
 
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Scene=&m_Input;
             break;
         case '6':
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
             m_Input.op=9;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected);
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
             m_Scene=&m_Input;
             break;
         case '7':

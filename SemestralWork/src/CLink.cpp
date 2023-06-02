@@ -13,7 +13,7 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
     }
 }
 
-void CLink::Open(std::vector<CItem *> **item) {
+void CLink::Open(std::vector< std::shared_ptr<CItem>> **item) {
 
 }
 
@@ -21,7 +21,7 @@ void CLink::Print() {
     cout<<"*"<<m_Name;
 }
 
-void CLink::Copy(vector<CItem *> items, std::string to) {
+void CLink::Copy(std::vector< std::shared_ptr<CItem>> items, std::string to) {
 
 }
 
@@ -34,7 +34,7 @@ void CLink::Delete() {
 
 }
 
-void CLink::Delete(vector<CItem *> items) {
+void CLink::Delete(std::vector< std::shared_ptr<CItem>> items) {
 
 }
 
@@ -43,7 +43,7 @@ void CLink::Move(string dest) {
     Delete();
 }
 
-void CLink::Move(vector<CItem *>, string dest) {
+void CLink::Move(std::vector< std::shared_ptr<CItem>> items, string dest) {
 
 }
 
@@ -71,7 +71,8 @@ std::string CLink::RenameDialog(std::string NewName) {
     return std::string();
 }
 
-CItem *CLink::Clone() {
-    CItem *tmp = ( new CLink(*this));
+std::shared_ptr<CItem> CLink::clone() const {
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(*this));
     return tmp;
 }
+
