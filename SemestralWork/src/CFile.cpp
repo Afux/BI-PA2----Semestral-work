@@ -62,7 +62,16 @@ std::string CFile::RenameDialog(std::string NewName) {
     return tmp;
 }
 
-void CFile::Open(std::vector< std::shared_ptr<CItem>> **item) {}
+void CFile::Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold) {
+  /*
+    if(m_inFolder!=NULL){
+       *inFold=m_inFolder;
+    }
+    else{
+        *inFold=NULL;
+    }
+    */
+}
 
 std::shared_ptr<CItem> CFile::clone() const {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(*this));

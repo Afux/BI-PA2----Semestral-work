@@ -9,7 +9,7 @@ public:
     CLink(std::string path,unsigned int size,CItem* toFile,CItem* parr);
 
     CItem* m_toFile;
-    virtual void Open(std::vector< std::shared_ptr<CItem>> **item)override;
+     void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
 
      void Print()override;
      void Copy(std::vector< std::shared_ptr<CItem>> items, std::string to ) override;

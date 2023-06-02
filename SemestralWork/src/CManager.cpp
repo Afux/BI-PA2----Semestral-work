@@ -78,49 +78,62 @@ void CManager::ReadKey() {
 
         case '1':
         case '+':
-            m_Menu.m_lastActive= this;
-            m_Menu.m_items=m_ActiveWindow->m_Items;
-            m_Menu.m_selectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
-            m_Scene=&m_Menu;
+            if(m_ActiveWindow->m_Selected!=0){
+                m_Menu.m_lastActive= this;
+                m_Menu.m_items=m_ActiveWindow->m_Items;
+                m_Menu.m_selectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+                m_Scene=&m_Menu;
+            }
+
             break;
         case '2':
+            if(m_ActiveWindow->m_Selected!=0){
             m_Confirm.m_lastActive= this;
-            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
+            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
             m_Confirm.op=1;
             m_Scene=&m_Confirm;
+            }
             break;
         case '3':
-            m_Input.m_Label="Enter path";
-            m_Input.m_lastActive= this;
-            m_Input.op=8;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
-            m_Scene=&m_Input;
+            if(m_ActiveWindow->m_Selected!=0) {
+                m_Input.m_Label = "Enter path";
+                m_Input.m_lastActive = this;
+                m_Input.op = 8;
+                m_Input.m_SelectedItem = m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+                m_Scene = &m_Input;
+            }
            // Move("(a)(.*)","/home/afu/PA1/df/copyhere",m_ActiveWindow->m_Items);
             break;
         case '4':
+            if(m_ActiveWindow->m_Selected!=0) {
             m_Input.m_Label="Enter file name";
             m_Input.m_lastActive= this;
             m_Input.op=10;
             m_Input.m_items=m_ActiveWindow->m_Items;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
             m_Scene=&m_Input;
+            }
             break;
 
         case '5':
+            if(m_ActiveWindow->m_Selected!=0) {
             m_Input.m_Label="Enter folder name";
             m_Input.m_lastActive= this;
             m_Input.op=12;
             m_Input.m_items=m_ActiveWindow->m_Items;
 
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
             m_Scene=&m_Input;
+            }
             break;
         case '6':
+            if(m_ActiveWindow->m_Selected!=0) {
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
             m_Input.op=9;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
             m_Scene=&m_Input;
+            }
             break;
         case '7':
             m_runFlag= false;

@@ -13,9 +13,6 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
     }
 }
 
-void CLink::Open(std::vector< std::shared_ptr<CItem>> **item) {
-
-}
 
 void CLink::Print() {
     cout<<"*"<<m_Name;
@@ -74,5 +71,16 @@ std::string CLink::RenameDialog(std::string NewName) {
 std::shared_ptr<CItem> CLink::clone() const {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(*this));
     return tmp;
+}
+
+void CLink::Open(std::vector<std::shared_ptr<CItem>> **item, CItem **inFold) {
+    /*
+    if(m_inFolder!=NULL){
+        *inFold=m_inFolder;
+    }
+    else{
+        *inFold=NULL;
+    }
+     */
 }
 

@@ -22,7 +22,7 @@ public:
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
-    virtual void Open(std::vector< std::shared_ptr<CItem>> **item)=0;
+    virtual void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)=0;
     virtual void Delete()=0;
     virtual void Delete(std::vector< std::shared_ptr<CItem>> items)=0;
     virtual void Move(std::string dest)=0;
@@ -33,7 +33,6 @@ public:
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::vector< std::shared_ptr<CItem>> m_items;
 
-    // virtual CItem* Clone()=0;
 private:
 protected:
 

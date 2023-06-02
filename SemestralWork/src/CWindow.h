@@ -17,15 +17,11 @@ public:
     std::string m_CurrPath;
     std::vector< std::shared_ptr<CItem>>   *m_Items;
     std::vector< std::shared_ptr<CItem>> m_Selecteditems;
-    //vector<std::string> TESTING;
     CDir m_StartDir;
 
     CDir m_currDir;
 
-    // CInputDialog  m_InputDialog;
 
-    //CConfirmDialog m_Dialog;
-    //CMenu m_Menu;
     CItem* m_CurrFile;
     void Print() override;
     void ReadKey() override;

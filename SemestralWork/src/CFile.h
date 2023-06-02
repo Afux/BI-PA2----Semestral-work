@@ -23,7 +23,7 @@ public:
      std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
-     void Open(std::vector< std::shared_ptr<CItem>> **item)override;
+     void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
     std::shared_ptr<CItem>  clone() const override;
 
 

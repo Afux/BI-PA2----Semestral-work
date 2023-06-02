@@ -5,8 +5,8 @@
 using namespace rang;
 void CWindow::Print() {
 
-    if(m_Selected>=m_Items->size()){
-        m_Selected=-1;
+    if(m_Selected>=m_Items->size()+1){
+        m_Selected=0;
     }
     //clear();
     moveto(m_Size.m_PosX,m_Size.m_PosY);
@@ -99,7 +99,7 @@ void CWindow::Print() {
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
-    if(m_Selected>=0){
+    if(m_Selected< m_Items->size()){
         cout <<m_Items->at(m_Selected)->m_Name;
 
     } else{
@@ -111,9 +111,11 @@ void CWindow::Print() {
 
 CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
 :  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
+    m_CurrFile=NULL;
 
-   m_Items=m_StartDir.FindDir("/home/afu/PA1/df");
-   // m_Items=&m_currDir.m_items;
+   m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
+
+    // m_Items=&m_currDir.m_items;
 
 }
 
@@ -131,15 +133,15 @@ void CWindow::Run() {
 void CWindow::ReadKey() {}
 
 void CWindow::Enter() {
-    if(m_Selected<0){
-        if(m_Items->at(m_Selected)->m_inFolder!=NULL)
-            m_Items->at(m_Selected)->m_inFolder->Open(&m_Items);
+    if(m_Selected==0){
+        if(m_CurrFile!=NULL)
+           m_CurrFile->Open(&m_Items,&m_CurrFile);
         else{
 
         }
     }
     else{
-        m_Items->at(m_Selected)->Open(&m_Items);
+        m_Items->at(m_Selected-1)->Open(&m_Items,&m_CurrFile);
        // m_currDir=dynamic_cast<CDir &> ( *m_Items->at(0) );
     }
 

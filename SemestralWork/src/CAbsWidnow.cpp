@@ -25,13 +25,12 @@ void CAbsWidnow::Copy(CItem *item, std::string to) {
 void CAbsWidnow::Copy(std::string reg,std::string to,std::vector< std::shared_ptr<CItem>> *Items) {
     std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
-    if(Items->size()>1){
-        CItem* item=Items->at(1)->m_inFolder;
+    if(!Items->empty()){
+        CItem* item=Items->at(0)->m_inFolder;
 
         for (auto & m_Item : *Items) {
             if(regex_match( m_Item->m_Name,r)&&m_Item.get()!=item){
                 items.push_back(m_Item);
-                // m_runFlag= false;
             }
         }
         item->Copy(items,to);
@@ -47,8 +46,8 @@ void CAbsWidnow::Delete(CItem *item) {
 void CAbsWidnow::Delete(std::string reg,std::vector< std::shared_ptr<CItem>> *Items) {
     std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
-    if(Items->size()>1) {
-        CItem *item = Items->at(1)->m_inFolder;
+    if(!Items->empty()) {
+        CItem *item = Items->at(0)->m_inFolder;
         for (auto &m_Item: *Items) {
             if (regex_match(m_Item->m_Name, r) && m_Item.get() != item) {
                 items.push_back(m_Item);
@@ -66,8 +65,8 @@ void CAbsWidnow::Move(CItem *item, std::string dest) {
 void CAbsWidnow::Move(std::string reg, std::string dest,std::vector< std::shared_ptr<CItem>> *Items) {
     std::vector< std::shared_ptr<CItem>> items;
     regex r(reg);
-    if(Items->size()>1) {
-        CItem *item = Items->at(1)->m_inFolder;
+    if(!Items->empty()) {
+        CItem *item = Items->at(0)->m_inFolder;
         for (size_t i = 0; i < Items->size() ; ++i) {
             if (regex_match(Items->at(i)->m_Name, r) && Items->at(i).get() != item) {
                 items.push_back(Items->at(i));
@@ -77,10 +76,8 @@ void CAbsWidnow::Move(std::string reg, std::string dest,std::vector< std::shared
         item->Move(items, dest);
 
 
-
-
-
-
+    }
+    else{
     }
 }
 

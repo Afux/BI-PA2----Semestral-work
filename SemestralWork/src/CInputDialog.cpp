@@ -91,6 +91,10 @@ void CInputDialog::Enter() {
                 Copy(m_reg,m_path,m_items);
                 break;
             case 3:
+                if(m_items->empty())
+                    throw std::invalid_argument("");
+
+
                 Move(m_reg,m_path,m_items);
                 break;
             case 4:

@@ -9,7 +9,7 @@ namespace fs = std::filesystem;
 using namespace std;
 
 CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : CItem(path, size,inFolder),m_parr(Parr) {
-
+    m_DeleteMe=NULL;
     try {
         fs::path filePath(m_Path);
         fs::file_status fileStatus = fs::status(filePath);
@@ -50,19 +50,15 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
     if(fs::exists(path)) {
         for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
                                                                   std::filesystem::directory_options::skip_permission_denied)) {
-            //  cout<<dirEntry.path()<<endl;
+            string s = dirEntry.path();
+
             if (dirEntry.is_symlink()) {
-               /*
-                string s = dirEntry.path();
-                CLink *temp = new CLink(CLink(s, 2, this, this));
-                temp->UpdateSize();
-                CItem *tmp = temp;
+
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
                 m_items.emplace_back(tmp);
                 m_currItems.emplace_back(tmp);
-                */
 
             } else if (dirEntry.is_directory()) {
-                string s = dirEntry.path();
              /*
                 CDir *temp = new CDir(CDir(s, 22, this, this));
                 temp->UpdateSize();
@@ -74,7 +70,6 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
                 m_currItems.emplace_back(tmp);
 
             } else if (dirEntry.is_regular_file()) {
-                string s = dirEntry.path();
                 /*
                 CFile *temp = new CFile(CFile(s, 2, this));
                 temp->UpdateSize();
@@ -107,9 +102,9 @@ void CDir::Copy(std::vector< std::shared_ptr<CItem>> items, std::string to) {
 }
 
 void CDir::Copy(std::string to) {
-    std::vector< std::shared_ptr<CItem>> *temp= FindDir(to);
+   // std::vector< std::shared_ptr<CItem>> *temp= FindDir(to,&m_DeleteMe);
     std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
-    temp->emplace_back(this);
+   // temp->emplace_back(this);
 }
 
 void CDir::Move(std::string dest) {
@@ -125,8 +120,9 @@ void CDir::Delete(std::vector< std::shared_ptr<CItem>> items) {
 }
 
 void CDir::Delete() {
-    std::vector< std::shared_ptr<CItem>> *temp= FindDir(m_parr->m_Path);
+   // std::vector< std::shared_ptr<CItem>> *temp= FindDir(m_parr->m_Path,&m_DeleteMe);
     fs::remove_all(m_Path);
+    /*
     if(m_parr!=NULL){
         for (size_t i = 0; i < temp->size(); ++i) {
             if( temp->at(i).get()== this){
@@ -134,6 +130,7 @@ void CDir::Delete() {
             }
         }
     }
+     */
 }
 
 void CDir::Move(std::vector< std::shared_ptr<CItem>> items, std::string dest) {
@@ -176,7 +173,7 @@ std::string CDir::RenameDialog(std::string NewName) {
     return std::string();
 }
 
-void CDir::Open(std::vector<std::shared_ptr<CItem>> **items) {
+void CDir::Open(std::vector<std::shared_ptr<CItem>> **items,CItem ** inFold) {
    /*
     if(m_parr== NULL){
 
@@ -191,6 +188,12 @@ void CDir::Open(std::vector<std::shared_ptr<CItem>> **items) {
    }
     */
     *items= &m_items;
+    if(m_inFolder!=NULL){
+        *inFold=m_inFolder;
+    }
+    else{
+        *inFold=NULL;
+    }
 
 
 }
@@ -214,14 +217,14 @@ std::vector<std::string> CDir::parseString(const string &input, char delimiter) 
 
 
 
-std::vector< std::shared_ptr<CItem>> *CDir::FindDir(const string &path) {
+std::vector< std::shared_ptr<CItem>> *CDir::FindDir(const string &path,CItem **item) {
     vector<string > tempPaths= parseString(path,'/');
     std::vector< std::shared_ptr<CItem>> *curr=&this->m_items;
     for (size_t i = 0; i < curr->size(); ++i) {
         for (size_t j = 0; j < tempPaths.size(); ++j) {
 
             if(curr->at(i)->m_Name==tempPaths[j]){
-                curr->at(i)->Open(&curr);
+                curr->at(i)->Open(&curr,item);
                 tempPaths.erase(tempPaths.begin());
                 i=0;
                 break;

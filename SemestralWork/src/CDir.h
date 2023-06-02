@@ -11,11 +11,11 @@ public:
     std::vector< std::shared_ptr<CItem>> m_currItems;
     //std::map<std::string,CItem*> m_items;
     CItem* m_parr;
-    std::vector< std::shared_ptr<CItem>> * FindDir(const std::string& path);
+    std::vector< std::shared_ptr<CItem>> * FindDir(const std::string& path,CItem **item);
      std::shared_ptr<CItem>  clone() const override;
 
-
-    void Open(std::vector< std::shared_ptr<CItem>> **item)override;
+    CItem *m_DeleteMe;
+    void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
 
      void Copy(std::vector< std::shared_ptr<CItem>> items, std::string to ) override;
      void Copy(std::string to) override;
