@@ -128,11 +128,7 @@ void CMenu::Enter() {
         case 2:
             m_inputDialog.m_lastActive=m_lastActive;
             m_inputDialog.op=3;
-            if(!m_items->empty())
-                 m_inputDialog.m_Label="Enter Regex n:l";
-            else
-                m_inputDialog.m_Label="F";
-
+            m_inputDialog.m_Label="Enter Regex n:l";
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
 
@@ -147,6 +143,10 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 4:
+
+            m_inputDialog.m_lastActive=m_lastActive;
+            m_inputDialog.op=5;
+            m_inputDialog.m_Label="Enter text";
 
             m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;

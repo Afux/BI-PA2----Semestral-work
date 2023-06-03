@@ -101,7 +101,7 @@ void CInputDialog::Enter() {
                 //Create();
                 break;
             case 5:
-                //Find by
+                FindByText(m_input,m_items);
                 break;
             case 6:
                 //Conacat by

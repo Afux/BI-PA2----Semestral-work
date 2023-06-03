@@ -5,6 +5,7 @@
 #include <termios.h>
 #include <iostream>
 #include "regex"
+#include <fstream>
 void CAbsWidnow::clear() {
     system("clear");
 }
@@ -118,6 +119,19 @@ CAbsWidnow::~CAbsWidnow() {
 }
 
 void CAbsWidnow::FindByText(std::string text, std::vector<std::shared_ptr<CItem>> *Items) {
+    if(Items->size()>1) {
+        CItem *item = Items->at(1)->m_inFolder;
+        vector<CItem*> found;
+        item->FindText(text,&found);
 
+        ofstream MyFile("/home/afu/PA1/df/filename.txt");
+
+        for (int i = 0; i <found.size() ; ++i) {
+            MyFile<<found[i]->m_Path<<endl;
+        }
+
+        // Close the file
+        MyFile.close();
+    }
 }
 

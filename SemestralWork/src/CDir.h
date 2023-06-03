@@ -27,7 +27,7 @@ public:
      void SetDate(u_int year, u_int month, u_int day) override;
      void Deduplicate() override;
      void Print() override;
-    void FindText(std::string FindThis) override;
+    void FindText(std::string FindThis,std::vector<CItem*> * Found) override;
 
     std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;

@@ -78,7 +78,7 @@ std::shared_ptr<CItem> CFile::clone() const {
     return tmp;
 }
 
-void CFile::FindText(std::string FindThis) {
+void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
     ifstream inFile;
     inFile.open(m_Path);
     string temp;
@@ -86,11 +86,11 @@ void CFile::FindText(std::string FindThis) {
     if(inFile){
         while(inFile.good())
         {
-            getline(inFile,temp); // get line from file
-            pos=temp.find(FindThis); // search
-            if(pos!=string::npos) // string::npos is returned if string is not found
+            getline(inFile,temp);
+            pos=temp.find(FindThis);
+            if(pos!=string::npos)
             {
-                cout <<"Found!";
+                Found->push_back(this);
                 break;
             }
         }

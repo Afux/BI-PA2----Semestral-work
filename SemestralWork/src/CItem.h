@@ -18,7 +18,7 @@ public:
     std::string m_Name;
     std::string m_Path;
     //CDate m_Date;
-  //  virtual void Add()=0;
+    //virtual void Add()=0;
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
@@ -29,7 +29,7 @@ public:
     virtual void Move(std::vector< std::shared_ptr<CItem>> items,std::string dest )=0;
     virtual void Copy( std::string dest )=0;
     virtual void Copy(std::vector< std::shared_ptr<CItem>> items, std::string dest)=0;
-    virtual void FindText(std::string FindThis)=0;
+    virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::vector< std::shared_ptr<CItem>> m_items;
