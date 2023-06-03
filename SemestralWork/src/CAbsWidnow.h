@@ -32,11 +32,10 @@ public:
     void Delete(std::string reg,std::vector< std::shared_ptr<CItem>> *Items) ;
     void Move( CItem *item , std::string dest) ;
     void Move(std::string reg, std::string dest,std::vector< std::shared_ptr<CItem>> *Items) ;
-
     void CreateFolder(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
     void CreateFile(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
     void CreateLink(std::string name,CItem * to,std::vector< std::shared_ptr<CItem>> *Items);
-
+    void FindByText(std::string text,std::vector< std::shared_ptr<CItem>> *Items);
 protected:
 private:
 };

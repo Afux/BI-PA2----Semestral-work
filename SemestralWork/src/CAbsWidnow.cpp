@@ -117,3 +117,7 @@ CAbsWidnow::~CAbsWidnow() {
 
 }
 
+void CAbsWidnow::FindByText(std::string text, std::vector<std::shared_ptr<CItem>> *Items) {
+
+}
+
