@@ -14,7 +14,7 @@ public:
     vector<string> m_Content;
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
-    std::vector< std::shared_ptr<CItem>> *m_items;
+    std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CItem * m_selectedItem;
     //CConfirmDialog   m_Dialog;
     //CInputDialog  m_InputDialog;

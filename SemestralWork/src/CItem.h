@@ -24,18 +24,18 @@ public:
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
-    virtual void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)=0;
+    virtual void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)=0;
     virtual void Delete()=0;
-    virtual void Delete(std::vector< std::shared_ptr<CItem>> items)=0;
+    virtual void Delete(std::map<std::string ,std::shared_ptr<CItem>> items)=0;
     virtual void Move(std::string dest)=0;
-    virtual void Move(std::vector< std::shared_ptr<CItem>> items,std::string dest )=0;
+    virtual void Move(std::map<std::string ,std::shared_ptr<CItem>> items,std::string dest )=0;
     virtual void Copy( std::string dest )=0;
-    virtual void Copy(std::vector< std::shared_ptr<CItem>> items, std::string dest)=0;
+    virtual void Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string dest)=0;
     virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
     virtual void ConCat(std::string To)=0;
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
-    std::vector< std::shared_ptr<CItem>> m_items;
+    std::map<std::string ,std::shared_ptr<CItem>> m_items;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
 
 private:

@@ -7,6 +7,7 @@ void CWindow::Print() {
 
     if(m_Selected>=m_Items->size()+1){
         m_Selected=0;
+        iter=m_Items->begin();
     }
     //clear();
     moveto(m_Size.m_PosX,m_Size.m_PosY);
@@ -47,57 +48,57 @@ void CWindow::Print() {
     }
 
 
-
-    for (size_t i = 0; i < m_Items->size() ; ++i) {
-        if(i==15)
+    int cnt=0;
+    for (auto it = m_Items->begin(); it != m_Items->end() ; ++it,cnt++) {
+        if(cnt==15)
             break;
-        moveto(m_Size.m_PosX+2,m_Size.m_PosY+5+i);
-        if(i==m_Selected-1){
+        moveto(m_Size.m_PosX+2,m_Size.m_PosY+5+cnt);
+        if(cnt==m_Selected-1){
 
 
 
                 cout << bg::blue;
-                m_Items->at(i)->Print();
-                cout<< setw(m_Size.m_Width-m_Items->at(i)->m_Name.size())
+                it->second->Print();
+                cout<< setw(m_Size.m_Width-it->second->m_Name.size())
                     <<style::reset;
 
-            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+5+i);
+            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout<<bg::blue<<"|"<<style::reset;
-            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+5+i);
-            cout << bg::blue<<m_Items->at(i)->m_Size<<style::reset;
-            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+5+i);
+            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
+            cout << bg::blue<<it->second->m_Size<<style::reset;
+            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout<<bg::blue<<"|"<<style::reset;
-            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+5+i);
+            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout << bg::blue<<"13/03/2023"<<style::reset;
-            moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+5+i);
+            moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout<<bg::blue<<"|"<<style::reset;
         }
 
 
         else{
 
-                if(m_Items->at(i)->m_isSelected){
+                if(it->second->m_isSelected){
                     cout<<fg::yellow;
-                    m_Items->at(i)->Print();
-                    cout<<fg::reset<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+                    it->second->Print();
+                    cout<<fg::reset<<setw(m_Size.m_Width-it->second->m_Name.size());
                 }
                 else{
 
-                    m_Items->at(i)->Print();
-                    cout<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+                   it->second->Print();
+                    cout<<setw(m_Size.m_Width-it->second->m_Name.size());
 
                 }
 
 
-            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
+            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
             cout<<"|";
-            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
-            cout <<m_Items->at(i)->m_Size;
-            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
+            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
+            cout <<it->second->m_Size;
+            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
             cout<<"|";
-            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
+            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
             cout <<"13/03/2023";
-            moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
+            moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
             cout<<"|";
         }
 
@@ -108,8 +109,8 @@ void CWindow::Print() {
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
-    if(m_Selected< m_Items->size()){
-        cout <<m_Items->at(m_Selected)->m_Name;
+    if(m_Selected-1< m_Items->size()){
+        cout <<(iter)->second->m_Name;
 
     } else{
 
@@ -121,8 +122,8 @@ void CWindow::Print() {
 CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
 :  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
     m_CurrFile=NULL;
-
    m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
+    iter=m_Items->begin();
 
     // m_Items=&m_currDir.m_items;
 
@@ -143,16 +144,19 @@ void CWindow::ReadKey() {}
 
 void CWindow::Enter() {
     if(m_Selected==0){
-        if(m_CurrFile!=NULL)
-           m_CurrFile->Open(&m_Items,&m_CurrFile);
+        if(m_CurrFile!=NULL){
+            m_CurrFile->Open(&m_Items,&m_CurrFile);
+            iter=m_Items->begin();
+        }
+
+
         else{
 
         }
     }
     else{
-        m_Items->at(m_Selected-1)->Open(&m_Items,&m_CurrFile);
-       // m_currDir=dynamic_cast<CDir &> ( *m_Items->at(0) );
+         iter->second->Open(&m_Items,&m_CurrFile);
+         iter=m_Items->begin();
     }
 
-    //m_currDir=dynamic_cast<CDir&>(*m_Items->at(m_Selected));
 }

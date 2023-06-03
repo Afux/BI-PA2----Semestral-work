@@ -15,13 +15,13 @@ class CWindow: public CAbsWidnow{
 public:
     CWindow( CSize size, unsigned int Selected, std::string Name,string Path);
     std::string m_CurrPath;
-    std::vector< std::shared_ptr<CItem>>   *m_Items;
-    std::vector< std::shared_ptr<CItem>> m_Selecteditems;
+    std::map<std::string ,std::shared_ptr<CItem>>   *m_Items;
+    std::map<std::string ,std::shared_ptr<CItem>> m_Selecteditems;
     CDir m_StartDir;
 
     CDir m_currDir;
 
-
+    _Rb_tree_iterator<pair<const basic_string<char>, shared_ptr<CItem>>> iter;
     CItem* m_CurrFile;
     void Print() override;
     void ReadKey() override;

@@ -40,7 +40,7 @@ int main() {
 
 /*
 
-      std::vector< std::shared_ptr<CItem>>   *m_Items;
+      std::map<std::string ,std::shared_ptr<CItem>>   *m_Items;
       m_Items=uf.FindDir("/home/afu/PA1/df");
       for (int i = 0; i < m_Items->size() ; ++i) {
          m_Items->at(i)->Print();

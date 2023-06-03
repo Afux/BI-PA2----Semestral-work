@@ -20,21 +20,21 @@ void CFile::Copy(string to) {
     std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
 }
 
-void CFile::Copy(std::vector< std::shared_ptr<CItem>> items, string to) {}
+void CFile::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, string to) {}
 
 void CFile::Delete() {
     std::filesystem::remove_all(m_Path);
 
 }
 
-void CFile::Delete(std::vector< std::shared_ptr<CItem>> items) {}
+void CFile::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {}
 
 void CFile::Move(string dest) {
     Copy(dest);
     Delete();
 }
 
-void CFile::Move(std::vector< std::shared_ptr<CItem>> items, string dest) {}
+void CFile::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string dest) {}
 
 void CFile::UpdateSize() {
     m_Size=filesystem::file_size(m_Path);
@@ -61,7 +61,7 @@ std::string CFile::RenameDialog(std::string NewName) {
     return tmp;
 }
 
-void CFile::Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold) {
+void CFile::Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold) {
   /*
     if(m_inFolder!=NULL){
        *inFold=m_inFolder;
@@ -100,7 +100,7 @@ void CFile::Deduplicate(CItem *DeduplicateMe) {
     if(identicalFiles(m_Path,DeduplicateMe->m_Path)){
         this->Delete();
         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(m_Path, 22, DeduplicateMe, m_inFolder));
-        m_inFolder->m_items.emplace_back(tmp);
+        m_inFolder->m_items.insert({tmp->m_Path,tmp});
     }
 }
 

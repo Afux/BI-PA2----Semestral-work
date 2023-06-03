@@ -9,15 +9,15 @@ public:
     CLink(std::string path,unsigned int size,CItem* toFile,CItem* parr);
 
     CItem* m_toFile;
-     void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
+     void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)override;
 
      void Print()override;
-     void Copy(std::vector< std::shared_ptr<CItem>> items, std::string to ) override;
+     void Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string to ) override;
      void Copy(std::string to) override;
      void Delete() override;
-     void Delete(std::vector< std::shared_ptr<CItem>> items) override;
+     void Delete(std::map<std::string ,std::shared_ptr<CItem>> items) override;
      void Move( string dest) override;
-     void Move(std::vector< std::shared_ptr<CItem>> items,string dest ) override;
+     void Move(std::map<std::string ,std::shared_ptr<CItem>> items,string dest ) override;
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;
      void Deduplicate(CItem * DeduplicateMe) override;

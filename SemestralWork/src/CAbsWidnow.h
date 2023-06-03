@@ -29,17 +29,17 @@ public:
 
    //OPS
     void Copy( CItem *item, std::string to);
-    void Copy( std::string reg,std::string to,std::vector< std::shared_ptr<CItem>> *Items);
+    void Copy( std::string reg,std::string to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void Delete( CItem *item);
-    void Delete(std::string reg,std::vector< std::shared_ptr<CItem>> *Items) ;
+    void Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
     void Move( CItem *item , std::string dest) ;
-    void Move(std::string reg, std::string dest,std::vector< std::shared_ptr<CItem>> *Items) ;
-    void CreateFolder(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
-    void CreateFile(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
-    void CreateLink(std::string name,CItem * to,std::vector< std::shared_ptr<CItem>> *Items);
-    void FindByText(std::string text,std::vector< std::shared_ptr<CItem>> *Items);
-    void Deduplicate(CItem* item,std::vector< std::shared_ptr<CItem>> *Items);
-    void ConcatFiles(std::vector< std::shared_ptr<CItem>> *Items,string to);
+    void Move(std::string reg, std::string dest,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
+    void CreateFolder(std::string name,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void CreateFile(std::string name,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void CreateLink(std::string name,CItem * to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void FindByText(std::string text,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void Deduplicate(CItem* item,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items,string to);
 
 protected:
 private:

@@ -18,7 +18,7 @@ void CLink::Print() {
     cout<<"*"<<m_Name;
 }
 
-void CLink::Copy(std::vector< std::shared_ptr<CItem>> items, std::string to) {
+void CLink::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string to) {
 
 }
 
@@ -31,7 +31,7 @@ void CLink::Delete() {
 
 }
 
-void CLink::Delete(std::vector< std::shared_ptr<CItem>> items) {
+void CLink::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
 
 }
 
@@ -40,7 +40,7 @@ void CLink::Move(string dest) {
     Delete();
 }
 
-void CLink::Move(std::vector< std::shared_ptr<CItem>> items, string dest) {
+void CLink::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string dest) {
 
 }
 
@@ -70,7 +70,7 @@ std::shared_ptr<CItem> CLink::clone() const {
     return tmp;
 }
 
-void CLink::Open(std::vector<std::shared_ptr<CItem>> **item, CItem **inFold) {
+void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
     /*
     if(m_inFolder!=NULL){
         *inFold=m_inFolder;

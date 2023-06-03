@@ -63,10 +63,18 @@ void CManager::ReadKey() {
         case 'w':
         case 'W':
             m_ActiveWindow->m_Selected--;
+            if( m_ActiveWindow->iter!=m_ActiveWindow->m_Items->begin())
+                 m_ActiveWindow->iter--;
+
             break;
         case 's':
         case 'S':
             m_ActiveWindow->m_Selected++;
+            if( m_ActiveWindow->m_Selected==1)
+                m_ActiveWindow->iter=m_ActiveWindow->m_Items->begin();
+            else
+                 m_ActiveWindow->iter++;
+
             break;
         case 'n':
             m_ActiveWindow=NextWind();
@@ -78,7 +86,8 @@ void CManager::ReadKey() {
         case 'k':
         case 'K':
             if(m_ActiveWindow->m_Selected!=0)
-                m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get()->Select();
+                m_ActiveWindow->iter->second->Select();
+              //  m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get()->Select();
             break;
 
         case '1':
@@ -86,7 +95,8 @@ void CManager::ReadKey() {
             if(m_ActiveWindow->m_Selected!=0){
                 m_Menu.m_lastActive= this;
                 m_Menu.m_items=m_ActiveWindow->m_Items;
-                m_Menu.m_selectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+
+                m_Menu.m_selectedItem=m_ActiveWindow->iter->second.get();
                 m_Scene=&m_Menu;
             }
 
@@ -94,7 +104,7 @@ void CManager::ReadKey() {
         case '2':
             if(m_ActiveWindow->m_Selected!=0){
             m_Confirm.m_lastActive= this;
-            m_Confirm.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+            m_Confirm.m_SelectedItem=m_ActiveWindow->iter->second.get();
             m_Confirm.op=1;
             m_Scene=&m_Confirm;
             }
@@ -104,7 +114,7 @@ void CManager::ReadKey() {
                 m_Input.m_Label = "Enter path";
                 m_Input.m_lastActive = this;
                 m_Input.op = 8;
-                m_Input.m_SelectedItem = m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+                m_Input.m_SelectedItem =m_ActiveWindow->iter->second.get();
                 m_Scene = &m_Input;
             }
            // Move("(a)(.*)","/home/afu/PA1/df/copyhere",m_ActiveWindow->m_Items);
@@ -115,7 +125,7 @@ void CManager::ReadKey() {
             m_Input.m_lastActive= this;
             m_Input.op=10;
             m_Input.m_items=m_ActiveWindow->m_Items;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
             m_Scene=&m_Input;
             }
             break;
@@ -127,7 +137,7 @@ void CManager::ReadKey() {
             m_Input.op=12;
             m_Input.m_items=m_ActiveWindow->m_Items;
 
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
             m_Scene=&m_Input;
             }
             break;
@@ -136,7 +146,7 @@ void CManager::ReadKey() {
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
             m_Input.op=9;
-            m_Input.m_SelectedItem=m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get();
+            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
             m_Scene=&m_Input;
             }
             break;
