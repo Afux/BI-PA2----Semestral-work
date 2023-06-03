@@ -27,7 +27,9 @@ void CLink::Copy(std::string to) {
 }
 
 void CLink::Delete() {
-    fs::remove_all(m_Path);
+    if(m_inFolder!=NULL){
+        m_inFolder->m_items.erase(m_Path);
+    }
 
 }
 

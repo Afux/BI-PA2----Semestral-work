@@ -91,11 +91,8 @@ void CInputDialog::Enter() {
                 Copy(m_reg,m_path,m_items);
                 break;
             case 3:
-                if(m_items->empty())
-                    throw std::invalid_argument("");
-
-
                 Move(m_reg,m_path,m_items);
+
                 break;
             case 4:
                 //Create();
@@ -114,6 +111,10 @@ void CInputDialog::Enter() {
                 break;
             case 9:
                 Move(m_SelectedItem,m_input);
+                if(win->iter!=m_items->begin()){
+                    win->iter--;
+                    win->m_Selected--;
+                }
                 break;
             case 10:
                 CreateFile(m_input,m_items);

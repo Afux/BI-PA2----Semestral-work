@@ -29,12 +29,20 @@ int main() {
 
     win.ReadKey();
      */
-     //CDir uf("/home/afu/PA1",2,NULL,NULL);
-     //vector<shared_ptr<CItem>> *sd=uf.FindDir("/home/afu/PA1/df");
+     //
+     //
     //cout<<sd->size()<<endl;
     //uf.m_items
+    /*
+    CDir uf("/home/afu/PA1/df/TESTER",2,NULL,NULL);
 
-
+    cout<<"------"<<endl;
+    for (auto i = uf.m_items.begin(); i !=uf.m_items.end() ; ++i) {
+        cout<<i->second->m_Path<<endl;
+    }
+    CDir se("/home/afu/PA1/df/TESTER/DEL",2,NULL,NULL);
+    cout<<se.m_Path<<endl;
+     */
    CManager man(CSize(100,30,1,1),"MAN",0);
     man.Run();
 

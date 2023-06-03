@@ -30,7 +30,7 @@ public:
     void FindText(std::string FindThis,std::vector<CItem*> * Found) override;
     void ConCat(std::string To) override;
 
-
+    void Refresh();
     std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;

@@ -83,7 +83,7 @@ void CConfirmDialog::ReadKey() {
         case 'D':
             m_Selected++;
             break;
-        case 'q':
+        case 'e':
             Enter();
             break;
 
@@ -101,6 +101,11 @@ void CConfirmDialog::Enter() {
       switch(op){
           case 1:
               Delete(m_SelectedItem);
+              if(win->iter!=m_items->begin()){
+                  win->m_Selected--;
+                  win->iter--;
+
+              }
               break;
           case 2:
               break;

@@ -24,6 +24,9 @@ void CFile::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, string to)
 
 void CFile::Delete() {
     std::filesystem::remove_all(m_Path);
+    if(m_inFolder!=NULL){
+        m_inFolder->m_items.erase(m_Path);
+    }
 
 }
 

@@ -105,8 +105,11 @@ void CManager::ReadKey() {
             if(m_ActiveWindow->m_Selected!=0){
             m_Confirm.m_lastActive= this;
             m_Confirm.m_SelectedItem=m_ActiveWindow->iter->second.get();
+            m_Confirm.m_items=m_ActiveWindow->m_Items;
+            m_Confirm.win=m_ActiveWindow;
             m_Confirm.op=1;
             m_Scene=&m_Confirm;
+
             }
             break;
         case '3':
@@ -146,6 +149,8 @@ void CManager::ReadKey() {
             m_Input.m_Label="Enter path";
             m_Input.m_lastActive= this;
             m_Input.op=9;
+                m_Input.m_items=m_ActiveWindow->m_Items;
+                m_Input.win=m_ActiveWindow;
             m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
             m_Scene=&m_Input;
             }

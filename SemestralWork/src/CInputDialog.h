@@ -25,6 +25,8 @@ public:
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
+    CAbsWidnow * win;
+
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     void parseString(const std::string& input, char delimiter);
 

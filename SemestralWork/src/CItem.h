@@ -38,6 +38,7 @@ public:
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
 
+
 private:
 protected:
 

@@ -20,6 +20,7 @@ public:
     std::string  m_Name;
     CAbsWidnow* m_Scene;
 
+    _Rb_tree_iterator<pair<const basic_string<char>, shared_ptr<CItem>>> iter;
 
     void Refresh();
     virtual void Print()=0;

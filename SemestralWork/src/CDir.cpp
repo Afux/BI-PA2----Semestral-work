@@ -125,15 +125,10 @@ void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
 void CDir::Delete() {
    // std::map<std::string ,std::shared_ptr<CItem>> *temp= FindDir(m_parr->m_Path,&m_DeleteMe);
     fs::remove_all(m_Path);
-    /*
-    if(m_parr!=NULL){
-        for (size_t i = 0; i < temp->size(); ++i) {
-            if( temp->at(i).get()== this){
-                temp->erase( temp->begin()+i);
-            }
-        }
+    if(m_inFolder!=NULL){
+        if(m_inFolder->m_items.count(m_Path))
+             m_inFolder->m_items.erase(m_Path);
     }
-     */
 }
 
 void CDir::Move(std::map<std::string ,std::shared_ptr<CItem>> items, std::string dest) {
@@ -189,6 +184,7 @@ void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** i
 
    }
     */
+    Refresh();
     *items= &m_items;
     if(m_inFolder!=NULL){
         *inFold=m_inFolder;
@@ -266,6 +262,33 @@ void CDir::Deduplicate(CItem *DeduplicateMe) {
 
 void CDir::ConCat(std::string To) {
 
+}
+
+void CDir::Refresh() {
+    for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
+                                                              std::filesystem::directory_options::skip_permission_denied)) {
+        string s = dirEntry.path();
+        if(!m_items.count(s)){
+            if (dirEntry.is_symlink()) {
+
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
+                m_items[tmp->m_Path]=tmp;
+
+            } else if (dirEntry.is_directory()) {
+
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
+                m_items[tmp->m_Path]=tmp;
+
+            } else if (dirEntry.is_regular_file()) {
+
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
+                m_items[tmp->m_Path]=tmp;
+
+            }
+        }
+
+
+    }
 }
 
 

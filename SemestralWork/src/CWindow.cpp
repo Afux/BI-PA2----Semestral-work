@@ -147,6 +147,7 @@ void CWindow::Enter() {
         if(m_CurrFile!=NULL){
             m_CurrFile->Open(&m_Items,&m_CurrFile);
             iter=m_Items->begin();
+            m_Selected=0;
         }
 
 
@@ -157,6 +158,8 @@ void CWindow::Enter() {
     else{
          iter->second->Open(&m_Items,&m_CurrFile);
          iter=m_Items->begin();
+        m_Selected=0;
+
     }
 
 }

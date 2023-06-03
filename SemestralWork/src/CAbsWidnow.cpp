@@ -40,6 +40,7 @@ void CAbsWidnow::Copy(std::string reg,std::string to,std::map<std::string ,std::
 
 void CAbsWidnow::Delete(CItem *item) {
     item->Delete();
+
 }
 
 void CAbsWidnow::Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
@@ -52,7 +53,10 @@ void CAbsWidnow::Delete(std::string reg,std::map<std::string ,std::shared_ptr<CI
                 items[it->second->m_Path]=it->second;
             }
         }
+
         item->Delete(items);
+        if(iter!=Items->begin())
+            iter--;
     }
 }
 
@@ -72,8 +76,8 @@ void CAbsWidnow::Move(std::string reg, std::string dest,std::map<std::string ,st
             }
         }
         item->Move(items, dest);
-
-
+        if(iter!=Items->begin())
+            iter--;
     }
     else{
     }
@@ -131,7 +135,7 @@ void CAbsWidnow::FindByText(std::string text, std::map<std::string ,std::shared_
         vector<CItem*> found;
         item->FindText(text,&found);
 
-        ofstream MyFile("/home/afu/PA1/df/filename.txt");
+        ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
 
         for (int i = 0; i <found.size() ; ++i) {
             MyFile<<found[i]->m_Path<<endl;
