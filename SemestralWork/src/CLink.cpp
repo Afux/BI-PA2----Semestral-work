@@ -84,3 +84,7 @@ void CLink::Open(std::vector<std::shared_ptr<CItem>> **item, CItem **inFold) {
      */
 }
 
+void CLink::FindText(std::string FindThis) {
+    m_toFile->FindText(FindThis);
+}
+

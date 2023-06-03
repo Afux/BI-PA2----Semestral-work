@@ -12,7 +12,7 @@ public:
     //std::map<std::string,CItem*> m_items;
     CItem* m_parr;
     std::vector< std::shared_ptr<CItem>> * FindDir(const std::string& path,CItem **item);
-     std::shared_ptr<CItem>  clone() const override;
+    std::shared_ptr<CItem>  clone() const override;
 
     CItem *m_DeleteMe;
     void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
@@ -27,7 +27,9 @@ public:
      void SetDate(u_int year, u_int month, u_int day) override;
      void Deduplicate() override;
      void Print() override;
-     std::string RemoveDialog() override;
+    void FindText(std::string FindThis) override;
+
+    std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
      std::vector<std::string> parseString(const std::string& input, char delimiter);

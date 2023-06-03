@@ -16,6 +16,7 @@ public:
      void Delete(std::vector< std::shared_ptr<CItem>> items) override;
      void Move( string dest) override;
      void Move(std::vector< std::shared_ptr<CItem>> items,string dest ) override;
+    void FindText(std::string FindThis) override;
 
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;

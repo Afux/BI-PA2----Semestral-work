@@ -243,6 +243,12 @@ CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {
 
 }
 
+void CDir::FindText(std::string FindThis) {
+    for (int i = 0; i < m_items.size() ; ++i) {
+        m_items[i]->FindText(FindThis);
+    }
+}
+
 
 
 

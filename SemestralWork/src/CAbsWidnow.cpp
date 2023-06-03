@@ -7,8 +7,6 @@
 #include "regex"
 void CAbsWidnow::clear() {
     system("clear");
-    //std::cout << "\033[3J";
-
 }
 
 void CAbsWidnow::moveto(int x, int y) {

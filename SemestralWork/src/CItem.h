@@ -29,6 +29,7 @@ public:
     virtual void Move(std::vector< std::shared_ptr<CItem>> items,std::string dest )=0;
     virtual void Copy( std::string dest )=0;
     virtual void Copy(std::vector< std::shared_ptr<CItem>> items, std::string dest)=0;
+    virtual void FindText(std::string FindThis)=0;
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::vector< std::shared_ptr<CItem>> m_items;
