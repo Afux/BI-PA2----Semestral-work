@@ -27,7 +27,7 @@ public:
      void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
     std::shared_ptr<CItem>  clone() const override;
     bool identicalFiles(string file1, string file2);
-
+    void ConCat(std::string To) override;
 
 };
 

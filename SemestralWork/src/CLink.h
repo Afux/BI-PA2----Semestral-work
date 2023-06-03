@@ -26,6 +26,8 @@ public:
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
     std::shared_ptr<CItem>  clone() const override;
+    void ConCat(std::string To) override;
+
 
 };
 

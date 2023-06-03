@@ -38,8 +38,8 @@ public:
     void CreateFile(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
     void CreateLink(std::string name,CItem * to,std::vector< std::shared_ptr<CItem>> *Items);
     void FindByText(std::string text,std::vector< std::shared_ptr<CItem>> *Items);
-
     void Deduplicate(CItem* item,std::vector< std::shared_ptr<CItem>> *Items);
+    void ConcatFiles(std::vector< std::shared_ptr<CItem>> *Items,string to);
 
 protected:
 private:

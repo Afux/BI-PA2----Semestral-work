@@ -143,3 +143,13 @@ void CAbsWidnow::Deduplicate(CItem *item, std::vector<std::shared_ptr<CItem>> *I
     }
 }
 
+void CAbsWidnow::ConcatFiles(std::vector<std::shared_ptr<CItem>> *Items, string to) {
+    if(Items->size()>1) {
+        CItem *item = Items->at(1)->m_inFolder;
+        for (int i = 0; i < Items->size(); ++i) {
+            if (Items->at(i)->m_isSelected)
+                Items->at(i)->ConCat(item->m_Path + "/" + to);
+        }
+    }
+}
+

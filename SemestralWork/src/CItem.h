@@ -17,6 +17,8 @@ public:
     virtual ~CItem();
     std::string m_Name;
     std::string m_Path;
+    bool m_isSelected;
+    void Select();
     //CDate m_Date;
     //virtual void Add()=0;
     unsigned int m_Size;
@@ -30,6 +32,7 @@ public:
     virtual void Copy( std::string dest )=0;
     virtual void Copy(std::vector< std::shared_ptr<CItem>> items, std::string dest)=0;
     virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
+    virtual void ConCat(std::string To)=0;
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::vector< std::shared_ptr<CItem>> m_items;
@@ -42,10 +45,7 @@ protected:
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;
-
-
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
-
     virtual void UpdateSize()=0;
 };
 

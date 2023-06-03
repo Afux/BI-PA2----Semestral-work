@@ -161,4 +161,16 @@ bool CFile::identicalFiles(string file1, string file2) {
         return false;
 }
 
+void CFile::ConCat(std::string To) {
+    ifstream stream1(m_Path, ios::in);
+    fstream stream2(To, ios::out|ios::app);
+    string temp;
+
+    while(getline(stream1, temp)){
+        stream2<<temp;
+        stream2<<endl;
+    }
+    m_isSelected= false;
+}
+
 

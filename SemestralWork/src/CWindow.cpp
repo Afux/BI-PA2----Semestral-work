@@ -76,9 +76,18 @@ void CWindow::Print() {
 
         else{
 
+                if(m_Items->at(i)->m_isSelected){
+                    cout<<fg::yellow;
+                    m_Items->at(i)->Print();
+                    cout<<fg::reset<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+                }
+                else{
 
-                m_Items->at(i)->Print();
-                cout<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+                    m_Items->at(i)->Print();
+                    cout<<setw(m_Size.m_Width-m_Items->at(i)->m_Name.size());
+
+                }
+
 
             moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+i+1);
             cout<<"|";

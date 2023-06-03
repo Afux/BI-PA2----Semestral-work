@@ -155,6 +155,9 @@ void CMenu::Enter() {
         case 5:
             m_inputDialog.m_lastActive=m_lastActive;
             m_inputDialog.op=6;
+            m_inputDialog.m_Label="Enter name";
+
+            m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();
             break;

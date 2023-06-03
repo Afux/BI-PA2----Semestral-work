@@ -75,6 +75,11 @@ void CManager::ReadKey() {
         case 'E':
             m_ActiveWindow->Enter();
             break;
+        case 'k':
+        case 'K':
+            if(m_ActiveWindow->m_Selected!=0)
+                m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get()->Select();
+            break;
 
         case '1':
         case '+':

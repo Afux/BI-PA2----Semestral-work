@@ -254,6 +254,10 @@ void CDir::Deduplicate(CItem *DeduplicateMe) {
     }
 }
 
+void CDir::ConCat(std::string To) {
+
+}
+
 
 
 

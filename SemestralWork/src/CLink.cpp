@@ -85,7 +85,9 @@ void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
     m_toFile->FindText(FindThis,Found);
 }
 
-void CLink::Deduplicate(CItem *DeduplicateMe) {
+void CLink::Deduplicate(CItem *DeduplicateMe) {}
 
+void CLink::ConCat(std::string To) {
+    m_toFile->ConCat(To);
 }
 

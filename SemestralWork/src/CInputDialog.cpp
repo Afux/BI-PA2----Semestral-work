@@ -104,7 +104,7 @@ void CInputDialog::Enter() {
                 FindByText(m_input,m_items);
                 break;
             case 6:
-                //Conacat by
+                ConcatFiles(m_items,m_input);
                 break;
             case 7:
                 Deduplicate(m_SelectedItem,m_items);
