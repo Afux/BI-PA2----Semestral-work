@@ -26,6 +26,8 @@ public:
     virtual void  ReadKey()=0;
     void clear();
     void moveto(int x = 1, int y = 1);
+
+   //OPS
     void Copy( CItem *item, std::string to);
     void Copy( std::string reg,std::string to,std::vector< std::shared_ptr<CItem>> *Items);
     void Delete( CItem *item);
@@ -36,6 +38,9 @@ public:
     void CreateFile(std::string name,std::vector< std::shared_ptr<CItem>> *Items);
     void CreateLink(std::string name,CItem * to,std::vector< std::shared_ptr<CItem>> *Items);
     void FindByText(std::string text,std::vector< std::shared_ptr<CItem>> *Items);
+
+    void Deduplicate(CItem* item,std::vector< std::shared_ptr<CItem>> *Items);
+
 protected:
 private:
 };

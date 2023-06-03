@@ -33,6 +33,7 @@ public:
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::vector< std::shared_ptr<CItem>> m_items;
+    virtual void Deduplicate(CItem * DeduplicateMe)=0;
 
 private:
 protected:
@@ -44,7 +45,6 @@ protected:
 
 
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
-    virtual void Deduplicate()=0;
 
     virtual void UpdateSize()=0;
 };

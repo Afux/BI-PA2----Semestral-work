@@ -25,7 +25,7 @@ public:
      void Move(std::vector< std::shared_ptr<CItem>> ,std::string dest ) override;
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;
-     void Deduplicate() override;
+     void Deduplicate(CItem * DeduplicateMe) override;
      void Print() override;
     void FindText(std::string FindThis,std::vector<CItem*> * Found) override;
 

@@ -160,7 +160,8 @@ void CMenu::Enter() {
             break;
         case 6:
             m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=13;
+            m_inputDialog.op=7;
+            m_inputDialog.m_Label="FIX";
             m_inputDialog.m_SelectedItem=m_selectedItem;
             m_inputDialog.m_items=m_items;
             m_inputDialog.Run();

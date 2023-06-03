@@ -52,9 +52,6 @@ void CLink::SetDate(u_int year, u_int month, u_int day) {
 
 }
 
-void CLink::Deduplicate() {
-
-}
 
 std::string CLink::RemoveDialog() {
     return std::string();
@@ -86,5 +83,9 @@ void CLink::Open(std::vector<std::shared_ptr<CItem>> **item, CItem **inFold) {
 
 void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
     m_toFile->FindText(FindThis,Found);
+}
+
+void CLink::Deduplicate(CItem *DeduplicateMe) {
+
 }
 

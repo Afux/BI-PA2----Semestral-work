@@ -107,7 +107,7 @@ void CInputDialog::Enter() {
                 //Conacat by
                 break;
             case 7:
-                //Dedup by
+                Deduplicate(m_SelectedItem,m_items);
                 break;
             case 8:
                 Copy(m_SelectedItem,m_input);

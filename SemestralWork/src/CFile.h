@@ -20,12 +20,13 @@ public:
 
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;
-     void Deduplicate() override;
+     void Deduplicate(CItem * DeduplicateMe) override;
      std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
      void Open(std::vector< std::shared_ptr<CItem>> **item,CItem ** inFold)override;
     std::shared_ptr<CItem>  clone() const override;
+    bool identicalFiles(string file1, string file2);
 
 
 };

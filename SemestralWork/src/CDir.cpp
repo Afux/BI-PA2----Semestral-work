@@ -152,9 +152,7 @@ void CDir::SetDate(u_int year, u_int month, u_int day) {
 
 }
 
-void CDir::Deduplicate() {
 
-}
 
 void CDir::Print() {
     cout<<"/"<<m_Name;
@@ -246,6 +244,13 @@ CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {
 void CDir::FindText(std::string FindThis,std::vector<CItem*> *Found) {
     for (int i = 0; i < m_items.size() ; ++i) {
         m_items[i]->FindText(FindThis,Found);
+    }
+}
+
+void CDir::Deduplicate(CItem *DeduplicateMe) {
+    for (int i = 0; i < m_items.size() ; ++i) {
+        if(m_items[i].get()!=DeduplicateMe)
+            m_items[i]->Deduplicate(DeduplicateMe);
     }
 }
 

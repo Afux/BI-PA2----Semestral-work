@@ -135,3 +135,11 @@ void CAbsWidnow::FindByText(std::string text, std::vector<std::shared_ptr<CItem>
     }
 }
 
+void CAbsWidnow::Deduplicate(CItem *item, std::vector<std::shared_ptr<CItem>> *Items) {
+    if(Items->size()>1) {
+        CItem *parent = Items->at(1)->m_inFolder;
+        parent->Deduplicate(item);
+
+    }
+}
+
