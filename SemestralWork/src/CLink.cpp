@@ -23,13 +23,22 @@ void CLink::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::strin
 }
 
 void CLink::Copy(std::string to) {
-    fs::copy_symlink(m_Path,to+"/"+m_Name);
+    if(fs::exists(to)){
+        if(IsReadable(to)&& IsWriteable(to))
+            fs::copy_symlink(m_Path,to+"/"+m_Name);
+    }
 }
 
 void CLink::Delete() {
-    if(m_inFolder!=NULL){
-        m_inFolder->m_items.erase(m_Path);
+    if(fs::exists(m_Path)) {
+        if (IsReadable(m_Path) && IsWriteable(m_Path)){
+            std::filesystem::remove_all(m_Path);
+            if(m_inFolder!=NULL){
+                m_inFolder->m_items.erase(m_Path);
+            }
+        }
     }
+
 
 }
 

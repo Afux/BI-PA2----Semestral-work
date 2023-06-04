@@ -48,7 +48,7 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
         m_currItems.emplace_back(this->clone());
     }
 */
-    if(fs::exists(path)) {
+    if(IsReadable(path)&&fs::exists(path)) {
         for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
                                                                   std::filesystem::directory_options::skip_permission_denied)) {
             string s = dirEntry.path();
@@ -62,16 +62,11 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
                 shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
                 tmp->UpdateSize();
                 m_items[tmp->m_Path]=tmp;
-
-
             } else if (dirEntry.is_directory()) {
 
                 shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
                 tmp->UpdateSize();
                 m_items[tmp->m_Path]=tmp;
-
-
-
 
             } else if (dirEntry.is_regular_file()) {
 
@@ -79,11 +74,7 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
                 tmp->UpdateSize();
                 m_items[tmp->m_Path]=tmp;
 
-
-
             }
-
-
         }
     }
     else{
@@ -101,14 +92,21 @@ void CDir::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string
 }
 
 void CDir::Copy(std::string to) {
-    std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
+   if(fs::exists(to)&&!fs::equivalent(m_Path,to)&&!fs::is_other(m_Path)&&!fs::is_other(to)&&!fs::exists(to+"/"+m_Name)){
+
+       if(IsReadable(to)&& IsWriteable(to)){
+           fs::create_directory(to+"/"+m_Name);
+           std::filesystem::copy(m_Path, to+"/"+m_Name, std::filesystem::copy_options::recursive);
+
+       }
+   }
 }
 
+//Osetreno
 void CDir::Move(std::string dest) {
     Copy(dest);
     Delete();
 }
-
 void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
     for (auto it = items.begin(); it != items.end(); ++it) {
         it->second->Delete();
@@ -117,10 +115,15 @@ void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
 }
 
 void CDir::Delete() {
-    fs::remove_all(m_Path);
-    if(m_inFolder!=NULL){
-        if(m_inFolder->m_items.count(m_Path))
-             m_inFolder->m_items.erase(m_Path);
+    if(fs::exists(m_Path)) {
+        if (IsReadable(m_Path) && IsWriteable(m_Path)){
+            fs::remove_all(m_Path);
+            if (m_inFolder != NULL) {
+                if (m_inFolder->m_items.count(m_Path))
+                    m_inFolder->m_items.erase(m_Path);
+            }
+        }
+
     }
 }
 
@@ -253,9 +256,8 @@ void CDir::Deduplicate(CItem *DeduplicateMe) {
 
 }
 
-void CDir::ConCat(std::string To) {
 
-}
+void CDir::ConCat(std::string To) {}
 
 void CDir::Refresh() {
     std::set<string > tmp;

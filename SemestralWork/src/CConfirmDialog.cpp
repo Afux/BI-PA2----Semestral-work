@@ -100,12 +100,13 @@ void CConfirmDialog::Enter() {
   if(m_Selected==0){
       switch(op){
           case 1:
-              Delete(m_SelectedItem);
               if(win->iter!=m_items->begin()){
                   win->m_Selected--;
                   win->iter--;
 
               }
+              Delete(m_SelectedItem);
+
               break;
           case 2:
               break;

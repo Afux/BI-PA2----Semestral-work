@@ -17,15 +17,23 @@ void CFile::Print() {
 }
 
 void CFile::Copy(string to) {
-    std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
+    if(fs::exists(to)){
+        if(IsReadable(to)&& IsWriteable(to))
+            std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
+    }
 }
 
 void CFile::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, string to) {}
 
 void CFile::Delete() {
-    std::filesystem::remove_all(m_Path);
-    if(m_inFolder!=NULL){
-        m_inFolder->m_items.erase(m_Path);
+    if(fs::exists(m_Path)) {
+        if (IsReadable(m_Path) && IsWriteable(m_Path)){
+            std::filesystem::remove_all(m_Path);
+            if(m_inFolder!=NULL){
+                m_inFolder->m_items.erase(m_Path);
+            }
+        }
+
     }
 
 }
@@ -81,27 +89,40 @@ std::shared_ptr<CItem> CFile::clone() const {
 }
 
 void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
-    ifstream inFile;
-    inFile.open(m_Path);
-    string temp;
-    size_t pos;
-    if(inFile){
-        while(inFile.good())
-        {
-            getline(inFile,temp);
-            pos=temp.find(FindThis);
-            if(pos!=string::npos)
+
+    ifstream inFile(m_Path, ios::in);
+    if (inFile.good()) {
+
+
+        inFile.open(m_Path);
+        string temp;
+        size_t pos;
+        if(inFile){
+            while(inFile.good())
             {
-                Found->push_back(this);
-                break;
+                getline(inFile,temp);
+                pos=temp.find(FindThis);
+                if(pos!=string::npos)
+                {
+                    inFile.close();
+                    if (inFile.good()) {
+                        Found->push_back(this);
+                        break;
+                    }
+
+                }
             }
         }
     }
+
+
+
 }
 
 void CFile::Deduplicate(CItem *DeduplicateMe) {
     if(identicalFiles(m_Path,DeduplicateMe->m_Path)){
         this->Delete();
+       //TryCatch
         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(m_Path, 22, DeduplicateMe, m_inFolder));
         m_inFolder->m_items.insert({tmp->m_Path,tmp});
     }
@@ -168,11 +189,13 @@ void CFile::ConCat(std::string To) {
     ifstream stream1(m_Path, ios::in);
     fstream stream2(To, ios::out|ios::app);
     string temp;
-
-    while(getline(stream1, temp)){
-        stream2<<temp;
-        stream2<<endl;
+    if(stream1.good()&&stream2.good()){
+        while(getline(stream1, temp)){
+            stream2<<temp;
+            stream2<<endl;
+        }
     }
+
     m_isSelected= false;
 }
 

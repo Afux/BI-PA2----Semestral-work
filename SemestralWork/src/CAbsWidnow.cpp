@@ -6,6 +6,8 @@
 #include <iostream>
 #include "regex"
 #include <fstream>
+#include "filesystem"
+namespace fs = std::filesystem;
 void CAbsWidnow::clear() {
     system("clear");
 }
@@ -18,7 +20,9 @@ void CAbsWidnow::moveto(int x, int y) {
 CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, std::string Name, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Name(Name),m_Scene(Scene){}
 
 void CAbsWidnow::Copy(CItem *item, std::string to) {
-    item->Copy(to);
+    if(fs::exists(to))
+        item->Copy(to);
+
 }
 
 void CAbsWidnow::Copy(std::string reg,std::string to,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
@@ -39,7 +43,9 @@ void CAbsWidnow::Copy(std::string reg,std::string to,std::map<std::string ,std::
 
 
 void CAbsWidnow::Delete(CItem *item) {
-    item->Delete();
+
+    if(fs::exists(item->m_Path))
+         item->Delete();
 
 }
 
@@ -55,8 +61,7 @@ void CAbsWidnow::Delete(std::string reg,std::map<std::string ,std::shared_ptr<CI
         }
 
         item->Delete(items);
-        if(iter!=Items->begin())
-            iter--;
+
     }
 }
 
@@ -75,9 +80,9 @@ void CAbsWidnow::Move(std::string reg, std::string dest,std::map<std::string ,st
                 items[it->second->m_Path]=it->second;
             }
         }
+
         item->Move(items, dest);
-        if(iter!=Items->begin())
-            iter--;
+
     }
     else{
     }
@@ -98,7 +103,7 @@ void CAbsWidnow::CreateFolder(std::string name, std::map<std::string ,std::share
         CItem *item = itr->second->m_inFolder;
         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item, item));
         Items->insert({ tmp->m_Path, tmp });
-        // Items->emplace_back(tmp);
+
 
     }
 }

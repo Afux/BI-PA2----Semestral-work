@@ -9,6 +9,7 @@
 #include "map"
 #include <memory>
 #include <iostream>
+#include <filesystem>
 class CItem {
 
 
@@ -19,8 +20,7 @@ public:
     std::string m_Path;
     bool m_isSelected;
     void Select();
-    //CDate m_Date;
-    //virtual void Add()=0;
+
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     virtual void Print()=0;
@@ -38,6 +38,8 @@ public:
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
     virtual void UpdateSize()=0;
+    bool IsReadable(const std::filesystem::path& p);
+    bool IsWriteable(const std::filesystem::path& p);
 
 
 private:
