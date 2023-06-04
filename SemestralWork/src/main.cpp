@@ -34,7 +34,11 @@ int main() {
     //cout<<sd->size()<<endl;
     //uf.m_items
     /*
-    CDir uf("/home/afu/PA1/df/TESTER",2,NULL,NULL);
+  CDir uf("/home/afu/PA1",2,NULL,NULL);
+   cout<< uf.IsReadable("/home/afu/PA1/df/TESTER")<<endl;
+    for (auto it = uf.m_items.begin(); it !=uf.m_items.end() ; ++it) {
+        cout<<it->second->m_Name<<endl;
+    }
 
     cout<<"------"<<endl;
     for (auto i = uf.m_items.begin(); i !=uf.m_items.end() ; ++i) {

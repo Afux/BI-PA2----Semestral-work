@@ -135,19 +135,23 @@ CAbsWidnow::~CAbsWidnow() {
 void CAbsWidnow::FindByText(std::string text, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
     if(Items->size()>1) {
         auto itr=Items->begin();
-        itr++;
+      //  itr++;
         CItem *item = itr->second->m_inFolder;
         vector<CItem*> found;
-        item->FindText(text,&found);
+       if(item!=NULL)
+         item->FindText(text,&found);
+
 
         ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
 
         for (int i = 0; i <found.size() ; ++i) {
+            throw logic_error("");
             MyFile<<found[i]->m_Path<<endl;
         }
 
         // Close the file
         MyFile.close();
+
     }
 }
 

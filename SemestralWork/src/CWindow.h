@@ -20,6 +20,8 @@ public:
     CDir m_StartDir;
 
     CDir m_currDir;
+    _Rb_tree_iterator<pair<const basic_string<char>, shared_ptr<CItem>>> tt;
+
 
     CItem* m_CurrFile;
     void Print() override;

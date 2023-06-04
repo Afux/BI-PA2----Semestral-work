@@ -4,11 +4,11 @@
 namespace fs = std::filesystem;
 CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
-    if(!fs::exists(path)) {
+    if(!fs::exists(path)&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
         if(fs::is_directory(toFile->m_Path))
-            fs::create_directory_symlink(toFile->m_Path,path);
+            fs::create_directory_symlink(toFile->m_Path,path+"l");
         else
-            fs::create_symlink(toFile->m_Path,path);
+            fs::create_symlink(toFile->m_Path,path+"l");
 
     }
 }
@@ -93,7 +93,7 @@ void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **i
 }
 
 void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
-    m_toFile->FindText(FindThis,Found);
+  //  m_toFile->FindText(FindThis,Found);
 }
 
 void CLink::Deduplicate(CItem *DeduplicateMe) {}

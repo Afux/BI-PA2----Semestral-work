@@ -15,8 +15,8 @@ void CManager::Print() {
 
 CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected, Name,this),
 m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height+1),0,"BAR")),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home/afu/PA1")),
-m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/home/afu/PA1")),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home")),
+m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/home")),
 m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1),0,"Menu", this)),
 m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu")),
 m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu"))
@@ -62,18 +62,29 @@ void CManager::ReadKey() {
     switch(c) {
         case 'w':
         case 'W':
-            m_ActiveWindow->m_Selected--;
+            if(m_ActiveWindow->m_Selected!=0)
+                m_ActiveWindow->m_Selected--;
+            else
+                m_ActiveWindow->m_Selected=0;
             if( m_ActiveWindow->iter!=m_ActiveWindow->m_Items->begin())
                  m_ActiveWindow->iter--;
-
+            if(m_ActiveWindow->m_Selected>15){
+                m_ActiveWindow->tt--;
+            }
             break;
         case 's':
         case 'S':
             m_ActiveWindow->m_Selected++;
-            if( m_ActiveWindow->m_Selected==1)
+            if(m_ActiveWindow->m_Selected>15){
+                m_ActiveWindow->tt++;
+            }
+            if( m_ActiveWindow->m_Selected==1&&m_ActiveWindow->m_Selected!=0)
                 m_ActiveWindow->iter=m_ActiveWindow->m_Items->begin();
-            else
-                 m_ActiveWindow->iter++;
+            else {
+                m_ActiveWindow->iter++;
+               if( m_ActiveWindow->iter==m_ActiveWindow->m_Items->end())
+                   m_ActiveWindow->iter--;
+            }
 
             break;
         case 'n':

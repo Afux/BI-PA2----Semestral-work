@@ -11,74 +11,42 @@ using namespace std;
 
 CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : CItem(path, size,inFolder),m_parr(Parr) {
     m_DeleteMe=NULL;
-    try {
-        fs::path filePath(m_Path);
-        fs::file_status fileStatus = fs::status(filePath);
-        if (fs::status_known(fileStatus)) {
 
-        }
-        else {
-           
-        }
+    if(fs::exists(path)&&IsReadable(path)) {
 
-    }
-    catch (const fs::filesystem_error& e) {
-        cout<<"D"<<endl;
-    }
-/*
-    if(Parr!=NULL){
-       // shared_ptr<CItem> tmp = shared_ptr<CItem>(m_parr);
-
-       // shared_ptr<CItem> tmp = shared_ptr<CItem>( new CItem(m_parr));
-              //  auto tmp=m_parr->clone();
-
-
-
-        m_items.emplace_back(m_parr->clone());
-        m_currItems.emplace_back(m_parr->clone());
-
-    }
-
-    else{
-      //  auto tmp= this->clone();
-       // auto sd=make_shared<CDir*>(this);
-
-      // shared_ptr<CItem> p2(this);
-        m_items.emplace_back(std::make_shared<CDir>(*this));
-        m_currItems.emplace_back(this->clone());
-    }
-*/
-    if(IsReadable(path)&&fs::exists(path)) {
-        for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
-                                                                  std::filesystem::directory_options::skip_permission_denied)) {
+        for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
             string s = dirEntry.path();
-            std::filesystem::file_time_type ftime = std::filesystem::last_write_time(s);
 
 
+            if(IsReadable(s)){
+               // cout<<"ADDED "<<s<<endl;
+                if (dirEntry.is_symlink()) {
 
+                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
+                    tmp->UpdateSize();
+                    m_items[tmp->m_Path]=tmp;
+                } else if (dirEntry.is_directory()) {
 
-            if (dirEntry.is_symlink()) {
+                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
+                    tmp->UpdateSize();
+                    m_items[tmp->m_Path]=tmp;
 
-                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
-                tmp->UpdateSize();
-                m_items[tmp->m_Path]=tmp;
-            } else if (dirEntry.is_directory()) {
+                } else if (dirEntry.is_regular_file()) {
 
-                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
-                tmp->UpdateSize();
-                m_items[tmp->m_Path]=tmp;
+                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
+                    tmp->UpdateSize();
+                    m_items[tmp->m_Path]=tmp;
 
-            } else if (dirEntry.is_regular_file()) {
-
-                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
-                tmp->UpdateSize();
-                m_items[tmp->m_Path]=tmp;
-
+                }
             }
+
+
+
         }
     }
     else{
-         fs::create_directory(path);
+        if(IsReadable(path)&&IsWriteable(path))
+             fs::create_directory(path);
 
     }
 }
@@ -143,11 +111,7 @@ void CDir::UpdateSize() {
 
 }
 
-void CDir::SetDate(u_int year, u_int month, u_int day) {
-
-}
-
-
+void CDir::SetDate(u_int year, u_int month, u_int day) {}
 
 void CDir::Print() {
     cout<<"/"<<m_Name;
@@ -167,19 +131,7 @@ std::string CDir::RenameDialog(std::string NewName) {
 }
 
 void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** inFold) {
-   /*
-    if(m_parr== NULL){
 
-       fs::path filePath(m_Path);
-       CDir *temp = new CDir(CDir(filePath.parent_path(), 22, NULL, NULL));
-       temp->UpdateSize();
-       CItem *tmp = temp;
-       m_parr= tmp;
-       m_items[0]=m_parr;
-
-
-   }
-    */
     Refresh();
     *items= &m_items;
     if(m_inFolder!=NULL){
@@ -188,7 +140,6 @@ void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** i
     else{
         *inFold=NULL;
     }
-
 
 }
 
@@ -241,9 +192,12 @@ CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {
 
 void CDir::FindText(std::string FindThis,std::vector<CItem*> *Found) {
 
-    for (auto & item : m_items) {
-        item.second->FindText(FindThis,Found);
+
+    for (auto it = m_items.begin(); it != m_items.end(); ++it) {
+        it->second->FindText(FindThis,Found);
+
     }
+
 
 }
 
@@ -261,11 +215,12 @@ void CDir::ConCat(std::string To) {}
 
 void CDir::Refresh() {
     std::set<string > tmp;
+
     for (const auto &dirEntry: filesystem::directory_iterator(m_Path,
                                                               std::filesystem::directory_options::skip_permission_denied)) {
         string s = dirEntry.path();
         tmp.insert(s);
-        if(!m_items.count(s)){
+        if(IsReadable(s)&& !m_items.count(s)){
             if (dirEntry.is_symlink()) {
 
                 shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
@@ -284,6 +239,10 @@ void CDir::Refresh() {
             }
         }
     }
+
+
+
+
     for(auto it=m_items.begin();it!=m_items.end();it++){
         if(!tmp.count(it->first)){
             m_items.erase(it->first);
@@ -291,9 +250,3 @@ void CDir::Refresh() {
 
     }
 }
-
-
-
-
-
-

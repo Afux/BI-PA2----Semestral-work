@@ -25,16 +25,19 @@ void CItem::Select() {
 
 bool CItem::IsReadable(const fs::path &p) {
 
+    try {
 
         auto perms = fs::status(p).permissions();
         if ((perms & fs::perms::owner_read) != fs::perms::none &&
             (perms & fs::perms::group_read) != fs::perms::none
-                )
-        {
+                ) {
             return true;
         }
         return false;
-
+    }
+    catch (fs::filesystem_error &e){
+        return false;
+    }
 }
 
 bool CItem::IsWriteable(const std::filesystem::path &p) {

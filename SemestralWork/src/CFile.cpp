@@ -94,25 +94,24 @@ void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
     if (inFile.good()) {
 
 
-        inFile.open(m_Path);
+       // inFile.open(m_Path);
         string temp;
         size_t pos;
-        if(inFile){
+
             while(inFile.good())
             {
                 getline(inFile,temp);
                 pos=temp.find(FindThis);
                 if(pos!=string::npos)
                 {
-                    inFile.close();
-                    if (inFile.good()) {
+
                         Found->push_back(this);
                         break;
-                    }
+
 
                 }
             }
-        }
+
     }
 
 

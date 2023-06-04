@@ -5,9 +5,16 @@
 using namespace rang;
 void CWindow::Print() {
 
+    if(m_Selected<=15){
+
+        tt=m_Items->begin();
+
+    }
+
     if(m_Selected>=m_Items->size()+1){
         m_Selected=0;
         iter=m_Items->begin();
+        tt=m_Items->begin();
     }
     //clear();
     moveto(m_Size.m_PosX,m_Size.m_PosY);
@@ -49,11 +56,14 @@ void CWindow::Print() {
 
 
     int cnt=0;
-    for (auto it = m_Items->begin(); it != m_Items->end() ; ++it,cnt++) {
-        if(cnt==15)
+
+    for (auto it = tt; it != m_Items->end() ; ++it,cnt++) {
+        if(cnt==15){
             break;
+        }
+
         moveto(m_Size.m_PosX+2,m_Size.m_PosY+5+cnt);
-        if(cnt==m_Selected-1){
+        if(m_Selected!=0&&(it->second.get()==iter->second.get())){
 
 
 
@@ -110,7 +120,7 @@ void CWindow::Print() {
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
 
     if(m_Selected-1< m_Items->size()){
-        cout <<(iter)->second->m_Name;
+       // cout <<(iter)->second->m_Name;
 
     } else{
 
@@ -124,21 +134,12 @@ CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path
     m_CurrFile=NULL;
    m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
     iter=m_Items->begin();
-
+    tt=m_Items->begin();
     // m_Items=&m_currDir.m_items;
 
 }
 
-void CWindow::Run() {
-    int i=0;
-    while (i<10){
-        ReadKey();
-        Refresh();
-        i++;
-    }
 
-
-}
 
 void CWindow::ReadKey() {}
 
@@ -149,10 +150,9 @@ void CWindow::Enter() {
             iter=m_Items->begin();
             m_Selected=0;
         }
-
-
         else{
-
+            m_currDir= CDir (filesystem::path(iter->second->m_Path).parent_path().parent_path(),2,NULL,NULL);
+            m_Items=&m_currDir.m_items;
         }
     }
     else{
