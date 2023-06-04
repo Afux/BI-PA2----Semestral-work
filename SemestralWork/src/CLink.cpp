@@ -47,7 +47,7 @@ void CLink::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string des
 }
 
 void CLink::UpdateSize() {
-
+    m_Size=m_toFile->m_Size;
 }
 
 void CLink::SetDate(u_int year, u_int month, u_int day) {

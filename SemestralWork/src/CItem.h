@@ -37,6 +37,7 @@ public:
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
+    virtual void UpdateSize()=0;
 
 
 private:
@@ -47,7 +48,6 @@ protected:
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
-    virtual void UpdateSize()=0;
 };
 
 
