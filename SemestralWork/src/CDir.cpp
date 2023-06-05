@@ -208,6 +208,7 @@ void CDir::Deduplicate(CItem *DeduplicateMe) {
         if(it->second.get()!=DeduplicateMe)
             it->second->Deduplicate(DeduplicateMe);
     }
+    Refresh();
 
 }
 

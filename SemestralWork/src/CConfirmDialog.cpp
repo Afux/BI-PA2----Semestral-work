@@ -143,3 +143,13 @@ void CConfirmDialog::PrintLabel() {
     moveto(m_Size.m_PosX+3,m_Size.m_PosY+4);
     cout<<m_Label;
 }
+
+void
+CConfirmDialog::Setup(CAbsWidnow *lastActive, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *items,
+                      CAbsWidnow *Win, const int &Op) {
+m_lastActive=lastActive;
+m_SelectedItem=SelectedItem;
+m_items=items;
+win=Win;
+op=Op;
+}

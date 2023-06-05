@@ -13,12 +13,15 @@ public:
     CMenu(CSize size, unsigned int Selected,CAbsWidnow * lastActive);
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
+    CConfirmDialog m_ConfirmDialog;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     std::map<std::string ,std::shared_ptr<CItem>> *m_SelectedItems;
     CItem * m_selectedItem;
     void Print() override;
     void ReadKey() override;
     void Enter();
+
+    void Setup( CAbsWidnow * LastActive,  std::map<std::string ,std::shared_ptr<CItem>> *Items,std::map<std::string ,std::shared_ptr<CItem>> *SelectedItems, CItem *SelectedItem);
 
 private:
    std::vector<std::string> m_Content;

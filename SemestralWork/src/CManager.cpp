@@ -111,21 +111,15 @@ void CManager::ReadKey() {
         case '1':
         case '+':
             if(m_ActiveWindow->m_Selected!=0){
-                m_Menu.m_lastActive= this;
-                m_Menu.m_items=m_ActiveWindow->m_Items;
-                m_Menu.m_selectedItem=m_ActiveWindow->iter->second.get();
+                m_Menu.Setup(this,m_ActiveWindow->m_Items,&m_ActiveWindow->m_Selecteditems,m_ActiveWindow->iter->second.get());
                 m_Scene=&m_Menu;
             }
 
             break;
         case '2':
             if(m_ActiveWindow->m_Selected!=0){
-            m_Confirm.m_lastActive= this;
-            m_Confirm.m_SelectedItem=m_ActiveWindow->iter->second.get();
-            m_Confirm.m_items=m_ActiveWindow->m_Items;
-            m_Confirm.win=m_ActiveWindow;
-            m_Confirm.op=1;
-            m_Scene=&m_Confirm;
+                m_Confirm.Setup(this,m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow,1);
+                m_Scene=&m_Confirm;
 
             }
             break;

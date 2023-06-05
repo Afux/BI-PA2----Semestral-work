@@ -16,6 +16,8 @@ public:
     void PrintBorders();
     void ClearDialogSpace();
     void PrintLabel();
+
+    void Setup(CAbsWidnow * lastActive,CItem * SelectedItem,std::map<std::string ,std::shared_ptr<CItem>> *items, CAbsWidnow * Win,const int &Op);
     void ReadKey() override;
     void Enter();
     void Run();

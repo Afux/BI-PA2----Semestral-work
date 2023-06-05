@@ -10,11 +10,13 @@ using namespace std;
 
 CMenu::CMenu(CSize size, unsigned int Selected,CAbsWidnow* lastActive)
 :  CAbsWidnow(size, Selected, this),m_lastActive(lastActive),
-    m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)){
+    m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)),
+    m_ConfirmDialog(CConfirmDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)){
+
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
     m_Content.emplace_back("Move by Regex");
-    m_Content.emplace_back("Create symb. link");
+    m_Content.emplace_back("Create sym. link");
     m_Content.emplace_back("Find by text");
     m_Content.emplace_back("Concat files");
     m_Content.emplace_back("Deduplicate file");
@@ -102,6 +104,7 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 6:
+           // m_ConfirmDialog.Setup(m_lastActive,m_selectedItem,m_items,m,)
             m_inputDialog.Setup(m_lastActive,7,"FIX",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
@@ -143,5 +146,13 @@ void CMenu::ClearDialogSpace() {
             cout<<" ";
         }
     }
+}
+
+void CMenu::Setup(CAbsWidnow *LastActive, std::map<std::string, std::shared_ptr<CItem>> *Items,
+                  std::map<std::string, std::shared_ptr<CItem>> *SelectedItems, CItem * SelectedItem) {
+m_lastActive=LastActive;
+m_items=Items;
+m_selectedItem=SelectedItem;
+m_SelectedItems=SelectedItems;
 }
 

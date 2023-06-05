@@ -121,10 +121,18 @@ void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
 
 void CFile::Deduplicate(CItem *DeduplicateMe) {
     if(identicalFiles(m_Path,DeduplicateMe->m_Path)){
-        this->Delete();
+
        //TryCatch
+        if(fs::exists(m_Path)) {
+            if (IsReadable(m_Path) && IsWriteable(m_Path)){
+                std::filesystem::remove_all(m_Path);
+
+            }
+
+        }
         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(m_Path, 22, DeduplicateMe, m_inFolder));
         m_inFolder->m_items.insert({tmp->m_Path,tmp});
+
     }
 }
 
