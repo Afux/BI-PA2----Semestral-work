@@ -13,6 +13,9 @@ public:
     CItem * m_SelectedItem;
     std::vector<std::string > m_Content;
     void Print() override;
+    void PrintBorders();
+    void ClearDialogSpace();
+    void PrintLabel();
     void ReadKey() override;
     void Enter();
     void Run();

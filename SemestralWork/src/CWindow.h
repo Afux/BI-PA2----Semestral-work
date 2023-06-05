@@ -25,6 +25,7 @@ public:
     CItem* m_CurrFile;
     void Print() override;
     void ReadKey() override;
+    void PrintBorders();
     void Run();
     void Enter();
 

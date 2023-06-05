@@ -23,6 +23,10 @@ public:
 
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
+    CItem* m_inFolder;
+    virtual std::shared_ptr<CItem>  clone() const=0;
+    std::map<std::string ,std::shared_ptr<CItem>> m_items;
+
     virtual void Print()=0;
     virtual void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)=0;
     virtual void Delete()=0;
@@ -33,19 +37,16 @@ public:
     virtual void Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string dest)=0;
     virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
     virtual void ConCat(std::string To)=0;
-    CItem* m_inFolder;
-    virtual std::shared_ptr<CItem>  clone() const=0;
-    std::map<std::string ,std::shared_ptr<CItem>> m_items;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
     virtual void UpdateSize()=0;
-    bool IsReadable(const std::filesystem::path& p);
-    bool IsWriteable(const std::filesystem::path& p);
+
 
 
 private:
 protected:
 
-
+    bool IsReadable(const std::filesystem::path& p);
+    bool IsWriteable(const std::filesystem::path& p);
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;

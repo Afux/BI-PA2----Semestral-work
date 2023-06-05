@@ -6,13 +6,16 @@ using namespace std;
 
 CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
-    if(!fs::exists(path+"l")&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
-        if(fs::is_directory(toFile->m_Path))
-            fs::create_directory_symlink(toFile->m_Path,path+"l");
-        else
-            fs::create_symlink(toFile->m_Path,path+"l");
+    if(toFile!=NULL){
+        if(!fs::exists(path)&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
+            if(fs::is_directory(toFile->m_Path))
+                fs::create_directory_symlink(toFile->m_Path,path);
+            else
+                fs::create_symlink(toFile->m_Path,path);
 
+        }
     }
+
 }
 
 
@@ -58,7 +61,7 @@ void CLink::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string des
 }
 
 void CLink::UpdateSize() {
-    m_Size=m_toFile->m_Size;
+    //m_Size=m_toFile->m_Size;
 }
 
 void CLink::SetDate(u_int year, u_int month, u_int day) {
@@ -101,6 +104,8 @@ void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
 void CLink::Deduplicate(CItem *DeduplicateMe) {}
 
 void CLink::ConCat(std::string To) {
-    m_toFile->ConCat(To);
+   if(m_toFile!=NULL){
+       m_toFile->ConCat(To);
+   }
 }
 

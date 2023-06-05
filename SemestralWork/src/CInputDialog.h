@@ -18,7 +18,9 @@ public:
     CManager * m_manager;
     void Print() override;
     void ReadKey() override;
-
+    void PrintBorders();
+    void ClearDialogSpace();
+    void PrintLabel();
     void Run();
     int op;
     CAbsWidnow * m_lastActive;

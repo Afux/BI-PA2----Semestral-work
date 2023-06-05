@@ -25,13 +25,9 @@ public:
     void Refresh();
     virtual void Print()=0;
     virtual void  ReadKey()=0;
-
+protected:
     int clear();
     void moveto(int x = 1, int y = 1);
-
-   //OPs
-
-protected:
 private:
 };
 

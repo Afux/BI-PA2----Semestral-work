@@ -16,15 +16,19 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
 
         for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
             string s = dirEntry.path();
-
-
             if(IsReadable(s)){
-               // cout<<"ADDED "<<s<<endl;
                 if (dirEntry.is_symlink()) {
+                    if(m_items.count(fs::read_symlink(dirEntry))){
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, m_items.at(fs::read_symlink(dirEntry)).get(), this));
+                        tmp->UpdateSize();
+                        m_items[tmp->m_Path]=tmp;
+                    }
+                    else{
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
+                        tmp->UpdateSize();
+                        m_items[tmp->m_Path]=tmp;
+                    }
 
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
-                    tmp->UpdateSize();
-                    m_items[tmp->m_Path]=tmp;
                 } else if (dirEntry.is_directory()) {
 
                     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
@@ -39,9 +43,6 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
 
                 }
             }
-
-
-
         }
     }
     else{

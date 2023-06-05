@@ -20,53 +20,22 @@ void CConfirmDialog::Print() {
     if(m_Selected>=m_Content.size()){
         m_Selected=0;
     }
-
-    moveto(m_Size.m_PosX,m_Size.m_PosY);
-    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
-        moveto(m_Size.m_PosX,i);
-        for (size_t j =1; j < m_Size.m_Width; ++j) {
-            cout<<" ";
-        }
-    }
-    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    ClearDialogSpace();
+    PrintBorders();
+    PrintLabel();
 
 
-    //Horni
-    for (size_t i =1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
-
-    }
-    moveto(m_Size.m_PosX+3,m_Size.m_PosY+4);
-    cout<<m_Label;
-    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
-        moveto(m_Size.m_PosX,i);
-        cout<<bg::black<<"*"<<style::reset;
-        moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
-        cout<<bg::black<<"*"<<style::reset;
-        moveto(m_Size.m_PosX,i);
-    }
-    //Dolni
-
-    for (size_t i = 1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
-
-    }
     moveto(m_Size.m_PosX+2,m_Size.m_Height-4+m_Size.m_PosY);
     for (size_t i = 0; i < m_Content.size() ; ++i) {
-
         if(i==m_Selected){
-
             cout << bg::blue<<m_Content[i]<<style::reset;
-
         }
         else{
-
             cout <<m_Content[i];
-
         }
         moveto(m_Size.m_Width-10+m_Size.m_PosX,m_Size.m_Height-4+m_Size.m_PosY);
-
     }
+
     moveto(1,m_Size.m_AbsPosY+2);
 
 }
@@ -91,14 +60,13 @@ void CConfirmDialog::ReadKey() {
         case 'D':
             m_Selected++;
             break;
+        case 'E':
         case 'e':
             Enter();
             break;
 
 
     }
-
-
 
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -135,4 +103,43 @@ void CConfirmDialog::Run() {
         clear();
     }
 
+}
+
+void CConfirmDialog::PrintBorders() {
+    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    //Upper borders
+    for (size_t i =1; i < m_Size.m_Width; ++i) {
+        cout<<bg::black<<"*"<<style::reset;
+
+    }
+    //SIDE BORDES
+    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
+        moveto(m_Size.m_PosX,i);
+        cout<<bg::black<<"*"<<style::reset;
+        moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
+        cout<<bg::black<<"*"<<style::reset;
+        moveto(m_Size.m_PosX,i);
+    }
+    //Bottom bordesr
+    for (size_t i = 1; i < m_Size.m_Width; ++i) {
+        cout<<bg::black<<"*"<<style::reset;
+
+    }
+}
+
+void CConfirmDialog::ClearDialogSpace() {
+    //CLEAR DIALOG
+    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
+        moveto(m_Size.m_PosX,i);
+        for (size_t j =1; j < m_Size.m_Width; ++j) {
+            cout<<" ";
+        }
+    }
+}
+
+void CConfirmDialog::PrintLabel() {
+    //LABEL
+    moveto(m_Size.m_PosX+3,m_Size.m_PosY+4);
+    cout<<m_Label;
 }

@@ -5,10 +5,9 @@
 #include <termios.h>
 #include <iostream>
 #include "regex"
-#include <fstream>
-#include "filesystem"
-namespace fs = std::filesystem;
+
 using namespace std;
+
 int CAbsWidnow::clear() {
     return system("clear");
 }
@@ -25,7 +24,6 @@ CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow* Scene): m_
 void CAbsWidnow::Refresh() {
         clear();
         Print();
-
 }
 
 
