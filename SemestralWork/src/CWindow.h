@@ -10,17 +10,16 @@
 #include "CConfirmDialog.h"
 #include "CAbsWidnow.h"
 #include "CDir.h"
-using namespace std;
 class CWindow: public CAbsWidnow{
 public:
-    CWindow( CSize size, unsigned int Selected, std::string Name,string Path);
+    CWindow( CSize size, unsigned int Selected,std::string Path);
     std::string m_CurrPath;
     std::map<std::string ,std::shared_ptr<CItem>>   *m_Items;
     std::map<std::string ,std::shared_ptr<CItem>> m_Selecteditems;
     CDir m_StartDir;
 
     CDir m_currDir;
-    _Rb_tree_iterator<pair<const basic_string<char>, shared_ptr<CItem>>> tt;
+    std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> tt;
 
 
     CItem* m_CurrFile;

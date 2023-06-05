@@ -6,12 +6,14 @@
 #include <iostream>
 #include "rang.hpp"
 using namespace rang;
-CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected, std::string Name) : CAbsWidnow(size, Selected, Name,
-                                                                                                 this) {
-    op=0;
-m_Content.push_back("[YES]");
-m_Content.push_back("[No]");
+using namespace std;
 
+CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this) {
+
+    op=0;
+    m_Content.emplace_back("[YES]");
+    m_Content.emplace_back("[No]");
+    m_Label="ARE YOU SURE?";
 }
 
 void CConfirmDialog::Print() {
@@ -26,12 +28,15 @@ void CConfirmDialog::Print() {
         }
     }
     moveto(m_Size.m_PosX,m_Size.m_PosY);
+
+
     //Horni
     for (size_t i =1; i < m_Size.m_Width; ++i) {
         cout<<bg::black<<"*"<<style::reset;
 
     }
-
+    moveto(m_Size.m_PosX+3,m_Size.m_PosY+4);
+    cout<<m_Label;
     for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
         moveto(m_Size.m_PosX,i);
         cout<<bg::black<<"*"<<style::reset;
@@ -61,6 +66,8 @@ void CConfirmDialog::Print() {
         moveto(m_Size.m_Width-10+m_Size.m_PosX,m_Size.m_Height-4+m_Size.m_PosY);
 
     }
+    moveto(1,m_Size.m_AbsPosY+2);
+
 }
 
 void CConfirmDialog::ReadKey() {
@@ -114,12 +121,17 @@ void CConfirmDialog::Enter() {
               break;
       }
       op=0;
+      m_Selected=0;
+
       m_lastActive->m_Scene=m_lastActive;
 
 
   }
-  else
+  else{
+      m_Selected=0;
       m_lastActive->m_Scene=m_lastActive;
+  }
+
 
 }
 void CConfirmDialog::Run() {

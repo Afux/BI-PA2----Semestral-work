@@ -1,7 +1,7 @@
 
 #include "CHelpBar.h"
 #include "iostream"
-CHelpBar::CHelpBar(CSize size, unsigned int Selected, std::string Name) : CAbsWidnow(size, Selected, Name, this) {
+CHelpBar::CHelpBar(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected, this) {
 
     m_Content.push_back("Menu");
     m_Content.push_back("Delete");
@@ -26,8 +26,6 @@ void CHelpBar::Print() {
 
 }
 
-void CHelpBar::ReadKey() {
-
-}
+void CHelpBar::ReadKey() {}
 
 

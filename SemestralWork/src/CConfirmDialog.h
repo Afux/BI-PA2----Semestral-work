@@ -8,20 +8,19 @@
 #include "CAbsWidnow.h"
 class CConfirmDialog: public CAbsWidnow{
 public:
-    CConfirmDialog(CSize size, unsigned int Selected, std::string Name);
+    CConfirmDialog(CSize size, unsigned int Selected);
     std::string m_Label;
-    std::string m_File_name;
     CItem * m_SelectedItem;
-    vector<std::string > m_Content;
+    std::vector<std::string > m_Content;
     void Print() override;
     void ReadKey() override;
     void Enter();
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
-
     CAbsWidnow * win;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
+private:
 
 
 

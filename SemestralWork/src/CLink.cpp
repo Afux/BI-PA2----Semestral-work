@@ -2,6 +2,8 @@
 #include "CLink.h"
 #include "filesystem"
 namespace fs = std::filesystem;
+using namespace std;
+
 CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
     if(!fs::exists(path)&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {

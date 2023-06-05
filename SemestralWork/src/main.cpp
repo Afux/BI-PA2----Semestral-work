@@ -47,7 +47,7 @@ int main() {
     CDir se("/home/afu/PA1/df/TESTER/DEL",2,NULL,NULL);
     cout<<se.m_Path<<endl;
      */
-   CManager man(CSize(100,30,1,1),"MAN",0);
+   CManager man(CSize(100,30,1,1,30),"MAN",0);
     man.Run();
 
 /*

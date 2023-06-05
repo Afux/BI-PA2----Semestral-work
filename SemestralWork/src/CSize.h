@@ -5,7 +5,7 @@
 
 class CSize {
 public:
-    CSize( unsigned int Width,  unsigned int Height,   int PosX,   int PosY);
+    CSize( unsigned int Width,  unsigned int Height,   int PosX,   int PosY,int AbsPosY);
     void SetHeight(const unsigned int &val);
     void SetWidth(const unsigned int &val);
     unsigned int GetHeight() const;
@@ -14,6 +14,7 @@ public:
     unsigned int m_Height;
     int  m_PosX;
     int m_PosY;
+    int m_AbsPosY;
 };
 
 

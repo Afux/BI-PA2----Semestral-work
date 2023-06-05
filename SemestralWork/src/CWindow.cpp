@@ -3,6 +3,8 @@
 #include "CWindow.h"
 #include "rang.hpp"
 using namespace rang;
+using namespace std;
+
 void CWindow::Print() {
 
     if(m_Selected<=15){
@@ -129,8 +131,8 @@ void CWindow::Print() {
 
 }
 
-CWindow::CWindow(CSize size, unsigned int Selected, std::string Name,string Path)
-:  CAbsWidnow(size, Selected, Name, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
+CWindow::CWindow(CSize size, unsigned int Selected,string Path)
+:  CAbsWidnow(size, Selected, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
     m_CurrFile=NULL;
    m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
     iter=m_Items->begin();

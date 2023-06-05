@@ -4,6 +4,7 @@
 #include <fstream>
 #include "CLink.h"
 namespace fs = std::filesystem;
+using namespace std;
 
 CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
     if(!fs::exists(path)) {

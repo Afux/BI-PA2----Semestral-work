@@ -10,27 +10,28 @@ class CManager;
 class CInputDialog: public CAbsWidnow{
 public:
 
-    CInputDialog(CSize size, unsigned int Selected, std::string Name);
+    CInputDialog(CSize size, unsigned int Selected);
     std::string m_Label;
-    std::string m_ButtonLabel;
     CItem * m_SelectedItem;
-    std::string  m_input;
-    std::string  m_reg;
-    std::string m_path;
-    vector<std::string > m_Content;
+
+    std::vector<std::string > m_Content;
     CManager * m_manager;
     void Print() override;
     void ReadKey() override;
-    void Enter();
+
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
     CAbsWidnow * win;
-
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
+
+
+private:
+    std::string  m_input;
+    std::string  m_reg;
+    std::string m_path;
     void parseString(const std::string& input, char delimiter);
-
-
+    void Enter();
 };
 
 

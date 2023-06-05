@@ -5,6 +5,8 @@
 #include <termios.h>
 #include <iostream>
 #include <regex>
+using namespace std;
+
 void CManager::Print() {
     clear();
     m_LeftPanel.Print();
@@ -13,17 +15,16 @@ void CManager::Print() {
 
 }
 
-CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected, Name,this),
-m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height+1),0,"BAR")),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1),0,"Window","/home")),
-m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1),0,"Window","/home")),
-m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1),0,"Menu", this)),
-m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu")),
-m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2),0,"Menu"))
+CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected,this),
+m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height+1,size.m_Height),0)),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height,1,1,size.m_Width),0,"/home")),
+m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height,size.m_Width/2,1,size.m_Height),0,"/home")),
+m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height),0, this)),
+m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0)),
+m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0))
 {
 
-   // m_LeftPanel.m_Items=&m_Start.m_currItems;
-   // m_RightPanel.m_Items=&m_Start.m_currItems;
+
     m_runFlag= true;
     m_ActivePanel=this;
     m_ActiveWindow=&m_LeftPanel;
@@ -98,7 +99,6 @@ void CManager::ReadKey() {
         case 'K':
             if(m_ActiveWindow->m_Selected!=0)
                 m_ActiveWindow->iter->second->Select();
-              //  m_ActiveWindow->m_Items->at(m_ActiveWindow->m_Selected-1).get()->Select();
             break;
 
         case '1':
@@ -166,7 +166,9 @@ void CManager::ReadKey() {
             m_Scene=&m_Input;
             }
             break;
+
         case '7':
+        case 44:
             m_runFlag= false;
             break;
 

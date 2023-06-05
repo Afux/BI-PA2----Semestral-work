@@ -6,18 +6,20 @@
 #include <termios.h>
 #include <iostream>
 using namespace rang;
-CMenu::CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow* lastActive)
-:  CAbsWidnow(size, Selected, Name, this),m_lastActive(lastActive),
-   m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2),0,"Menu")){
-    m_Content.push_back("Remove by Regex");
-    m_Content.push_back("Copy by Regex");
-    m_Content.push_back("Move by Regex");
-    m_Content.push_back("Create symb. link");
-    m_Content.push_back("Find by text");
-    m_Content.push_back("Concat files");
-    m_Content.push_back("Deduplicate file");
+using namespace std;
 
-    m_Content.push_back("Quit");
+CMenu::CMenu(CSize size, unsigned int Selected,CAbsWidnow* lastActive)
+:  CAbsWidnow(size, Selected, this),m_lastActive(lastActive),
+   m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)){
+    m_Content.emplace_back("Remove by Regex");
+    m_Content.emplace_back("Copy by Regex");
+    m_Content.emplace_back("Move by Regex");
+    m_Content.emplace_back("Create symb. link");
+    m_Content.emplace_back("Find by text");
+    m_Content.emplace_back("Concat files");
+    m_Content.emplace_back("Deduplicate file");
+
+    m_Content.emplace_back("Quit");
 
 
 }
@@ -70,7 +72,7 @@ void CMenu::Print() {
         }
 
     }
-
+    moveto(1,m_Size.m_AbsPosY+2);
 
 }
 
@@ -170,6 +172,7 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 7:
+            m_Selected=0;
             m_inputDialog.m_lastActive=m_lastActive;
             m_lastActive->m_Scene=m_lastActive;
             break;

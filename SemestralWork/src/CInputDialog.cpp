@@ -6,10 +6,10 @@
 #include <termios.h>
 #include <iostream>
 using namespace rang;
-CInputDialog::CInputDialog(CSize size, unsigned int Selected, std::string Name) : CAbsWidnow(size, Selected, Name,this) {
+using namespace std;
+
+CInputDialog::CInputDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this) {
     op=0;
-    m_Content.push_back("[YES]");
-    m_Content.push_back("[No]");
     m_Label="Zadej Vstup";
 }
 
@@ -48,21 +48,8 @@ void CInputDialog::Print() {
         cout<<bg::black<<"*"<<style::reset;
 
     }
-    moveto(m_Size.m_PosX+2,m_Size.m_Height-4+m_Size.m_PosY);
-    for (size_t i = 0; i < m_Content.size() ; ++i) {
 
-        if(i==m_Selected){
-
-            cout << bg::blue<<m_Content[i]<<style::reset;
-
-        }
-        else{
-            cout <<m_Content[i];
-        }
-        moveto(m_Size.m_Width-10+m_Size.m_PosX,m_Size.m_Height-4+m_Size.m_PosY);
-
-    }
-
+    moveto(1,m_Size.m_AbsPosY+2);
 
 }
 
@@ -71,14 +58,10 @@ void CInputDialog::ReadKey() {
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-    moveto(m_Size.m_PosX+4,m_Size.m_PosY+8);
+    cout<<bg::yellow<<m_Label<<": "<<bg::reset;
     std::getline(std::cin, m_input);
     parseString(m_input,':');
-
     Enter();
-   // m_lastActive->m_Scene=m_lastActive;
-
-
 }
 
 void CInputDialog::Enter() {
@@ -92,7 +75,6 @@ void CInputDialog::Enter() {
                 break;
             case 3:
                 Move(m_reg,m_path,m_items);
-
                 break;
             case 4:
                 //Create();
@@ -134,12 +116,8 @@ void CInputDialog::Enter() {
 }
 
 void CInputDialog::Run() {
-
         Print();
         ReadKey();
-        //clear();
-
-
 }
 
 void CInputDialog::parseString(const string &input, char delimiter) {

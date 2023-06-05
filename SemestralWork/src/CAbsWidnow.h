@@ -9,22 +9,21 @@
 #include "CFile.h"
 #include "CLink.h"
 #include <memory>
-using namespace std;
 class CAbsWidnow {
 public:
-    CAbsWidnow(CSize size, unsigned int Selected, std::string Name, CAbsWidnow * Scene);
+    CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow * Scene);
 
     virtual ~CAbsWidnow();
     CSize  m_Size;
     unsigned int m_Selected;
-    std::string  m_Name;
     CAbsWidnow* m_Scene;
 
-    _Rb_tree_iterator<pair<const basic_string<char>, shared_ptr<CItem>>> iter;
+   std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> iter;
 
     void Refresh();
     virtual void Print()=0;
     virtual void  ReadKey()=0;
+
     void clear();
     void moveto(int x = 1, int y = 1);
 
@@ -40,7 +39,7 @@ public:
     void CreateLink(std::string name,CItem * to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void FindByText(std::string text,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void Deduplicate(CItem* item,std::map<std::string ,std::shared_ptr<CItem>> *Items);
-    void ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items,string to);
+    void ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items,std::string to);
 
 protected:
 private:

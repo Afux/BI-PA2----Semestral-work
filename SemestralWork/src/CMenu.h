@@ -10,17 +10,18 @@
 class CMenu: public CAbsWidnow{
 public:
 
-    CMenu(CSize size, unsigned int Selected, std::string Name,CAbsWidnow * lastActive);
-    vector<string> m_Content;
+    CMenu(CSize size, unsigned int Selected,CAbsWidnow * lastActive);
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CItem * m_selectedItem;
-    //CConfirmDialog   m_Dialog;
-    //CInputDialog  m_InputDialog;
     void Print() override;
     void ReadKey() override;
     void Enter();
+
+private:
+   std::vector<std::string> m_Content;
+
 };
 
 

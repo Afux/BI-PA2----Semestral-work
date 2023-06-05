@@ -3,7 +3,6 @@
 #define SEMESTRALWORK_CLINK_H
 #include "CItem.h"
 #include "CDir.h"
-using namespace std;
 class CLink:public CItem {
 public:
     CLink(std::string path,unsigned int size,CItem* toFile,CItem* parr);
@@ -16,8 +15,8 @@ public:
      void Copy(std::string to) override;
      void Delete() override;
      void Delete(std::map<std::string ,std::shared_ptr<CItem>> items) override;
-     void Move( string dest) override;
-     void Move(std::map<std::string ,std::shared_ptr<CItem>> items,string dest ) override;
+     void Move( std::string dest) override;
+     void Move(std::map<std::string ,std::shared_ptr<CItem>> items,std::string dest ) override;
      void UpdateSize() override;
      void SetDate(u_int year, u_int month, u_int day) override;
      void Deduplicate(CItem * DeduplicateMe) override;

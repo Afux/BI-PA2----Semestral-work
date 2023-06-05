@@ -9,9 +9,7 @@
 
 class CHelpBar: public CAbsWidnow{
 public:
-    CHelpBar(CSize size, unsigned int Selected, std::string Name);
-
-    CHelpBar();
+    CHelpBar(CSize size, unsigned int Selected);
 
     std::vector<std::string> m_Content;
     void Print() override;

@@ -8,6 +8,7 @@
 #include <fstream>
 #include "filesystem"
 namespace fs = std::filesystem;
+using namespace std;
 void CAbsWidnow::clear() {
     system("clear");
 }
@@ -17,7 +18,7 @@ void CAbsWidnow::moveto(int x, int y) {
 
 }
 
-CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, std::string Name, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Name(Name),m_Scene(Scene){}
+CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Scene(Scene){}
 
 void CAbsWidnow::Copy(CItem *item, std::string to) {
     if(fs::exists(to))
@@ -27,7 +28,7 @@ void CAbsWidnow::Copy(CItem *item, std::string to) {
 
 void CAbsWidnow::Copy(std::string reg,std::string to,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
     std::map<std::string ,std::shared_ptr<CItem>> items;
-    regex r(reg);
+    std::regex r(reg);
     if(!Items->empty()){
         CItem* item=Items->begin()->second->m_inFolder;
         for (auto it = Items->begin(); it !=Items->end() ; ++it) {
@@ -144,8 +145,7 @@ void CAbsWidnow::FindByText(std::string text, std::map<std::string ,std::shared_
 
         ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
 
-        for (int i = 0; i <found.size() ; ++i) {
-            throw logic_error("");
+        for (size_t i = 0; i <found.size() ; ++i) {
             MyFile<<found[i]->m_Path<<endl;
         }
 
