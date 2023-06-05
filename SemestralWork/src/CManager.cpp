@@ -5,6 +5,7 @@
 #include <termios.h>
 #include <iostream>
 #include <regex>
+
 using namespace std;
 
 void CManager::Print() {
@@ -97,8 +98,10 @@ void CManager::ReadKey() {
             break;
         case 'k':
         case 'K':
-            if(m_ActiveWindow->m_Selected!=0)
+            if(m_ActiveWindow->m_Selected!=0){
                 m_ActiveWindow->iter->second->Select();
+                m_ActiveWindow->m_Selecteditems.insert({iter->second->m_Path,iter->second});
+            }
             break;
 
         case '1':
@@ -106,7 +109,6 @@ void CManager::ReadKey() {
             if(m_ActiveWindow->m_Selected!=0){
                 m_Menu.m_lastActive= this;
                 m_Menu.m_items=m_ActiveWindow->m_Items;
-
                 m_Menu.m_selectedItem=m_ActiveWindow->iter->second.get();
                 m_Scene=&m_Menu;
             }
@@ -125,45 +127,31 @@ void CManager::ReadKey() {
             break;
         case '3':
             if(m_ActiveWindow->m_Selected!=0) {
-                m_Input.m_Label = "Enter path";
-                m_Input.m_lastActive = this;
-                m_Input.op = 8;
-                m_Input.m_SelectedItem =m_ActiveWindow->iter->second.get();
+                m_Input.Setup(this,8,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
                 m_Scene = &m_Input;
             }
-           // Move("(a)(.*)","/home/afu/PA1/df/copyhere",m_ActiveWindow->m_Items);
             break;
         case '4':
-            if(m_ActiveWindow->m_Selected!=0) {
-            m_Input.m_Label="Enter file name";
-            m_Input.m_lastActive= this;
-            m_Input.op=10;
-            m_Input.m_items=m_ActiveWindow->m_Items;
-            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
-            m_Scene=&m_Input;
+            if(m_ActiveWindow->m_Selected!=0)
+            {
+                m_Input.Setup(this,10,"Enter file name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Scene=&m_Input;
             }
             break;
 
         case '5':
-            if(m_ActiveWindow->m_Selected!=0) {
-            m_Input.m_Label="Enter folder name";
-            m_Input.m_lastActive= this;
-            m_Input.op=12;
-            m_Input.m_items=m_ActiveWindow->m_Items;
-
-            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
-            m_Scene=&m_Input;
+            if(m_ActiveWindow->m_Selected!=0)
+            {
+                m_Input.Setup(this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Scene=&m_Input;
             }
             break;
         case '6':
-            if(m_ActiveWindow->m_Selected!=0) {
-            m_Input.m_Label="Enter path";
-            m_Input.m_lastActive= this;
-            m_Input.op=9;
-                m_Input.m_items=m_ActiveWindow->m_Items;
+            if(m_ActiveWindow->m_Selected!=0)
+            {
+                m_Input.Setup(this,9,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
                 m_Input.win=m_ActiveWindow;
-            m_Input.m_SelectedItem=m_ActiveWindow->iter->second.get();
-            m_Scene=&m_Input;
+                m_Scene=&m_Input;
             }
             break;
 

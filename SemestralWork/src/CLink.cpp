@@ -6,7 +6,7 @@ using namespace std;
 
 CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
-    if(!fs::exists(path)&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
+    if(!fs::exists(path+"l")&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
         if(fs::is_directory(toFile->m_Path))
             fs::create_directory_symlink(toFile->m_Path,path+"l");
         else

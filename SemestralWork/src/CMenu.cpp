@@ -10,7 +10,7 @@ using namespace std;
 
 CMenu::CMenu(CSize size, unsigned int Selected,CAbsWidnow* lastActive)
 :  CAbsWidnow(size, Selected, this),m_lastActive(lastActive),
-   m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)){
+    m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY),0)){
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
     m_Content.emplace_back("Move by Regex");
@@ -18,7 +18,6 @@ CMenu::CMenu(CSize size, unsigned int Selected,CAbsWidnow* lastActive)
     m_Content.emplace_back("Find by text");
     m_Content.emplace_back("Concat files");
     m_Content.emplace_back("Deduplicate file");
-
     m_Content.emplace_back("Quit");
 
 
@@ -112,63 +111,31 @@ void CMenu::ReadKey() {
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=1;
-            m_inputDialog.m_Label="Enter Regex";
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,1,"Enter Regex",m_selectedItem,m_items);
             m_inputDialog.Run();
-
             break;
         case 1:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=2;
-            m_inputDialog.m_Label="Enter Regex n:l";
-
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 2:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=3;
-            m_inputDialog.m_Label="Enter Regex n:l";
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_items);
             m_inputDialog.Run();
-
             break;
         case 3:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=13;
-            m_inputDialog.m_Label="Enter name and link n:l";
-
-            m_inputDialog.m_SelectedItem=m_selectedItem;
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,13,"Enter name",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 4:
-
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=5;
-            m_inputDialog.m_Label="Enter text";
-
-            m_inputDialog.m_SelectedItem=m_selectedItem;
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,5,"Enter text",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 5:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=6;
-            m_inputDialog.m_Label="Enter name";
-
-            m_inputDialog.m_SelectedItem=m_selectedItem;
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,6,"Enter name",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 6:
-            m_inputDialog.m_lastActive=m_lastActive;
-            m_inputDialog.op=7;
-            m_inputDialog.m_Label="FIX";
-            m_inputDialog.m_SelectedItem=m_selectedItem;
-            m_inputDialog.m_items=m_items;
+            m_inputDialog.Setup(m_lastActive,7,"FIX",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 7:

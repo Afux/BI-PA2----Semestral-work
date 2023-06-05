@@ -14,6 +14,7 @@ public:
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
+    std::map<std::string ,std::shared_ptr<CItem>> *m_SelectedItems;
     CItem * m_selectedItem;
     void Print() override;
     void ReadKey() override;

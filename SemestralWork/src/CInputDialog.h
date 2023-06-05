@@ -25,6 +25,7 @@ public:
     CAbsWidnow * win;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
 
+    void Setup( CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,   std::map<std::string ,std::shared_ptr<CItem>> *items);
 
 private:
     std::string  m_input;

@@ -49,8 +49,7 @@ void CWindow::Print() {
 
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+4);
     if(m_Selected==0){
-        cout << bg::blue<<"/.."<< setw(m_Size.m_Width-3)
-             <<style::reset;
+        cout << bg::blue<<"/.."<< setw(m_Size.m_Width-3)<<style::reset;
     }
     else{
         cout << "/.."<< setw(m_Size.m_Width-3);

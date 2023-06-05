@@ -1,0 +1,153 @@
+//
+// Created by afu on 05.06.23.
+//
+
+#include "CManagerOPs.h"
+#include "CSize.h"
+#include "CItem.h"
+#include "CDir.h"
+#include "CFile.h"
+#include "CLink.h"
+#include "filesystem"
+#include "regex"
+#include "fstream"
+using namespace std;
+namespace fs = std::filesystem;
+void CManagerOPs::Copy(CItem *item, const std::string &to) {
+    if(fs::exists(to))
+        item->Copy(to);
+
+}
+
+void CManagerOPs::Copy(const std::string &reg, const std::string &to,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    std::map<std::string ,std::shared_ptr<CItem>> items;
+    std::regex r(reg);
+    if(!Items->empty()){
+        CItem* item=Items->begin()->second->m_inFolder;
+        for (auto it = Items->begin(); it !=Items->end() ; ++it) {
+            if(regex_match( it->second->m_Name,r)&&it->second.get()!=item){
+                items[it->second->m_Path]=it->second;
+            }
+        }
+
+        item->Copy(items,to);
+    }
+
+}
+
+
+void CManagerOPs::Delete(CItem *item) {
+
+    if(fs::exists(item->m_Path))
+        item->Delete();
+
+}
+
+void CManagerOPs::Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    std::map<std::string ,std::shared_ptr<CItem>> items;
+    regex r(reg);
+    if(!Items->empty()) {
+        CItem* item=Items->begin()->second->m_inFolder;
+        for (auto it = Items->begin(); it !=Items->end() ; ++it) {
+            if(regex_match( it->second->m_Name,r)&&it->second.get()!=item){
+                items[it->second->m_Path]=it->second;
+            }
+        }
+
+        item->Delete(items);
+
+    }
+}
+
+void CManagerOPs::Move(CItem *item, std::string dest) {
+    item->Move(dest);
+
+}
+
+void CManagerOPs::Move(std::string reg, std::string dest,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    std::map<std::string ,std::shared_ptr<CItem>> items;
+    regex r(reg);
+    if(!Items->empty()) {
+        CItem* item=Items->begin()->second->m_inFolder;
+        for (auto it = Items->begin(); it !=Items->end() ; ++it) {
+            if(regex_match( it->second->m_Name,r)&&it->second.get()!=item){
+                items[it->second->m_Path]=it->second;
+            }
+        }
+
+        item->Move(items, dest);
+
+    }
+    else{
+    }
+}
+
+
+void CManagerOPs::CreateFolder(std::string name, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+        CItem *item = itr->second->m_inFolder;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item, item));
+        Items->insert({ tmp->m_Path, tmp });
+    }
+}
+
+void CManagerOPs::CreateFile(std::string name, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+        CItem *item = itr->second->m_inFolder;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(item->m_Path+"/"+name, 22, item));
+        Items->insert({ tmp->m_Path, tmp });
+    }
+}
+
+void CManagerOPs::CreateLink(std::string name, CItem *to, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+        CItem *item = itr->second->m_inFolder;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(item->m_Path+"/"+name, 22,to, item));
+        Items->insert({ tmp->m_Path, tmp });
+    }
+}
+
+
+
+void CManagerOPs::FindByText(const std::string &text, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+        CItem *item = itr->second->m_inFolder;
+        vector<CItem*> found;
+        if(item!=NULL){
+            item->FindText(text,&found);
+            ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
+
+            for (size_t i = 0; i <found.size() ; ++i) {
+                MyFile<<found[i]->m_Path<<endl;
+            }
+
+            MyFile.close();
+        }
+    }
+}
+
+void CManagerOPs::Deduplicate(CItem *item, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+
+
+        CItem *parent = itr->second->m_inFolder;
+        parent->Deduplicate(item);
+
+    }
+}
+
+void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items, string to) {
+    if(!Items->empty()) {
+        auto itr=Items->begin();
+        CItem *item =itr->second->m_inFolder;
+        for (auto it = Items->begin(); it !=Items->end() ; ++it) {
+            if (it->second->m_isSelected)
+                it->second->ConCat(item->m_Path + "/" + to);
+        }
+    }
+}

@@ -49,7 +49,7 @@ void CInputDialog::Print() {
 
     }
 
-    moveto(1,m_Size.m_AbsPosY+2);
+    moveto(1,m_Size.m_AbsPosY+3);
 
 }
 
@@ -59,7 +59,12 @@ void CInputDialog::ReadKey() {
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     cout<<bg::yellow<<m_Label<<": "<<bg::reset;
-    std::getline(std::cin, m_input);
+ std::getline(std::cin, m_input);
+    if(m_input.empty()){
+        op=0;
+        m_lastActive->m_Scene=m_lastActive;
+    }
+
     parseString(m_input,':');
     Enter();
 }
@@ -68,44 +73,48 @@ void CInputDialog::Enter() {
 
         switch (op) {
             case 1:
-                Delete(m_input,m_items);
+                Oper.Delete(m_input,m_items);
                 break;
             case 2:
-                Copy(m_reg,m_path,m_items);
+                Oper.Copy(m_reg,m_path,m_items);
                 break;
             case 3:
-                Move(m_reg,m_path,m_items);
+                Oper.Move(m_reg,m_path,m_items);
                 break;
             case 4:
                 //Create();
                 break;
             case 5:
-                FindByText(m_input,m_items);
+                Oper.FindByText(m_input,m_items);
                 break;
             case 6:
-                ConcatFiles(m_items,m_input);
+                Oper.ConcatFiles(m_items,m_input);
                 break;
             case 7:
-                Deduplicate(m_SelectedItem,m_items);
+                Oper.Deduplicate(m_SelectedItem,m_items);
                 break;
             case 8:
-                Copy(m_SelectedItem,m_input);
+                Oper.Copy(m_SelectedItem,m_input);
                 break;
             case 9:
-                Move(m_SelectedItem,m_input);
+                Oper.Move(m_SelectedItem,m_input);
                 if(win->iter!=m_items->begin()){
                     win->iter--;
                     win->m_Selected--;
                 }
                 break;
             case 10:
-                CreateFile(m_input,m_items);
+                Oper.CreateFile(m_input,m_items);
                 break;
             case 12:
-                CreateFolder(m_input,m_items);
+                Oper.CreateFolder(m_input,m_items);
                 break;
             case 13:
-                CreateLink(m_input,m_SelectedItem,m_items);
+                Oper.CreateLink(m_input,m_SelectedItem,m_items);
+                break;
+            default:
+                op=0;
+                m_lastActive->m_Scene=m_lastActive;
                 break;
 
         }
@@ -126,7 +135,6 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
     while (end != std::string::npos) {
         m_reg=input.substr(start, end - start);
-
         start = end + 1;
         end = input.find(delimiter, start);
     }
@@ -134,6 +142,14 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
     m_path=input.substr(start);
 
+}
+
+void CInputDialog::Setup(CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *items) {
+    m_lastActive=lastActive;
+    op=Op;
+    m_Label=Label;
+    m_SelectedItem=SelectedItem;
+    m_items=items;
 }
 
 
