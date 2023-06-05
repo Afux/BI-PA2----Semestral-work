@@ -6,6 +6,7 @@
 #include "CSize.h"
 #include "iostream"
 #include "CAbsWidnow.h"
+#include "CErrDialog.h"
 class CManager;
 class CInputDialog: public CAbsWidnow{
 public:
@@ -26,6 +27,7 @@ public:
     CAbsWidnow * m_lastActive;
     CAbsWidnow * win;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
+    CErrDialog m_errDialog;
 
     void Setup( CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,   std::map<std::string ,std::shared_ptr<CItem>> *items);
 

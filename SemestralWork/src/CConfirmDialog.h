@@ -6,6 +6,7 @@
 #include "CSize.h"
 #include "CItem.h"
 #include "CAbsWidnow.h"
+#include "CErrDialog.h"
 class CConfirmDialog: public CAbsWidnow{
 public:
     CConfirmDialog(CSize size, unsigned int Selected);
@@ -25,6 +26,7 @@ public:
     CAbsWidnow * m_lastActive;
     CAbsWidnow * win;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
+    CErrDialog m_errDialog;
 private:
 
 

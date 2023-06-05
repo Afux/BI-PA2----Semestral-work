@@ -8,7 +8,7 @@
 using namespace rang;
 using namespace std;
 
-CInputDialog::CInputDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this) {
+CInputDialog::CInputDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this),m_errDialog(size,0) {
     op=0;
     m_Label="Zadej Vstup";
 }
@@ -62,7 +62,13 @@ void CInputDialog::Enter() {
                 Oper.FindByText(m_input,m_items);
                 break;
             case 6:
-                Oper.ConcatFiles(m_items,m_input);
+                try{
+                    Oper.ConcatFiles(m_items,m_input);
+                }
+               catch (logic_error &e){
+                   m_errDialog.Setup(m_lastActive,e.what());
+                   m_errDialog.Run();
+               }
                 break;
             case 7:
                 Oper.Deduplicate(m_SelectedItem,m_items);

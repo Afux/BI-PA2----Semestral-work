@@ -92,18 +92,22 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 3:
+            m_Selected=0;
             m_inputDialog.Setup(m_lastActive,13,"Enter name",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 4:
+            m_Selected=0;
             m_inputDialog.Setup(m_lastActive,5,"Enter text",m_selectedItem,m_items);
             m_inputDialog.Run();
             break;
         case 5:
+            m_Selected=0;
             m_inputDialog.Setup(m_lastActive,6,"Enter name",m_selectedItem,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 6:
+            m_Selected=0;
            // m_ConfirmDialog.Setup(m_lastActive,m_selectedItem,m_items,m,)
             m_inputDialog.Setup(m_lastActive,7,"FIX",m_selectedItem,m_items);
             m_inputDialog.Run();
@@ -112,6 +116,7 @@ void CMenu::Enter() {
             m_Selected=0;
             m_inputDialog.m_lastActive=m_lastActive;
             m_lastActive->m_Scene=m_lastActive;
+
             break;
     }
 

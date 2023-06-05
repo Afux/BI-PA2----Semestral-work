@@ -148,4 +148,6 @@ void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Ite
         }
 
     }
+    else
+        throw logic_error("Vyber soubory!!");
 }

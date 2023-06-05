@@ -8,7 +8,7 @@
 using namespace rang;
 using namespace std;
 
-CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this) {
+CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this), m_errDialog(size,0) {
 
     op=0;
     m_Content.emplace_back("[YES]");
@@ -80,7 +80,14 @@ void CConfirmDialog::Enter() {
                   win->m_Selected--;
                   win->iter--;
               }
-              Oper.Delete(m_SelectedItem);
+              try {
+                  Oper.Delete(m_SelectedItem);
+              }
+              catch (logic_error &e){
+                  m_errDialog.Setup(m_lastActive,e.what());
+              }
+              break;
+          case 2:
               break;
       }
       op=0;

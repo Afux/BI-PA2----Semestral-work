@@ -6,6 +6,7 @@
 #include "CHelpBar.h"
 #include "CAbsWidnow.h"
 #include "CInputDialog.h"
+#include "CErrDialog.h"
 #include "CMenu.h"
 #include "CDir.h"
 
@@ -21,6 +22,7 @@ public:
     CInputDialog m_Input;
     CConfirmDialog m_Confirm;
     CWindow *m_ActiveWindow;
+    CErrDialog m_ErrorDialog;
     bool m_runFlag;
     CAbsWidnow * m_ActivePanel;
 
