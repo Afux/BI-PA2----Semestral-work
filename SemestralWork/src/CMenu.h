@@ -22,7 +22,8 @@ public:
 
 private:
    std::vector<std::string> m_Content;
-
+    void PrintBorders();
+    void ClearDialogSpace();
 };
 
 

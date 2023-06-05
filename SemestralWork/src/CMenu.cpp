@@ -27,49 +27,16 @@ void CMenu::Print() {
     if(m_Selected>=m_Content.size()){
         m_Selected=0;
     }
-    moveto(m_Size.m_PosX,m_Size.m_PosY);
-    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
-        moveto(m_Size.m_PosX,i);
-        for (size_t j =1; j < m_Size.m_Width; ++j) {
-            cout<<" ";
-        }
-    }
-    moveto(m_Size.m_PosX,m_Size.m_PosY);
-    //Horni
-    for (size_t i =1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
-
-    }
-
-    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
-        moveto(m_Size.m_PosX,i);
-        cout<<bg::black<<"*"<<style::reset;
-        moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
-        cout<<bg::black<<"*"<<style::reset;
-        moveto(m_Size.m_PosX,i);
-    }
-    //Dolni
-
-
-    for (size_t i = 1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
-
-    }
-
+    ClearDialogSpace();
+    PrintBorders();
     for (size_t i = 0; i < m_Content.size() ; ++i) {
         moveto(m_Size.m_PosX+2,m_Size.m_PosY+4+i);
         if(i==m_Selected){
-
-            cout << bg::blue<<m_Content[i]<< setw(m_Size.m_Width-m_Content[i].size())
-                 <<style::reset;
-
+            cout << bg::blue<<m_Content[i]<< setw(m_Size.m_Width-m_Content[i].size())<<style::reset;
         }
-
         else{
             cout <<m_Content[i]<<setw(m_Size.m_Width-m_Content[i].size());
-
         }
-
     }
     moveto(1,m_Size.m_AbsPosY+2);
 
@@ -131,7 +98,7 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 5:
-            m_inputDialog.Setup(m_lastActive,6,"Enter name",m_selectedItem,m_items);
+            m_inputDialog.Setup(m_lastActive,6,"Enter name",m_selectedItem,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 6:
@@ -146,3 +113,35 @@ void CMenu::Enter() {
     }
 
 }
+
+void CMenu::PrintBorders() {
+    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    for (size_t i =1; i < m_Size.m_Width; ++i) {
+        cout<<bg::black<<"*"<<style::reset;
+
+    }
+
+    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
+        moveto(m_Size.m_PosX,i);
+        cout<<bg::black<<"*"<<style::reset;
+        moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
+        cout<<bg::black<<"*"<<style::reset;
+        moveto(m_Size.m_PosX,i);
+    }
+    for (size_t i = 1; i < m_Size.m_Width; ++i) {
+        cout<<bg::black<<"*"<<style::reset;
+
+    }
+
+}
+
+void CMenu::ClearDialogSpace() {
+    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
+        moveto(m_Size.m_PosX,i);
+        for (size_t j =1; j < m_Size.m_Width; ++j) {
+            cout<<" ";
+        }
+    }
+}
+

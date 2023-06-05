@@ -29,10 +29,8 @@ void CManagerOPs::Copy(const std::string &reg, const std::string &to,std::map<st
                 items[it->second->m_Path]=it->second;
             }
         }
-
         item->Copy(items,to);
     }
-
 }
 
 
@@ -146,8 +144,8 @@ void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Ite
         auto itr=Items->begin();
         CItem *item =itr->second->m_inFolder;
         for (auto it = Items->begin(); it !=Items->end() ; ++it) {
-            if (it->second->m_isSelected)
                 it->second->ConCat(item->m_Path + "/" + to);
         }
+
     }
 }

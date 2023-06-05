@@ -84,7 +84,7 @@ void CWindow::Print() {
 
     }
 
-    moveto(2,m_Size.m_Height+1);
+    moveto(2,m_Size.m_AbsPosY+1);
 
 }
 
@@ -102,6 +102,7 @@ CWindow::CWindow(CSize size, unsigned int Selected,string Path)
 void CWindow::ReadKey() {}
 
 void CWindow::Enter() {
+
     if(m_Selected==0){
         if(m_CurrFile!=NULL){
             m_CurrFile->Open(&m_Items,&m_CurrFile);
@@ -119,6 +120,7 @@ void CWindow::Enter() {
         m_Selected=0;
 
     }
+    m_Selecteditems.clear();
 
 }
 
@@ -136,7 +138,7 @@ void CWindow::PrintBorders() {
     moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+2);
     cout<<"  Modify  ";
 
-    for (size_t i =0; i < m_Size.m_Height*0.8; ++i) {
+    for (size_t i =0; i < m_Size.m_Height; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
         moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,i);
@@ -150,14 +152,14 @@ void CWindow::PrintBorders() {
     for (size_t i = 1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
-    moveto(m_Size.m_PosX,m_Size.m_Height*0.7);
+    moveto(m_Size.m_PosX,m_Size.m_Height*0.9);
     for (size_t i = 1; i < m_Size.m_Width; ++i) {
         cout<<"-";
     }
-    moveto(m_Size.m_PosX+2,m_Size.m_Height*0.7+1);
+    moveto(m_Size.m_PosX+2,m_Size.m_Height*0.9+1);
 
-    if(m_Selected-1< m_Items->size()){
-        // cout <<(iter)->second->m_Name;
+    if(m_Selected!=0){
+         cout <<(iter)->second->m_Name;
 
     } else{
 

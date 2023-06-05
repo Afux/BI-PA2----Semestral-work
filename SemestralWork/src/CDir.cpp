@@ -80,6 +80,7 @@ void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
     for (auto it = items.begin(); it != items.end(); ++it) {
         it->second->Delete();
     }
+    Refresh();
 
 }
 
@@ -92,7 +93,6 @@ void CDir::Delete() {
                     m_inFolder->m_items.erase(m_Path);
             }
         }
-
     }
 }
 
@@ -245,6 +245,7 @@ void CDir::Refresh() {
 
 
     for(auto it=m_items.begin();it!=m_items.end();it++){
+        it->second->m_isSelected=false;
         if(!tmp.count(it->first)){
             m_items.erase(it->first);
         }
