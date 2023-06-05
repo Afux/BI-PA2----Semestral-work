@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>
-#include "rang.hpp"
+#include "../libs/rang.hpp"
 using namespace rang;
 using namespace std;
 

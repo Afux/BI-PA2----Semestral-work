@@ -1,7 +1,7 @@
 
 
 #include "CInputDialog.h"
-#include "rang.hpp"
+#include "../libs/rang.hpp"
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>

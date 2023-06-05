@@ -27,9 +27,9 @@ public:
     void clear();
     void moveto(int x = 1, int y = 1);
 
-   //OPS
-    void Copy( CItem *item, std::string to);
-    void Copy( std::string reg,std::string to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+   //OPs
+    void Copy( CItem *item, const std::string &to);
+    void Copy( const std::string &reg,const std::string &to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void Delete( CItem *item);
     void Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
     void Move( CItem *item , std::string dest) ;

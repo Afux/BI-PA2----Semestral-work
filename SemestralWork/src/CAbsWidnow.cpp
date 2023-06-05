@@ -20,13 +20,13 @@ void CAbsWidnow::moveto(int x, int y) {
 
 CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Scene(Scene){}
 
-void CAbsWidnow::Copy(CItem *item, std::string to) {
+void CAbsWidnow::Copy(CItem *item, const std::string &to) {
     if(fs::exists(to))
         item->Copy(to);
 
 }
 
-void CAbsWidnow::Copy(std::string reg,std::string to,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+void CAbsWidnow::Copy(const std::string &reg, const std::string &to,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
     std::map<std::string ,std::shared_ptr<CItem>> items;
     std::regex r(reg);
     if(!Items->empty()){

@@ -1,6 +1,6 @@
 
 #include "CMenu.h"
-#include "rang.hpp"
+#include "../libs/rang.hpp"
 #include <iomanip>
 #include <unistd.h>
 #include <termios.h>

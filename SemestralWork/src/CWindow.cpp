@@ -1,7 +1,7 @@
 
 #include <iomanip>
 #include "CWindow.h"
-#include "rang.hpp"
+#include "../libs/rang.hpp"
 using namespace rang;
 using namespace std;
 
