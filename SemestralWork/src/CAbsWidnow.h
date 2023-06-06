@@ -14,13 +14,14 @@
 class CAbsWidnow {
 public:
     CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow * Scene);
-
     virtual ~CAbsWidnow();
     CSize  m_Size;
     unsigned int m_Selected;
     CAbsWidnow* m_Scene;
     CManagerOPs Oper;
-   std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> iter;
+    typedef std::map<std::string ,std::shared_ptr<CItem>>::iterator Myiterator;
+    Myiterator iter;
+//    std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> iter;
 
     void Refresh();
     virtual void Print()=0;

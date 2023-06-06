@@ -9,30 +9,19 @@ using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
 using namespace std;
 
-//Vyjimka?.
 CDir::CDir( std::string path, unsigned int size,CItem* inFolder) : CItem(path, size,inFolder) {
     m_DeleteMe=NULL;
-    if(IsReadable(path)&&fs::exists(path)) {
-
-
-    }
-
-    else{
+    if(IsReadable(path)&&!fs::exists(path)) {
         try{
-            if(IsReadable(fs::path(path).parent_path())&&IsWriteable(fs::path(path).parent_path()))
             fs::create_directory(path);
         }
         catch (const fs::filesystem_error &e){
-              throw logic_error(e.code().message());
+            throw logic_error(e.code().message());
         }
-
     }
 }
 
-
-
 void CDir::Copy(std::string to) {
-   if(IsReadable(to)&& IsWriteable(to)&&fs::exists(to)&&!fs::equivalent(m_Path,to)&&!fs::is_other(m_Path)&&!fs::is_other(to)&&!fs::exists(to+"/"+m_Name)){
 
        try{
            fs::create_directory(to+"/"+m_Name);
@@ -42,29 +31,10 @@ void CDir::Copy(std::string to) {
            throw logic_error(e.code().message());
 
        }
-   }
-
 }
 
-void CDir::Move(std::string dest) {
-   try{
-       Copy(dest);
-   }
-   catch (const logic_error &e){
-       throw logic_error(e.what());
-   }
-   try {
-       Delete();
-   }
-   catch (const logic_error &e){
-       fs::remove_all(dest);
-       throw logic_error(e.what());
-   }
-}
 
 void CDir::Delete() {
-
-    if (IsReadable(m_Path) && IsWriteable(m_Path)){
        try{
            fs::remove_all(m_Path);
        }
@@ -72,12 +42,25 @@ void CDir::Delete() {
            throw logic_error(e.code().message());
        }
        if (m_inFolder != NULL) {
-            if (m_inFolder->m_items.count(m_Path))
-                m_inFolder->m_items.erase(m_Path);
+           if (m_inFolder->m_items.count(m_Path))
+               m_inFolder->m_items.erase(m_Path);
        }
+}
+void CDir::Move(std::string dest) {
+
+
+    try{
+        Copy(dest);
     }
-    else{
-        throw  logic_error("Cant delete directory");
+    catch (const logic_error &e){
+        throw logic_error(e.what());
+    }
+    try {
+        Delete();
+    }
+    catch (const logic_error &e){
+        fs::remove_all(dest+"/"+m_Name);
+        throw logic_error(e.what());
     }
 
 }
@@ -121,7 +104,7 @@ void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** i
     }
 
 }
-
+/*
 std::vector<std::string> CDir::parseString(const string &input, char delimiter) {
     std::vector<std::string> tokens;
     std::string::size_type start = 0;
@@ -138,6 +121,9 @@ std::vector<std::string> CDir::parseString(const string &input, char delimiter) 
 
     return tokens;
 }
+
+
+
 std::map<std::string ,std::shared_ptr<CItem>> *CDir::FindDir(const string &path,CItem **item) {
     vector<string > tempPaths= parseString(path,'/');
     std::map<std::string ,std::shared_ptr<CItem>> *curr=&this->m_items;
@@ -156,7 +142,7 @@ std::map<std::string ,std::shared_ptr<CItem>> *CDir::FindDir(const string &path,
 
     return curr;
 }
-
+ */
 std::shared_ptr<CItem> CDir::clone() const {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(*this));
     return tmp;

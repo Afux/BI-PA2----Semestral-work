@@ -8,15 +8,19 @@ using namespace std;
 
 CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
 
-       if(!fs::exists(path)) {
-           if(IsReadable(m_inFolder->m_Path)&& IsWriteable(m_inFolder->m_Path))
-               std::ofstream { path };
-           else{
-               throw logic_error("Bad Perms");
-           }
-       }
-
-
+    try{
+        if(!fs::exists(path)) {
+            try{
+                std::ofstream { path };
+            }
+            catch (const fs::filesystem_error &e) {
+                throw logic_error(e.code().message());
+            }
+        }
+    }
+    catch (const fs::filesystem_error &e){
+        throw logic_error(e.code().message());
+    }
 
 }
 
@@ -26,45 +30,32 @@ void CFile::Print() {
 }
 
 void CFile::Copy(string to) {
-    if(fs::exists(to)&&!fs::equivalent(m_Path,to)&&!fs::is_other(m_Path)&&!fs::is_other(to)){
-        if(IsReadable(to)&& IsWriteable(to))
-            std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
-        else{
-            throw  logic_error("Bad perms");
-        }
+    try{
+        std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
     }
-    else{
-        throw logic_error("Cannot Copy, check dest. directory");
+    catch (const fs::filesystem_error &e){
+        throw logic_error(e.code().message());
     }
+
 }
 
 
 
 void CFile::Delete() {
-    if(fs::exists(m_Path)) {
-        if (IsReadable(m_Path) && IsWriteable(m_Path)){
-            try{
-                fs::remove_all(m_Path);
-            }
-            catch (const fs::filesystem_error &e){
-                throw logic_error(e.code().message());
-            }
-            if(m_inFolder!=NULL){
-                m_inFolder->m_items.erase(m_Path);
-            }
-        }
-        else{
-            throw  logic_error("Bad perms");
+    try{
+        fs::remove_all(m_Path);
+    }
+    catch (const fs::filesystem_error &e){
+        throw logic_error(e.code().message());
+        if(m_inFolder!=NULL){
+            m_inFolder->m_items.erase(m_Path);
         }
     }
-    else{
-        throw logic_error("Cannot delete, file doesnt exist");
-    }
-
 }
 
 
 void CFile::Move(string dest) {
+
     try{
         Copy(dest);
     }
@@ -75,6 +66,7 @@ void CFile::Move(string dest) {
         Delete();
     }
     catch (const logic_error &e){
+        fs::remove_all(dest+"/"+m_Name);
         throw logic_error(e.what());
     }
 }
@@ -107,6 +99,7 @@ std::shared_ptr<CItem> CFile::clone() const {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(*this));
     return tmp;
 }
+
 
 void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
 
