@@ -56,7 +56,7 @@ void CErrDialog::ClearDialogSpace() {
 
 void CErrDialog::PrintLabel() {
     //LABEL
-    moveto(m_Size.m_PosX+m_Size.m_PosX+(m_Size.m_Width/2),m_Size.m_PosY+4);
+    moveto(m_Size.m_PosX+(m_Size.m_Width/2),m_Size.m_PosY+4);
     cout<<m_Label;
 }
 

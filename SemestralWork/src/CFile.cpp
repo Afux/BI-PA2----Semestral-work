@@ -8,8 +8,13 @@ using namespace std;
 
 CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
     if(!fs::exists(path)) {
+      if(IsReadable(m_inFolder->m_Path)&& IsWriteable(m_inFolder->m_Path))
         std::ofstream { path };
+      else{
+          throw logic_error("Bad Perms");
+      }
     }
+
 }
 
 void CFile::Print() {
@@ -18,34 +23,63 @@ void CFile::Print() {
 }
 
 void CFile::Copy(string to) {
-    if(fs::exists(to)){
+    if(fs::exists(to)&&!fs::equivalent(m_Path,to)&&!fs::is_other(m_Path)&&!fs::is_other(to)){
         if(IsReadable(to)&& IsWriteable(to))
             std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
+        else{
+            throw  logic_error("Bad perms");
+        }
+    }
+    else{
+        throw logic_error("Cannot Copy, check dest. directory");
     }
 }
 
+//Delete mb
 void CFile::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, string to) {}
 
 void CFile::Delete() {
     if(fs::exists(m_Path)) {
         if (IsReadable(m_Path) && IsWriteable(m_Path)){
-            std::filesystem::remove_all(m_Path);
+            try{
+                fs::remove_all(m_Path);
+            }
+            catch (const fs::filesystem_error &e){
+                throw logic_error(e.code().message());
+            }
             if(m_inFolder!=NULL){
                 m_inFolder->m_items.erase(m_Path);
             }
         }
-
+        else{
+            throw  logic_error("Bad perms");
+        }
+    }
+    else{
+        throw logic_error("Cannot delete, file doesnt exist");
     }
 
 }
 
+//Delete mb
 void CFile::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {}
 
 void CFile::Move(string dest) {
-    Copy(dest);
-    Delete();
+    try{
+        Copy(dest);
+    }
+    catch (const logic_error &e){
+        throw logic_error(e.what());
+    }
+    try {
+        Delete();
+    }
+    catch (const logic_error &e){
+        throw logic_error(e.what());
+    }
 }
 
+//Delete mb
 void CFile::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string dest) {}
 
 void CFile::UpdateSize() {
@@ -113,12 +147,10 @@ void CFile::Deduplicate(CItem *DeduplicateMe) {
         if(fs::exists(m_Path)) {
             if (IsReadable(m_Path) && IsWriteable(m_Path)){
                 std::filesystem::remove_all(m_Path);
-
             }
-
         }
         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(m_Path, 22, DeduplicateMe, m_inFolder));
-        m_inFolder->m_items.insert({tmp->m_Path,tmp});
+        m_inFolder->m_items[m_Path]=tmp;
 
     }
 }

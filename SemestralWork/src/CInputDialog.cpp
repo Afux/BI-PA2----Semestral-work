@@ -5,9 +5,10 @@
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>
+#include "filesystem"
 using namespace rang;
 using namespace std;
-
+namespace fs = std::filesystem;
 CInputDialog::CInputDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this),m_errDialog(size,0) {
     op=0;
     m_Label="Zadej Vstup";
@@ -47,19 +48,43 @@ void CInputDialog::Enter() {
 
         switch (op) {
             case 1:
-                Oper.Delete(m_input,m_items);
+                try{
+                    Oper.Delete(m_input,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 2:
-                Oper.Copy(m_reg,m_path,m_items);
+                try{
+                    Oper.Copy(m_reg,m_path,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 3:
-                Oper.Move(m_reg,m_path,m_items);
+                try{
+                    Oper.Move(m_reg,m_path,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 4:
                 //Create();
                 break;
             case 5:
-                Oper.FindByText(m_input,m_items);
+                try{
+                    Oper.FindByText(m_input,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 6:
                 try{
@@ -71,26 +96,66 @@ void CInputDialog::Enter() {
                }
                 break;
             case 7:
-                Oper.Deduplicate(m_SelectedItem,m_items);
+                try{
+                    Oper.Deduplicate(m_SelectedItem,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 8:
-                Oper.Copy(m_SelectedItem,m_input);
+                try{
+                    Oper.Copy(m_SelectedItem,m_input);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 9:
-                Oper.Move(m_SelectedItem,m_input);
+                try{
+                    Oper.Move(m_SelectedItem,m_input);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 if(win->iter!=m_items->begin()){
                     win->iter--;
                     win->m_Selected--;
                 }
                 break;
             case 10:
-                Oper.CreateFile(m_input,m_items);
+                try{
+                    Oper.CreateFile(m_input,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
+                catch (const fs::filesystem_error &e){
+                    m_errDialog.Setup(m_lastActive,e.code().message());
+                    m_errDialog.Run();
+                }
                 break;
             case 12:
-                Oper.CreateFolder(m_input,m_items);
+                try{
+                    Oper.CreateFolder(m_input,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             case 13:
-                Oper.CreateLink(m_input,m_SelectedItem,m_items);
+                try{
+                    Oper.CreateLink(m_input,m_SelectedItem,m_items);
+                }
+                catch (logic_error &e){
+                    m_errDialog.Setup(m_lastActive,e.what());
+                    m_errDialog.Run();
+                }
                 break;
             default:
                 op=0;

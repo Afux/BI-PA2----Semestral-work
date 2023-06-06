@@ -35,10 +35,7 @@ void CManagerOPs::Copy(const std::string &reg, const std::string &to,std::map<st
 
 
 void CManagerOPs::Delete(CItem *item) {
-
-    if(fs::exists(item->m_Path))
         item->Delete();
-
 }
 
 void CManagerOPs::Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) {
@@ -126,21 +123,22 @@ void CManagerOPs::FindByText(const std::string &text, std::map<std::string ,std:
             MyFile.close();
         }
     }
+    else
+        throw logic_error("Dir is empty");
 }
 
 void CManagerOPs::Deduplicate(CItem *item, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
     if(!Items->empty()) {
         auto itr=Items->begin();
-
-
         CItem *parent = itr->second->m_inFolder;
         parent->Deduplicate(item);
-
     }
+    else
+        throw logic_error("Nothing to deduplicate");
 }
 
 void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items, string to) {
-    if(!Items->empty()) {
+    if(Items->size()>1) {
         auto itr=Items->begin();
         CItem *item =itr->second->m_inFolder;
         for (auto it = Items->begin(); it !=Items->end() ; ++it) {
@@ -149,5 +147,5 @@ void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Ite
 
     }
     else
-        throw logic_error("Vyber soubory!!");
+        throw logic_error("Choose at least 2 files");
 }

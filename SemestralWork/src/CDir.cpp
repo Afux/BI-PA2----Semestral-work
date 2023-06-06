@@ -9,46 +9,51 @@ using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
 using namespace std;
 
+//Vyjimka?.
 CDir::CDir( std::string path, unsigned int size,CItem* inFolder) : CItem(path, size,inFolder) {
     m_DeleteMe=NULL;
+    if(IsReadable(path)&&fs::exists(path)) {
 
-    if(fs::exists(path)&&IsReadable(path)) {
 
+            for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
+                string s = dirEntry.path();
+                if(IsReadable(s)){
+                    if (dirEntry.is_symlink()) {
+                        if(m_items.count(fs::read_symlink(dirEntry))){
+                            shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, m_items.at(fs::read_symlink(dirEntry)).get(), this));
+                            tmp->UpdateSize();
+                            m_items[tmp->m_Path]=tmp;
+                        }
+                        else{
+                            shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
+                            tmp->UpdateSize();
+                            m_items[tmp->m_Path]=tmp;
+                        }
 
-        for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
-            string s = dirEntry.path();
-            if(IsReadable(s)){
-                if (dirEntry.is_symlink()) {
-                    if(m_items.count(fs::read_symlink(dirEntry))){
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, m_items.at(fs::read_symlink(dirEntry)).get(), this));
+                    } else if (dirEntry.is_directory()) {
+
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
                         tmp->UpdateSize();
                         m_items[tmp->m_Path]=tmp;
-                    }
-                    else{
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
+
+                    } else if (dirEntry.is_regular_file()) {
+
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
                         tmp->UpdateSize();
                         m_items[tmp->m_Path]=tmp;
+
                     }
-
-                } else if (dirEntry.is_directory()) {
-
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
-                    tmp->UpdateSize();
-                    m_items[tmp->m_Path]=tmp;
-
-                } else if (dirEntry.is_regular_file()) {
-
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
-                    tmp->UpdateSize();
-                    m_items[tmp->m_Path]=tmp;
-
                 }
             }
         }
-    }
     else{
-        if(IsReadable(path)&&IsWriteable(path))
-             fs::create_directory(path);
+        try{
+            fs::create_directory(path);
+        }
+        catch (const fs::filesystem_error &e){
+            //  throw logic_error(e.code().message());
+        }
+
 
     }
 }
@@ -56,7 +61,16 @@ CDir::CDir( std::string path, unsigned int size,CItem* inFolder) : CItem(path, s
 
 void CDir::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string to) {
     for (auto it = items.begin(); it != items.end(); ++it) {
-        it->second->Copy(to);
+       try{
+           it->second->Copy(to);
+       }
+       catch (const logic_error &e){
+           throw logic_error(e.what());
+       }
+       catch (const fs::filesystem_error & e){
+           throw logic_error(e.code().message());
+
+       }
     }
 
 }
@@ -69,17 +83,39 @@ void CDir::Copy(std::string to) {
            std::filesystem::copy(m_Path, to+"/"+m_Name, std::filesystem::copy_options::recursive);
 
        }
+       else{
+            throw  logic_error("Bad perms");
+       }
+   }
+   else{
+       throw logic_error("Cannot Copy, check dest. directory");
    }
 }
 
-//Osetreno
 void CDir::Move(std::string dest) {
-    Copy(dest);
-    Delete();
+   try{
+       Copy(dest);
+   }
+   catch (const logic_error &e){
+       throw logic_error(e.what());
+   }
+   try {
+       Delete();
+   }
+   catch (const logic_error &e){
+       throw logic_error(e.what());
+   }
 }
 void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
     for (auto it = items.begin(); it != items.end(); ++it) {
-        it->second->Delete();
+      try{
+          it->second->Delete();
+      }
+      catch (const logic_error &e){
+          Refresh();
+          throw logic_error(e.what());
+
+      }
     }
     Refresh();
 
@@ -88,20 +124,43 @@ void CDir::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
 void CDir::Delete() {
     if(fs::exists(m_Path)) {
         if (IsReadable(m_Path) && IsWriteable(m_Path)){
-            fs::remove_all(m_Path);
+           try{
+               fs::remove_all(m_Path);
+           }
+           catch (const fs::filesystem_error &e){
+               throw logic_error(e.code().message());
+           }
             if (m_inFolder != NULL) {
                 if (m_inFolder->m_items.count(m_Path))
                     m_inFolder->m_items.erase(m_Path);
             }
         }
+        else{
+            throw  logic_error("Bad perms");
+        }
     }
+    else{
+        throw logic_error("Cannot delete, file doesnt exist");
+    }
+
 }
 
 void CDir::Move(std::map<std::string ,std::shared_ptr<CItem>> items, std::string dest) {
 
     for (auto it = items.begin(); it != items.end(); ++it) {
-        it->second->Move(dest);
+       try{
+           it->second->Move(dest);
+
+       }
+        catch (const logic_error &e){
+            throw logic_error(e.what());
+        }
+        catch (const fs::filesystem_error & e){
+            throw logic_error(e.code().message());
+
+        }
     }
+
 
 }
 
@@ -193,14 +252,9 @@ CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {
 }
 
 void CDir::FindText(std::string FindThis,std::vector<CItem*> *Found) {
-
-
     for (auto it = m_items.begin(); it != m_items.end(); ++it) {
         it->second->FindText(FindThis,Found);
-
     }
-
-
 }
 
 void CDir::Deduplicate(CItem *DeduplicateMe) {
@@ -242,7 +296,6 @@ void CDir::Refresh() {
             }
         }
     }
-
 
 
 
