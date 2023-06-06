@@ -14,36 +14,7 @@ CDir::CDir( std::string path, unsigned int size,CItem* inFolder) : CItem(path, s
     m_DeleteMe=NULL;
     if(IsReadable(path)&&fs::exists(path)) {
 
-        for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
-            string s = dirEntry.path();
-            if(IsReadable(s)){
-                if (dirEntry.is_symlink()) {
-                    if(m_items.count(fs::read_symlink(dirEntry))){
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, m_items.at(fs::read_symlink(dirEntry)).get(), this));
-                        tmp->UpdateSize();
-                        m_items[tmp->m_Path]=tmp;
-                    }
-                    else{
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
-                        tmp->UpdateSize();
-                        m_items[tmp->m_Path]=tmp;
-                    }
 
-                } else if (dirEntry.is_directory()) {
-
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
-                    tmp->UpdateSize();
-                    m_items[tmp->m_Path]=tmp;
-
-                } else if (dirEntry.is_regular_file()) {
-
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
-                    tmp->UpdateSize();
-                    m_items[tmp->m_Path]=tmp;
-
-                }
-            }
-        }
     }
 
     else{
@@ -139,7 +110,7 @@ std::string CDir::RenameDialog(std::string NewName) {
 }
 
 void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** inFold) {
-
+    FillItems();
     Refresh();
     *items= &m_items;
     if(m_inFolder!=NULL){
@@ -245,4 +216,44 @@ void CDir::Refresh() {
         }
 
     }
+}
+
+void CDir::FillItems() {
+    if(m_items.empty()){
+        for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
+            string s = dirEntry.path();
+            if(!m_items.count(s)){
+
+
+                if(IsReadable(s)){
+                    if (dirEntry.is_symlink()) {
+                        if(m_items.count(fs::read_symlink(dirEntry))){
+                            shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, m_items.at(fs::read_symlink(dirEntry)).get(), this));
+                            tmp->UpdateSize();
+                            m_items[tmp->m_Path]=tmp;
+                        }
+                        else{
+                            shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
+                            tmp->UpdateSize();
+                            m_items[tmp->m_Path]=tmp;
+                        }
+
+                    } else if (dirEntry.is_directory()) {
+
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
+                        tmp->UpdateSize();
+                        m_items[tmp->m_Path]=tmp;
+
+                    } else if (dirEntry.is_regular_file()) {
+
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
+                        tmp->UpdateSize();
+                        m_items[tmp->m_Path]=tmp;
+
+                    }
+                }
+            }
+        }
+    }
+
 }

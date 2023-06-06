@@ -22,7 +22,7 @@ public:
      void Print() override;
      void FindText(std::string FindThis,std::vector<CItem*> * Found) override;
      void ConCat(std::string To) override;
-
+    void FillItems();
     void Refresh();
     std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
