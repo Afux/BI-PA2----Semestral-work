@@ -89,7 +89,7 @@ void CWindow::Print() {
 }
 
 CWindow::CWindow(CSize size, unsigned int Selected,string Path)
-:  CAbsWidnow(size, Selected, this), m_StartDir(CDir(Path,2,NULL,NULL)),m_currDir(m_StartDir){
+:  CAbsWidnow(size, Selected, this), m_StartDir(CDir(Path,2,NULL)),m_currDir(m_StartDir){
     m_CurrFile=NULL;
     m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
     iter=m_Items->begin();
@@ -110,7 +110,7 @@ void CWindow::Enter() {
             m_Selected=0;
         }
         else{
-            m_currDir= CDir (filesystem::path(iter->second->m_Path).parent_path().parent_path(),2,NULL,NULL);
+            m_currDir= CDir (filesystem::path(iter->second->m_Path).parent_path().parent_path(),2,NULL);
             m_Items=&m_currDir.m_items;
         }
     }

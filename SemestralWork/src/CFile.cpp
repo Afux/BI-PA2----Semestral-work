@@ -52,11 +52,7 @@ void CFile::UpdateSize() {
     m_Size=filesystem::file_size(m_Path);
 }
 
-void CFile::SetDate(u_int year, u_int month, u_int day) {
-
-}
-
-
+void CFile::SetDate(u_int year, u_int month, u_int day) {}
 
 std::string CFile::RemoveDialog() {
     std::string tmp="File "+m_Name+" will be removed";
@@ -73,16 +69,7 @@ std::string CFile::RenameDialog(std::string NewName) {
     return tmp;
 }
 
-void CFile::Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold) {
-  /*
-    if(m_inFolder!=NULL){
-       *inFold=m_inFolder;
-    }
-    else{
-        *inFold=NULL;
-    }
-    */
-}
+void CFile::Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold) {}
 
 std::shared_ptr<CItem> CFile::clone() const {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(*this));

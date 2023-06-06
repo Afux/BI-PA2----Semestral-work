@@ -85,7 +85,7 @@ void CManagerOPs::CreateFolder(std::string name, std::map<std::string ,std::shar
     if(!Items->empty()) {
         auto itr=Items->begin();
         CItem *item = itr->second->m_inFolder;
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item, item));
+        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item));
         Items->insert({ tmp->m_Path, tmp });
     }
 }

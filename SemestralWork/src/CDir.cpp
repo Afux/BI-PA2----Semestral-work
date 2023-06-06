@@ -9,10 +9,11 @@ using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
 using namespace std;
 
-CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : CItem(path, size,inFolder),m_parr(Parr) {
+CDir::CDir( std::string path, unsigned int size,CItem* inFolder) : CItem(path, size,inFolder) {
     m_DeleteMe=NULL;
 
     if(fs::exists(path)&&IsReadable(path)) {
+
 
         for (const auto &dirEntry: filesystem::directory_iterator(m_Path,std::filesystem::directory_options::skip_permission_denied)) {
             string s = dirEntry.path();
@@ -31,7 +32,7 @@ CDir::CDir( std::string path, unsigned int size,CItem* Parr,CItem* inFolder) : C
 
                 } else if (dirEntry.is_directory()) {
 
-                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
+                    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
                     tmp->UpdateSize();
                     m_items[tmp->m_Path]=tmp;
 
@@ -230,7 +231,7 @@ void CDir::Refresh() {
 
             } else if (dirEntry.is_directory()) {
 
-                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this, this));
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
                 m_items[tmp->m_Path]=tmp;
 
             } else if (dirEntry.is_regular_file()) {
@@ -247,7 +248,7 @@ void CDir::Refresh() {
 
     for(auto it=m_items.begin();it!=m_items.end();it++){
         it->second->m_isSelected=false;
-        if(!tmp.count(it->first)){
+        if(!tmp.count(it->first)|| !IsReadable(it->first)){
             m_items.erase(it->first);
         }
 

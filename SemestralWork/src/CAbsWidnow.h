@@ -26,7 +26,7 @@ public:
     virtual void Print()=0;
     virtual void  ReadKey()=0;
 protected:
-    int clear();
+    int clear() const;
     void moveto(int x = 1, int y = 1);
 private:
 };

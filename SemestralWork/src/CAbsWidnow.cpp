@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int CAbsWidnow::clear() {
+int CAbsWidnow::clear() const{
     return system("clear");
 }
 
@@ -26,6 +26,4 @@ void CAbsWidnow::Refresh() {
         Print();
 }
 
-
 CAbsWidnow::~CAbsWidnow() {}
-

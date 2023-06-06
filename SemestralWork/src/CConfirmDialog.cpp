@@ -9,7 +9,6 @@ using namespace rang;
 using namespace std;
 
 CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this), m_errDialog(size,0) {
-
     op=0;
     m_Content.emplace_back("[YES]");
     m_Content.emplace_back("[No]");
@@ -20,8 +19,9 @@ void CConfirmDialog::Print() {
     if(m_Selected>=m_Content.size()){
         m_Selected=0;
     }
+
     ClearDialogSpace();
-    PrintBorders();
+    PrintBorders('*');
     PrintLabel();
 
 
@@ -76,8 +76,8 @@ void CConfirmDialog::Enter() {
   if(m_Selected==0){
       switch(op){
           case 1:
+              win->m_Selected--;
               if(win->iter!=m_items->begin()){
-                  win->m_Selected--;
                   win->iter--;
               }
               try {
@@ -112,24 +112,24 @@ void CConfirmDialog::Run() {
 
 }
 
-void CConfirmDialog::PrintBorders() {
+void CConfirmDialog::PrintBorders(const char &c) {
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     //Upper borders
     for (size_t i =1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
 
     }
     //SIDE BORDES
     for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
         moveto(m_Size.m_PosX,i);
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
         moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
         moveto(m_Size.m_PosX,i);
     }
     //Bottom bordesr
     for (size_t i = 1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
 
     }
 }

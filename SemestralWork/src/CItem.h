@@ -20,7 +20,6 @@ public:
     std::string m_Path;
     bool m_isSelected;
     void Select();
-
     unsigned int m_Size;
     std:: vector<CPermission> m_Permisions;
     CItem* m_inFolder;
@@ -41,16 +40,14 @@ public:
     virtual void UpdateSize()=0;
 
 
-
-private:
 protected:
-
     bool IsReadable(const std::filesystem::path& p);
     bool IsWriteable(const std::filesystem::path& p);
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
+
 };
 
 

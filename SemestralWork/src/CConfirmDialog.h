@@ -10,11 +10,9 @@
 class CConfirmDialog: public CAbsWidnow{
 public:
     CConfirmDialog(CSize size, unsigned int Selected);
-    std::string m_Label;
-    CItem * m_SelectedItem;
-    std::vector<std::string > m_Content;
+
     void Print() override;
-    void PrintBorders();
+    void PrintBorders(const char &c);
     void ClearDialogSpace();
     void PrintLabel();
 
@@ -23,12 +21,15 @@ public:
     void Enter();
     void Run();
     int op;
+
+private:
+    std::string m_Label;
+    CItem * m_SelectedItem;
+    std::vector<std::string > m_Content;
     CAbsWidnow * m_lastActive;
     CAbsWidnow * win;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CErrDialog m_errDialog;
-private:
-
 
 
 };
