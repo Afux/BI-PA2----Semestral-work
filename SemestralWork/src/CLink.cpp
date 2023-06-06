@@ -1,5 +1,6 @@
 
 #include "CLink.h"
+#include "CFile.h"
 #include "filesystem"
 namespace fs = std::filesystem;
 using namespace std;
@@ -15,6 +16,17 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
                 fs::create_symlink(toFile->m_Path,path);
 
         }
+    }
+    else{
+        string temp=fs::read_symlink(m_Path);
+        if(fs::is_symlink(temp))
+             m_toFile=shared_ptr<CItem>( new CLink(temp, 22, NULL, NULL));
+        else if (fs::is_directory(temp)){
+            m_toFile=shared_ptr<CItem>( new CDir(temp, 22,NULL));
+        }
+        else if(fs::is_regular_file(temp))
+            m_toFile=shared_ptr<CItem>( new CFile(temp, 22,NULL));
+
     }
 }
 
@@ -81,13 +93,13 @@ std::shared_ptr<CItem> CLink::clone() const {
 
 void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
     if(m_toFile!=NULL){
-      //  m_toFile->Open(item,inFold);
+        m_toFile->Open(item,inFold);
     }
 }
 
 void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
     if(m_toFile!=NULL){
-        m_toFile->FindText(FindThis,Found);
+        //m_toFile->FindText(FindThis,Found);
     }
 }
 
@@ -95,7 +107,7 @@ void CLink::Deduplicate(CItem *DeduplicateMe) {}
 
 void CLink::ConCat(std::string To) {
    if(m_toFile!=NULL){
-       m_toFile->ConCat(To);
+     //  m_toFile->ConCat(To);
    }
 }
 

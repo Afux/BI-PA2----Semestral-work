@@ -146,13 +146,18 @@ std::shared_ptr<CItem> CDir::clone() const {
 CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {}
 
 void CDir::FindText(std::string FindThis,std::vector<CItem*> *Found) {
+       if(m_items.empty()){
+           FillItems();
+       }
     for (auto it = m_items.begin(); it != m_items.end(); ++it) {
         it->second->FindText(FindThis,Found);
     }
 }
 
 void CDir::Deduplicate(CItem *DeduplicateMe) {
-
+    if(m_items.empty()){
+        FillItems();
+    }
     for (auto it = m_items.begin(); it != m_items.end(); ++it) {
         if(it->second.get()!=DeduplicateMe)
             it->second->Deduplicate(DeduplicateMe);
@@ -173,7 +178,7 @@ void CDir::Refresh() {
         if(IsReadable(s)&& !m_items.count(s)){
             if (dirEntry.is_symlink()) {
 
-                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, this, this));
+                shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
                 m_items[tmp->m_Path]=tmp;
 
             } else if (dirEntry.is_directory()) {

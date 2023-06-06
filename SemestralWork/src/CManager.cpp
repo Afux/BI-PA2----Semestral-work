@@ -18,7 +18,7 @@ void CManager::Print() {
 
 CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected,this),
 m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height*0.8+1,size.m_Height),0)),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,1,1,size.m_Width),0,"/home/afu/PA1/df/TESTER")),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,1,1,size.m_Width),0,"/home/afu/PA1")),
 m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,size.m_Width/2,1,size.m_Height),0,"/home")),
 m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height),0, this)),
 m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0)),

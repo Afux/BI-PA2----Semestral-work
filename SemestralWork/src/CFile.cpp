@@ -47,9 +47,9 @@ void CFile::Delete() {
     }
     catch (const fs::filesystem_error &e){
         throw logic_error(e.code().message());
-        if(m_inFolder!=NULL){
-            m_inFolder->m_items.erase(m_Path);
-        }
+    }
+    if(m_inFolder!=NULL){
+        m_inFolder->m_items.erase(m_Path);
     }
 }
 

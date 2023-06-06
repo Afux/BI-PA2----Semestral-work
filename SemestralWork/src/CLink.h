@@ -7,7 +7,7 @@ class CLink:public CItem {
 public:
     CLink(std::string path,unsigned int size,CItem* toFile,CItem* parr);
 
-    CItem* m_toFile;
+    std::shared_ptr<CItem> m_toFile;
      void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)override;
 
      void Print()override;
