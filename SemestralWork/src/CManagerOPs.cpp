@@ -29,7 +29,10 @@ void CManagerOPs::Copy(const std::string &reg, const std::string &to,std::map<st
                 items[it->second->m_Path]=it->second;
             }
         }
-        item->Copy(items,to);
+        for (auto i = items.begin(); i != items.end() ; ++i) {
+            i->second->Copy(to);
+
+        }
     }
 }
 
@@ -48,8 +51,9 @@ void CManagerOPs::Delete(std::string reg,std::map<std::string ,std::shared_ptr<C
                 items[it->second->m_Path]=it->second;
             }
         }
-
-        item->Delete(items);
+        for (auto i = items.begin(); i != items.end() ; ++i) {
+            i->second->Delete();
+        }
 
     }
 }
@@ -69,8 +73,9 @@ void CManagerOPs::Move(std::string reg, std::string dest,std::map<std::string ,s
                 items[it->second->m_Path]=it->second;
             }
         }
-
-        item->Move(items, dest);
+        for (auto i = items.begin(); i != items.end() ; ++i) {
+            i->second->Move(dest);
+        }
 
     }
     else{

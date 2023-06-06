@@ -7,13 +7,16 @@ namespace fs = std::filesystem;
 using namespace std;
 
 CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
-    if(!fs::exists(path)) {
-      if(IsReadable(m_inFolder->m_Path)&& IsWriteable(m_inFolder->m_Path))
-        std::ofstream { path };
-      else{
-          throw logic_error("Bad Perms");
-      }
-    }
+
+       if(!fs::exists(path)) {
+           if(IsReadable(m_inFolder->m_Path)&& IsWriteable(m_inFolder->m_Path))
+               std::ofstream { path };
+           else{
+               throw logic_error("Bad Perms");
+           }
+       }
+
+
 
 }
 
@@ -35,8 +38,7 @@ void CFile::Copy(string to) {
     }
 }
 
-//Delete mb
-void CFile::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, string to) {}
+
 
 void CFile::Delete() {
     if(fs::exists(m_Path)) {
@@ -61,8 +63,6 @@ void CFile::Delete() {
 
 }
 
-//Delete mb
-void CFile::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {}
 
 void CFile::Move(string dest) {
     try{
@@ -79,8 +79,6 @@ void CFile::Move(string dest) {
     }
 }
 
-//Delete mb
-void CFile::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string dest) {}
 
 void CFile::UpdateSize() {
     m_Size=filesystem::file_size(m_Path);

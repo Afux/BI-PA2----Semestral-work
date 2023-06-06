@@ -3,7 +3,6 @@
 #define SEMESTRALWORK_CITEM_H
 
 #include "iostream"
-#include "CDate.h"
 #include "CPermission.h"
 #include "vector"
 #include "map"
@@ -29,23 +28,20 @@ public:
     virtual void Print()=0;
     virtual void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)=0;
     virtual void Delete()=0;
-    virtual void Delete(std::map<std::string ,std::shared_ptr<CItem>> items)=0;
     virtual void Move(std::string dest)=0;
-    virtual void Move(std::map<std::string ,std::shared_ptr<CItem>> items,std::string dest )=0;
     virtual void Copy( std::string dest )=0;
-    virtual void Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string dest)=0;
     virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
     virtual void ConCat(std::string To)=0;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
     virtual void UpdateSize()=0;
-
+    virtual std::string RemoveDialog()=0;
+    virtual std::string CreateDialog(std::string NewName)=0;
+    virtual std::string RenameDialog(std::string NewName)=0;
 
 protected:
     bool IsReadable(const std::filesystem::path& p);
     bool IsWriteable(const std::filesystem::path& p);
-    virtual std::string RemoveDialog()=0;
-    virtual std::string CreateDialog(std::string NewName)=0;
-    virtual std::string RenameDialog(std::string NewName)=0;
+
     virtual void SetDate(u_int year, u_int month, u_int day)=0;
 
 };

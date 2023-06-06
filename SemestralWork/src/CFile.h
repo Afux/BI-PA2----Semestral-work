@@ -9,12 +9,9 @@ public:
     CFile(std::string path,unsigned int size, CItem * parr);
    // CFile* Concat(std::map<std::string ,std::shared_ptr<CItem>> items);
      void Print() override;
-     void Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string to ) override;
      void Copy(std::string to) override;
      void Delete() override;
-     void Delete(std::map<std::string ,std::shared_ptr<CItem>> items) override;
      void Move( std::string dest) override;
-     void Move(std::map<std::string ,std::shared_ptr<CItem>> items,std::string dest ) override;
     void FindText(std::string FindThis,std::vector<CItem*> *Found) override;
 
      void UpdateSize() override;

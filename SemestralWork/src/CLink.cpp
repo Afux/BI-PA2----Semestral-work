@@ -8,7 +8,7 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
 
     if(toFile!=NULL){
 
-        if(!fs::exists(path)&& IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)) {
+        if(IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)&&!fs::exists(path)) {
             if(fs::is_directory(toFile->m_Path))
                 fs::create_directory_symlink(toFile->m_Path,path);
             else
@@ -16,7 +16,6 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
 
         }
     }
-
 }
 
 
@@ -24,9 +23,6 @@ void CLink::Print() {
     cout<<"*"<<m_Name;
 }
 
-void CLink::Copy(std::map<std::string ,std::shared_ptr<CItem>> items, std::string to) {
-
-}
 
 void CLink::Copy(std::string to) {
     if(fs::exists(to)){
@@ -48,18 +44,14 @@ void CLink::Delete() {
 
 }
 
-void CLink::Delete(std::map<std::string ,std::shared_ptr<CItem>> items) {
 
-}
 
 void CLink::Move(string dest) {
     Copy(dest);
     Delete();
 }
 
-void CLink::Move(std::map<std::string ,std::shared_ptr<CItem>> items, string dest) {
 
-}
 
 void CLink::UpdateSize() {
     //m_Size=m_toFile->m_Size;
@@ -88,18 +80,15 @@ std::shared_ptr<CItem> CLink::clone() const {
 }
 
 void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
-    /*
-    if(m_inFolder!=NULL){
-        *inFold=m_inFolder;
+    if(m_toFile!=NULL){
+      //  m_toFile->Open(item,inFold);
     }
-    else{
-        *inFold=NULL;
-    }
-     */
 }
 
 void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
-  //  m_toFile->FindText(FindThis,Found);
+    if(m_toFile!=NULL){
+        m_toFile->FindText(FindThis,Found);
+    }
 }
 
 void CLink::Deduplicate(CItem *DeduplicateMe) {}
