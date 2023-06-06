@@ -96,12 +96,7 @@ void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** i
     FillItems();
     Refresh();
     *items= &m_items;
-    if(m_inFolder!=NULL){
-        *inFold=m_inFolder;
-    }
-    else{
-        *inFold=NULL;
-    }
+    *inFold= this;
 
 }
 /*

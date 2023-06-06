@@ -89,10 +89,9 @@ void CWindow::Print() {
 }
 
 CWindow::CWindow(CSize size, unsigned int Selected,string Path)
-:  CAbsWidnow(size, Selected, this), m_StartDir(CDir(Path,2,NULL)),m_currDir(m_StartDir){
+:  CAbsWidnow(size, Selected, this), m_currDir(CDir(Path,2,NULL)){
     m_CurrFile=NULL;
-
-    m_StartDir.Open(&m_Items,&m_CurrFile);
+    m_currDir.Open(&m_Items,&m_CurrFile);
 
     // m_Items=&m_StartDir.m_items;
    // m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
@@ -108,15 +107,16 @@ void CWindow::ReadKey() {}
 void CWindow::Enter() {
 
     if(m_Selected==0){
-        if(m_CurrFile!=NULL){
-            m_CurrFile->Open(&m_Items,&m_CurrFile);
+        if(m_CurrFile->m_inFolder!=NULL){
+            m_CurrFile->m_inFolder->Open(&m_Items,&m_CurrFile);
             iter=m_Items->begin();
             m_Selected=0;
         }
         else{
            // shared_ptr<CItem> s=iter->second;
            string s="/";
-            m_currDir= CDir ("/",2,NULL);
+           //if()
+            m_currDir= CDir (filesystem::path(m_CurrFile->m_Path).parent_path(),2,NULL);
              m_currDir.Open(&m_Items,&m_CurrFile);
            // m_Items=&m_currDir.m_items;
         }
@@ -137,7 +137,7 @@ void CWindow::PrintBorders() {
         cout<<"-";
     }
     moveto(m_Size.m_PosX+2,1);
-    cout<<m_currDir.m_Path;
+    cout<<m_CurrFile->m_Path;
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
     cout<<"  NAME  ";
     moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+2);

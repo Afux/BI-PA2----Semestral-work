@@ -16,7 +16,6 @@ public:
     std::string m_CurrPath;
     std::map<std::string ,std::shared_ptr<CItem>>   *m_Items;
     std::map<std::string ,std::shared_ptr<CItem>> m_Selecteditems;
-    CDir m_StartDir;
     bool Flag=false;
     CDir m_currDir;
     std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> tt;
