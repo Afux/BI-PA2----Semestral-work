@@ -8,10 +8,8 @@ public:
     CDir(std::string path,unsigned int size,CItem* inFolder);
     CDir(const CDir& rhs);
 
-    std::map<std::string ,std::shared_ptr<CItem>> * FindDir(const std::string& path,CItem **item);
     std::shared_ptr<CItem>  clone() const override;
 
-    CItem *m_DeleteMe;
     void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)override;
 
      void Copy(std::string to) override;
@@ -27,7 +25,6 @@ public:
     std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
-     std::vector<std::string> parseString(const std::string& input, char delimiter);
 
 protected:
     void UpdateSize() override;

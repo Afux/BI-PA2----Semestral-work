@@ -13,13 +13,13 @@ CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size
             try{
                 std::ofstream { path };
             }
-            catch (const fs::filesystem_error &e) {
-                throw logic_error(e.code().message());
+            catch (...) {
+                throw logic_error("Ca");
             }
         }
     }
-    catch (const fs::filesystem_error &e){
-        throw logic_error(e.code().message());
+    catch (...){
+        throw logic_error("Cant create file");
     }
 
 }
@@ -48,7 +48,7 @@ void CFile::Delete() {
     catch (const fs::filesystem_error &e){
         throw logic_error(e.code().message());
     }
-    if(m_inFolder!=NULL){
+    if(m_inFolder!=NULL&&m_inFolder->m_items.count(m_Path)){
         m_inFolder->m_items.erase(m_Path);
     }
 }

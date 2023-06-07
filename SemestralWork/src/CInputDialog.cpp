@@ -45,7 +45,7 @@ void CInputDialog::ReadKey() {
     }
 
     parseString(m_input,':');
-   // Enter();
+    Enter();
     op=0;
     m_lastActive->m_Scene=m_lastActive;
 }
@@ -61,6 +61,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
+                win->m_Selected=0;
                 break;
             case 2:
                 try{
@@ -79,6 +80,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
+                win->m_Selected=0;
                 break;
             case 4:
                 //Create();
@@ -100,6 +102,7 @@ void CInputDialog::Enter() {
                    m_errDialog.Setup(m_lastActive,e.what());
                    m_errDialog.Run();
                }
+
                 break;
             case 7:
                 try{
@@ -109,6 +112,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
+
                 break;
             case 8:
                 try{
@@ -127,10 +131,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                if(win->iter!=m_items->begin()){
-                    win->iter--;
-                    win->m_Selected--;
-                }
+                win->m_Selected=0;
                 break;
             case 10:
                 try{

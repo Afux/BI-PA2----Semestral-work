@@ -8,26 +8,14 @@ using namespace std;
 CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CItem(path, size,parr),m_toFile(toFile) {
 
     if(toFile!=NULL){
-
         if(IsReadable(toFile->m_Path)&& IsWriteable(toFile->m_Path)&&!fs::exists(path)) {
             if(fs::is_directory(toFile->m_Path))
                 fs::create_directory_symlink(toFile->m_Path,path);
             else
                 fs::create_symlink(toFile->m_Path,path);
-
         }
     }
-    else{
-        string temp=fs::read_symlink(m_Path);
-        if(fs::is_symlink(temp))
-             m_toFile=shared_ptr<CItem>( new CLink(temp, 22, NULL, NULL));
-        else if (fs::is_directory(temp)){
-            m_toFile=shared_ptr<CItem>( new CDir(temp, 22,NULL));
-        }
-        else if(fs::is_regular_file(temp))
-            m_toFile=shared_ptr<CItem>( new CFile(temp, 22,NULL));
 
-    }
 }
 
 
@@ -37,30 +25,43 @@ void CLink::Print() {
 
 
 void CLink::Copy(std::string to) {
-    if(fs::exists(to)){
-        if(IsReadable(to)&& IsWriteable(to))
-            fs::copy_symlink(m_Path,to+"/"+m_Name);
+    try{
+        fs::copy_symlink(m_Path,to+"/"+m_Name);
     }
+    catch (const fs::filesystem_error &e){
+        throw logic_error(e.code().message());
+    }
+
 }
 
 void CLink::Delete() {
-    if(fs::exists(m_Path)) {
-        if (IsReadable(m_Path) && IsWriteable(m_Path)){
-            std::filesystem::remove_all(m_Path);
-            if(m_inFolder!=NULL){
-                m_inFolder->m_items.erase(m_Path);
-            }
-        }
+    try{
+        fs::remove_all(m_Path);
     }
-
-
+    catch (const fs::filesystem_error &e){
+        throw logic_error(e.code().message());
+    }
+    if(m_inFolder!=NULL&&m_inFolder->m_items.count(m_Path)){
+        m_inFolder->m_items.erase(m_Path);
+    }
 }
 
 
 
 void CLink::Move(string dest) {
-    Copy(dest);
-    Delete();
+    try{
+        Copy(dest);
+    }
+    catch (const logic_error &e){
+        throw logic_error(e.what());
+    }
+    try {
+        Delete();
+    }
+    catch (const logic_error &e){
+        fs::remove_all(dest+"/"+m_Name);
+        throw logic_error(e.what());
+    }
 }
 
 
@@ -93,7 +94,7 @@ std::shared_ptr<CItem> CLink::clone() const {
 
 void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
     if(m_toFile!=NULL){
-        m_toFile->Open(item,inFold);
+       // m_toFile->Open(item,inFold);
     }
 }
 

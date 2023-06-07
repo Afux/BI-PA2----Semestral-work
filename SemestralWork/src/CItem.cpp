@@ -28,7 +28,7 @@ bool CItem::IsReadable(const fs::path &p) {
     try {
 
         auto perms = fs::status(p).permissions();
-        if ((perms & fs::perms::owner_read) != fs::perms::none && (perms & fs::perms::group_read) != fs::perms::none)
+        if ((perms & fs::perms::owner_read) != fs::perms::none && (perms & fs::perms::group_read) != fs::perms::none&&(fs::exists(p)))
         {
             return true;
         }
@@ -44,7 +44,7 @@ bool CItem::IsWriteable(const std::filesystem::path &p) {
     try {
 
         auto perms = fs::status(p).permissions();
-        if ((perms & fs::perms::owner_write) != fs::perms::none && (perms & fs::perms::group_write) != fs::perms::none)
+        if ((perms & fs::perms::owner_write) != fs::perms::none && (perms & fs::perms::group_write) != fs::perms::none&&(fs::exists(p)))
         {
             return true;
         }
