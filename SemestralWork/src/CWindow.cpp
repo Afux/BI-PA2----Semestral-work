@@ -10,15 +10,14 @@ void CWindow::Print() {
     if(m_Selected<=15){
         tt=m_Items->begin();
     }
-
     if(m_Selected>=m_Items->size()+1){
         m_Selected=0;
         iter=m_Items->begin();
         tt=m_Items->begin();
     }
     PrintBorders();
-
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+4);
+
     if(m_Selected==0){
         cout << bg::blue<<"/.."<< setw(m_Size.m_Width-3)<<style::reset;
     }
@@ -34,22 +33,9 @@ void CWindow::Print() {
 
         moveto(m_Size.m_PosX+2,m_Size.m_PosY+5+cnt);
         if(m_Selected!=0&&(it->second.get()==iter->second.get())){
-
-
-
-                cout << bg::blue;
-                it->second->Print();
-                cout<< setw(m_Size.m_Width-it->second->m_Name.size())
-                    <<style::reset;
-
-            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
-            cout<<bg::blue<<"|"<<style::reset;
-            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
-            cout << bg::blue<<it->second->m_Size<<style::reset;
-            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
-            cout<<bg::blue<<"|"<<style::reset;
-            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
-            cout << bg::blue<<"13/03/2023"<<style::reset;
+            cout << bg::blue;
+            it->second->Print();
+            cout<< setw(m_Size.m_Width-it->second->m_Name.size())<<style::reset;
             moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout<<bg::blue<<"|"<<style::reset;
         }
@@ -57,52 +43,30 @@ void CWindow::Print() {
 
         else{
 
-                if(it->second->m_isSelected){
-                    cout<<fg::yellow;
-                    it->second->Print();
-                    cout<<fg::reset<<setw(m_Size.m_Width-it->second->m_Name.size());
-                }
-                else{
-
-                   it->second->Print();
-                    cout<<setw(m_Size.m_Width-it->second->m_Name.size());
-
-                }
-
-
-            moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
-            cout<<"|";
-            moveto((int)(m_Size.m_Width*0.4)+1+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
-            cout <<it->second->m_Size;
-            moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
-            cout<<"|";
-            moveto((int)(m_Size.m_Width*0.6)+1+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
-            cout <<"13/03/2023";
+            if(it->second->m_isSelected){
+                cout<<fg::yellow;
+                it->second->Print();
+                cout<<fg::reset<<setw(m_Size.m_Width-it->second->m_Name.size());
+            }
+            else{
+               it->second->Print();
+                cout<<setw(m_Size.m_Width-it->second->m_Name.size());
+            }
             moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+4+cnt+1);
             cout<<"|";
         }
-
     }
 
     moveto(2,m_Size.m_AbsPosY+1);
-
 }
 
-CWindow::CWindow(CSize size, unsigned int Selected,string Path)
-:  CAbsWidnow(size, Selected, this), m_currDir(CDir(Path,2,NULL)){
+CWindow::CWindow(CSize size,string Path): CAbsWidnow(size, this), m_currDir(CDir(Path,2,NULL)){
     m_CurrFile=NULL;
     m_currDir.Open(&m_Items,&m_CurrFile);
-
-    // m_Items=&m_StartDir.m_items;
-   // m_Items=m_StartDir.FindDir("/home/afu/PA1/df",&m_CurrFile);
     iter=m_Items->begin();
     tt=m_Items->begin();
 
 }
-
-
-
-void CWindow::ReadKey() {}
 
 void CWindow::Enter() {
 
@@ -130,7 +94,6 @@ void CWindow::Enter() {
     m_Selecteditems.clear();
 
 }
-
 void CWindow::PrintBorders() {
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     for (size_t i =1; i < m_Size.m_Width; ++i) {
@@ -148,10 +111,7 @@ void CWindow::PrintBorders() {
     for (size_t i =0; i < m_Size.m_Height; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
-        moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,i);
-        cout<<"|";
-        moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,i);
-        cout<<"|";
+
         moveto((int)(m_Size.m_Width)+m_Size.m_PosX,i);
         cout<<"|";
         moveto(m_Size.m_PosX,i);
@@ -173,9 +133,9 @@ void CWindow::PrintBorders() {
     }
 
 }
-
 void CWindow::Jump(string to) {
     m_currDir= CDir (to,2,NULL);
     m_currDir.Open(&m_Items,&m_CurrFile);
     m_Selected=0;
 }
+void CWindow::ReadKey() {}

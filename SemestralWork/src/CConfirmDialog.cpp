@@ -8,7 +8,7 @@
 using namespace rang;
 using namespace std;
 
-CConfirmDialog::CConfirmDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this), m_errDialog(size,0) {
+CConfirmDialog::CConfirmDialog(CSize size) : CAbsWidnow(size,this), m_errDialog(size) {
     op=0;
     m_Content.emplace_back("[YES]");
     m_Content.emplace_back("[No]");

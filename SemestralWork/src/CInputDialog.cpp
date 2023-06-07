@@ -9,7 +9,7 @@
 using namespace rang;
 using namespace std;
 namespace fs = std::filesystem;
-CInputDialog::CInputDialog(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected,this),m_errDialog(size,0) {
+CInputDialog::CInputDialog(CSize size) : CAbsWidnow(size,this),m_errDialog(size) {
     op=0;
     m_Label="Zadej Vstup";
 }
@@ -62,6 +62,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Run();
                 }
                 win->m_Selected=0;
+
                 break;
             case 2:
                 try{
@@ -196,12 +197,13 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
 }
 
-void CInputDialog::Setup(CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *items) {
+void CInputDialog::Setup(CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *items,CAbsWidnow *Win) {
     m_lastActive=lastActive;
     op=Op;
     m_Label=Label;
     m_SelectedItem=SelectedItem;
     m_items=items;
+    win=Win;
 }
 
 void CInputDialog::PrintBorders() {

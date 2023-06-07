@@ -1,7 +1,7 @@
 
 #include "CHelpBar.h"
 #include "iostream"
-CHelpBar::CHelpBar(CSize size, unsigned int Selected) : CAbsWidnow(size, Selected, this) {
+CHelpBar::CHelpBar(CSize size) : CAbsWidnow(size, this) {
 
     m_Content.push_back("Menu");
     m_Content.push_back("Delete");

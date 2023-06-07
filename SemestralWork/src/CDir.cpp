@@ -94,9 +94,6 @@ std::string CDir::CreateDialog(std::string NewName) {
     return "Dir "+m_Name+" will be created";
 }
 
-std::string CDir::RenameDialog(std::string NewName) {
-    return "Dir "+m_Name+" will be renamed to "+ NewName;
-}
 
 void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** inFold) {
     FillItems();
@@ -206,4 +203,8 @@ void CDir::FillItems() {
         }
     }
 
+}
+
+std::string CDir::RenameDialog(std::string NewName) {
+    return std::string();
 }

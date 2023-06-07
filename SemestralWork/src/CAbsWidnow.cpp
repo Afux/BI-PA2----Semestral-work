@@ -17,8 +17,9 @@ void CAbsWidnow::moveto(int x, int y) {
 
 }
 
-CAbsWidnow::CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow* Scene): m_Size(size),m_Selected(Selected),m_Scene(Scene){
+CAbsWidnow::CAbsWidnow(CSize size, CAbsWidnow* Scene): m_Size(size),m_Scene(Scene){
     Oper=CManagerOPs();
+    m_Selected=0;
 }
 
 void CAbsWidnow::Refresh() {
@@ -26,4 +27,4 @@ void CAbsWidnow::Refresh() {
         Print();
 }
 
-CAbsWidnow::~CAbsWidnow() {}
+CAbsWidnow::~CAbsWidnow() = default;

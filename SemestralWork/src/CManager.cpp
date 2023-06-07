@@ -5,7 +5,6 @@
 #include <termios.h>
 #include <iostream>
 #include <regex>
-
 using namespace std;
 
 void CManager::Print() {
@@ -16,31 +15,26 @@ void CManager::Print() {
 
 }
 
-CManager::CManager(CSize size, std::string Name, unsigned int Selected) :  CAbsWidnow(size, Selected,this),
-m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height*0.8+1,size.m_Height),0)),
-m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,1,1,size.m_Width),0,"/home/afu/PA1/df/TESTER")),
-m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,size.m_Width/2,1,size.m_Height),0,"/home")),
-m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height),0, this)),
-m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0)),
-m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0)),
-m_ErrorDialog(CErrDialog(CSize(size.m_Width/2,size.m_Height*0.5,size.m_Width/4,size.m_Height*0.2,size.m_Height),0))
+CManager::CManager(CSize size, std::string path) :  CAbsWidnow(size,this),
+m_HelpBar(CHelpBar(CSize(size.m_Width/2,size.m_Height,1, size.m_Height*0.8+1,size.m_Height))),
+m_LeftPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,1,1,size.m_Width),path)),
+m_RightPanel(CWindow(CSize(size.m_Width/2,size.m_Height*0.8,size.m_Width/2,1,size.m_Height),path)),
+m_Menu(CMenu(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height), this)),
+m_Input(CInputDialog(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height))),
+m_Confirm(CConfirmDialog(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height))),
+m_ErrorDialog(CErrDialog(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,size.m_Height*0.1,size.m_Height)))
 {
-
 
     m_runFlag= true;
     m_ActivePanel=this;
     m_ActiveWindow=&m_LeftPanel;
 
-
 }
 
 void CManager::Run() {
-
     while (m_runFlag){
         m_Scene->Print();
         m_Scene->ReadKey();
-
-        // Refresh();
     }
 }
 /*
@@ -118,7 +112,7 @@ void CManager::ReadKey() {
         case '1':
         case '+':
             if(m_ActiveWindow->m_Selected!=0){
-                m_Menu.Setup(this,m_ActiveWindow->m_Items,&m_ActiveWindow->m_Selecteditems,m_ActiveWindow->iter->second.get());
+                m_Menu.Setup(this,m_ActiveWindow->m_Items,&m_ActiveWindow->m_Selecteditems,m_ActiveWindow->iter->second.get(),m_ActiveWindow);
                 m_Scene=&m_Menu;
             }
 
@@ -132,14 +126,14 @@ void CManager::ReadKey() {
             break;
         case '3':
             if(m_ActiveWindow->m_Selected!=0) {
-                m_Input.Setup(this,8,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Input.Setup(this,8,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
                 m_Scene = &m_Input;
             }
             break;
         case '4':
             if(m_ActiveWindow->m_Selected!=0)
             {
-                m_Input.Setup(this,10,"Enter file name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Input.Setup(this,10,"Enter file name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
                 m_Scene=&m_Input;
             }
             break;
@@ -147,14 +141,14 @@ void CManager::ReadKey() {
         case '5':
             if(m_ActiveWindow->m_Selected!=0)
             {
-                m_Input.Setup(this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Input.Setup(this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
                 m_Scene=&m_Input;
             }
             break;
         case '6':
             if(m_ActiveWindow->m_Selected!=0)
             {
-                m_Input.Setup(this,9,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items);
+                m_Input.Setup(this,9,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
                 m_Input.win=m_ActiveWindow;
                 m_Scene=&m_Input;
             }

@@ -9,7 +9,7 @@
 #include "CErrDialog.h"
 class CConfirmDialog: public CAbsWidnow{
 public:
-    CConfirmDialog(CSize size, unsigned int Selected);
+    CConfirmDialog(CSize size);
 
     void Print() override;
     void PrintBorders(const char &c);

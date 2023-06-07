@@ -7,7 +7,7 @@
 #include "termios.h"
 using namespace std;
 using namespace rang;
-CErrDialog::CErrDialog( CSize size, unsigned int selected): CAbsWidnow(size, selected, this) {
+CErrDialog::CErrDialog( CSize size): CAbsWidnow(size, this) {
 m_Label="Chyba";
 }
 

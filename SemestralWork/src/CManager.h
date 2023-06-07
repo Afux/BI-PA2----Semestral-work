@@ -14,7 +14,7 @@
 
 class CManager: public CAbsWidnow{
 public:
-    CManager( CSize size,std::string Name, unsigned int Selected);
+    CManager( CSize size,std::string Path);
     CHelpBar m_HelpBar;
     CWindow m_LeftPanel;
     CWindow m_RightPanel;

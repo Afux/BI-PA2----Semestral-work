@@ -12,7 +12,7 @@
 #include "CDir.h"
 class CWindow: public CAbsWidnow{
 public:
-    CWindow( CSize size, unsigned int Selected,std::string Path);
+    CWindow( CSize size,std::string Path);
     std::string m_CurrPath;
     std::map<std::string ,std::shared_ptr<CItem>>   *m_Items;
     std::map<std::string ,std::shared_ptr<CItem>> m_Selecteditems;

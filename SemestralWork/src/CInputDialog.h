@@ -11,7 +11,7 @@ class CManager;
 class CInputDialog: public CAbsWidnow{
 public:
 
-    CInputDialog(CSize size, unsigned int Selected);
+    CInputDialog(CSize size);
     std::string m_Label;
     CItem * m_SelectedItem;
 
@@ -29,7 +29,7 @@ public:
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CErrDialog m_errDialog;
 
-    void Setup( CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,   std::map<std::string ,std::shared_ptr<CItem>> *items);
+    void Setup( CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,   std::map<std::string ,std::shared_ptr<CItem>> *items,CAbsWidnow *Win);
 
 private:
     std::string  m_input;

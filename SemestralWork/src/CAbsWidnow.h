@@ -13,7 +13,7 @@
 
 class CAbsWidnow {
 public:
-    CAbsWidnow(CSize size, unsigned int Selected, CAbsWidnow * Scene);
+    CAbsWidnow(CSize size, CAbsWidnow * Scene);
     virtual ~CAbsWidnow();
     CSize  m_Size;
     unsigned int m_Selected;

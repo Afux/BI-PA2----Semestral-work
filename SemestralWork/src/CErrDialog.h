@@ -9,7 +9,7 @@
 #include "CAbsWidnow.h"
 class CErrDialog:CAbsWidnow {
 public:
-    CErrDialog(CSize size, unsigned int selected);
+    CErrDialog(CSize size);
     std::string m_Label;
     CAbsWidnow * m_lastActive;
 

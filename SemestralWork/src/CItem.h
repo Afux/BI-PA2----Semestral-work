@@ -3,7 +3,6 @@
 #define SEMESTRALWORK_CITEM_H
 
 #include "iostream"
-#include "CPermission.h"
 #include "vector"
 #include "map"
 #include <memory>
@@ -20,7 +19,6 @@ public:
     bool m_isSelected;
     void Select();
     unsigned int m_Size;
-    std:: vector<CPermission> m_Permisions;
     CItem* m_inFolder;
     virtual std::shared_ptr<CItem>  clone() const=0;
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
