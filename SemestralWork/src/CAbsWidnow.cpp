@@ -22,9 +22,6 @@ CAbsWidnow::CAbsWidnow(CSize size, CAbsWidnow* Scene): m_Size(size),m_Scene(Scen
     m_Selected=0;
 }
 
-void CAbsWidnow::Refresh() {
-        clear();
-        Print();
-}
+
 
 CAbsWidnow::~CAbsWidnow() = default;

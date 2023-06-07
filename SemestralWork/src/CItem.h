@@ -20,7 +20,6 @@ public:
     void Select();
     unsigned int m_Size;
     CItem* m_inFolder;
-    virtual std::shared_ptr<CItem>  clone() const=0;
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
 
     virtual void Print()=0;
@@ -31,7 +30,6 @@ public:
     virtual void FindText(std::string FindThis,std::vector<CItem*> *Found)=0;
     virtual void ConCat(std::string To)=0;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
-    virtual void UpdateSize()=0;
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;
@@ -40,7 +38,6 @@ protected:
     bool IsReadable(const std::filesystem::path& p);
     bool IsWriteable(const std::filesystem::path& p);
 
-    virtual void SetDate(u_int year, u_int month, u_int day)=0;
 
 };
 

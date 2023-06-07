@@ -14,7 +14,7 @@ public:
     CInputDialog(CSize size);
     std::string m_Label;
     CItem * m_SelectedItem;
-
+   // CItem *CurrDir
     std::vector<std::string > m_Content;
     CManager * m_manager;
     void Print() override;

@@ -8,3 +8,11 @@ m_PosX=PosX;
 m_PosY=PosY;
 m_AbsPosY=AbsPosY;
 }
+
+CSize::CSize(CSize &rhs) {
+    m_Width=rhs.m_Width;
+    m_Height=rhs.m_Height;
+    m_PosX=rhs.m_PosX;
+    m_PosY=rhs.m_PosY;
+    m_AbsPosY=rhs.m_AbsPosY;
+}

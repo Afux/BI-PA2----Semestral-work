@@ -19,11 +19,9 @@ public:
     unsigned int m_Selected;
     CAbsWidnow* m_Scene;
     CManagerOPs Oper;
-    typedef std::map<std::string ,std::shared_ptr<CItem>>::iterator Myiterator;
-    Myiterator iter;
-//    std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::shared_ptr<CItem>>> iter;
+    typedef std::map<std::string ,std::shared_ptr<CItem>>::iterator MyIterator;
+    MyIterator iter;
 
-    void Refresh();
     virtual void Print()=0;
     virtual void  ReadKey()=0;
 protected:

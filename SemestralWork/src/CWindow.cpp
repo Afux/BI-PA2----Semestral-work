@@ -8,12 +8,12 @@ using namespace std;
 void CWindow::Print() {
 
     if(m_Selected<=15){
-        tt=m_Items->begin();
+        m_FromItem=m_Items->begin();
     }
     if(m_Selected>=m_Items->size()+1){
         m_Selected=0;
         iter=m_Items->begin();
-        tt=m_Items->begin();
+        m_FromItem=m_Items->begin();
     }
     PrintBorders();
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+4);
@@ -26,7 +26,7 @@ void CWindow::Print() {
     }
 
     int cnt=0;
-    for (auto it = tt; it != m_Items->end() ; ++it,cnt++) {
+    for (auto it = m_FromItem; it != m_Items->end() ; ++it,cnt++) {
         if(cnt==15){
             break;
         }
@@ -60,11 +60,11 @@ void CWindow::Print() {
     moveto(2,m_Size.m_AbsPosY+1);
 }
 
-CWindow::CWindow(CSize size,string Path): CAbsWidnow(size, this), m_currDir(CDir(Path,2,NULL)){
+CWindow::CWindow(CSize size,string Path): CAbsWidnow(size, this), m_Dir(CDir(Path,2,NULL)){
     m_CurrFile=NULL;
-    m_currDir.Open(&m_Items,&m_CurrFile);
+    m_Dir.Open(&m_Items,&m_CurrFile);
     iter=m_Items->begin();
-    tt=m_Items->begin();
+    m_FromItem=m_Items->begin();
 
 }
 
@@ -77,19 +77,15 @@ void CWindow::Enter() {
             m_Selected=0;
         }
         else{
-           // shared_ptr<CItem> s=iter->second;
            string s="/";
-           //if()
-            m_currDir= CDir (filesystem::path(m_CurrFile->m_Path).parent_path(),2,NULL);
-             m_currDir.Open(&m_Items,&m_CurrFile);
-           // m_Items=&m_currDir.m_items;
+            m_Dir= CDir (filesystem::path(m_CurrFile->m_Path).parent_path(),2,NULL);
+            m_Dir.Open(&m_Items,&m_CurrFile);
         }
     }
     else{
          iter->second->Open(&m_Items,&m_CurrFile);
          iter=m_Items->begin();
-          m_Selected=0;
-
+         m_Selected=0;
     }
     m_Selecteditems.clear();
 
@@ -103,15 +99,11 @@ void CWindow::PrintBorders() {
     cout<<m_CurrFile->m_Path;
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
     cout<<"  NAME  ";
-    moveto((int)(m_Size.m_Width*0.4)+m_Size.m_PosX,m_Size.m_PosY+2);
-    cout<<"  SIZE  ";
-    moveto((int)(m_Size.m_Width*0.6)+m_Size.m_PosX,m_Size.m_PosY+2);
-    cout<<"  Modify  ";
+
 
     for (size_t i =0; i < m_Size.m_Height; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
-
         moveto((int)(m_Size.m_Width)+m_Size.m_PosX,i);
         cout<<"|";
         moveto(m_Size.m_PosX,i);
@@ -128,14 +120,15 @@ void CWindow::PrintBorders() {
     if(m_Selected!=0){
          cout <<(iter)->second->m_Name;
 
-    } else{
-
+    }
+    else{
+        cout <<"/..";
     }
 
 }
 void CWindow::Jump(string to) {
-    m_currDir= CDir (to,2,NULL);
-    m_currDir.Open(&m_Items,&m_CurrFile);
+    m_Dir= CDir (to,2,NULL);
+    m_Dir.Open(&m_Items,&m_CurrFile);
     m_Selected=0;
 }
 void CWindow::ReadKey() {}

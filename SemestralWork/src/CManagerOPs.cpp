@@ -83,36 +83,27 @@ void CManagerOPs::Move(std::string reg, std::string dest,std::map<std::string ,s
 }
 
 
-void CManagerOPs::CreateFolder(std::string name, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
-    if(!Items->empty()) {
-        auto itr=Items->begin();
-        CItem *item = itr->second->m_inFolder;
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(item->m_Path+"/"+name, 22, item));
-        Items->insert({ tmp->m_Path, tmp });
-    }
+void CManagerOPs::CreateFolder(std::string name, CItem *CurrDir) {
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(CurrDir->m_Path+"/"+name, 22, CurrDir));
+    CurrDir->m_items.insert({ tmp->m_Path, tmp });
 }
 
-void CManagerOPs::CreateFile(std::string name, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
-    if(!Items->empty()) {
-        auto itr=Items->begin();
-        CItem *item = itr->second->m_inFolder;
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(item->m_Path+"/"+name, 22, item));
-        Items->insert({ tmp->m_Path, tmp });
-    }
+void CManagerOPs::CreateFile(std::string name, CItem *CurrDir) {
+
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CurrDir->m_Path+"/"+name, 22, CurrDir));
+    CurrDir->m_items.insert({ tmp->m_Path, tmp });
+
 }
 
-void CManagerOPs::CreateLink(std::string name, CItem *to, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
-    if(!Items->empty()) {
-        auto itr=Items->begin();
-        CItem *item = itr->second->m_inFolder;
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(item->m_Path+"/"+name, 22,to, item));
-        Items->insert({ tmp->m_Path, tmp });
-    }
+void CManagerOPs::CreateLink(std::string name, CItem *to, CItem *CurrDir) {
+    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(CurrDir->m_Path+"/"+name, 22,to, CurrDir));
+    CurrDir->m_items.insert({ tmp->m_Path, tmp });
 }
 
 
 
 void CManagerOPs::FindByText(const std::string &text, std::map<std::string ,std::shared_ptr<CItem>> *Items) {
+
     if(!Items->empty()) {
         auto itr=Items->begin();
         CItem *item = itr->second->m_inFolder;

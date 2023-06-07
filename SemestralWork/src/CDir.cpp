@@ -71,15 +71,6 @@ void CDir::Move(std::string dest) {
 
 }
 
-void CDir::UpdateSize() {
-    m_Size=0;
-    for (auto it = m_items.begin(); it != m_items.end(); ++it) {
-        m_Size+=it->second->m_Size;
-    }
-
-}
-
-void CDir::SetDate(u_int year, u_int month, u_int day) {}
 
 void CDir::Print() {
     cout<<"/"<<m_Name;
@@ -103,12 +94,6 @@ void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** i
 
 }
 
-std::shared_ptr<CItem> CDir::clone() const {
-    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(*this));
-    return tmp;
-}
-
-CDir::CDir(const CDir &rhs): CItem(rhs.m_Path, rhs.m_Size,rhs.m_inFolder) {}
 
 void CDir::FindText(std::string FindThis,std::vector<CItem*> *Found) {
        if(m_items.empty()){
@@ -182,19 +167,16 @@ void CDir::FillItems() {
                 if(IsReadable(s)){
                     if (dirEntry.is_symlink()) {
                             shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(s, 22, NULL, this));
-                            tmp->UpdateSize();
                             m_items[tmp->m_Path]=tmp;
 
                     } else if (dirEntry.is_directory()) {
 
                         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(s, 22, this));
-                        tmp->UpdateSize();
                         m_items[tmp->m_Path]=tmp;
 
                     } else if (dirEntry.is_regular_file()) {
 
                         shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CFile(s, 2, this)));
-                        tmp->UpdateSize();
                         m_items[tmp->m_Path]=tmp;
 
                     }

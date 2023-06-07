@@ -14,14 +14,11 @@ public:
      void Move( std::string dest) override;
     void FindText(std::string FindThis,std::vector<CItem*> *Found) override;
 
-     void UpdateSize() override;
-     void SetDate(u_int year, u_int month, u_int day) override;
      void Deduplicate(CItem * DeduplicateMe) override;
      std::string RemoveDialog() override;
      std::string CreateDialog(std::string NewName) override;
      std::string RenameDialog(std::string NewName) override;
      void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)override;
-    std::shared_ptr<CItem>  clone() const override;
     bool identicalFiles(std::string file1, std::string file2);
     void ConCat(std::string To) override;
 

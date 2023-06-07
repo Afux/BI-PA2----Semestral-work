@@ -66,15 +66,6 @@ void CLink::Move(string dest) {
 
 
 
-void CLink::UpdateSize() {
-    //m_Size=m_toFile->m_Size;
-}
-
-void CLink::SetDate(u_int year, u_int month, u_int day) {
-
-}
-
-
 std::string CLink::RemoveDialog() {
     return std::string();
 }
@@ -87,10 +78,7 @@ std::string CLink::RenameDialog(std::string NewName) {
     return std::string();
 }
 
-std::shared_ptr<CItem> CLink::clone() const {
-    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(*this));
-    return tmp;
-}
+
 
 void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
     if(m_toFile!=NULL){

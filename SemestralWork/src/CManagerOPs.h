@@ -20,9 +20,9 @@ public:
     void Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
     void Move( CItem *item , std::string dest) ;
     void Move(std::string reg, std::string dest,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
-    void CreateFolder(std::string name,std::map<std::string ,std::shared_ptr<CItem>> *Items);
-    void CreateFile(std::string name,std::map<std::string ,std::shared_ptr<CItem>> *Items);
-    void CreateLink(std::string name,CItem * to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void CreateFolder(std::string name,CItem *CurrDir);
+    void CreateFile(std::string name,CItem *CurrDir);
+    void CreateLink(std::string name,CItem * to,CItem *CurrDir);
     void FindByText(const std::string &text,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void Deduplicate(CItem* item,std::map<std::string ,std::shared_ptr<CItem>> *Items);
     void ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items,std::string to);

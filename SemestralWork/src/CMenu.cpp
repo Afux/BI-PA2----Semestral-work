@@ -9,8 +9,7 @@ using namespace rang;
 using namespace std;
 
 CMenu::CMenu(CSize size,CAbsWidnow* lastActive):  CAbsWidnow(size, this),m_lastActive(lastActive),
-    m_inputDialog(CInputDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY))),
-    m_ConfirmDialog(CConfirmDialog(CSize(lastActive->m_Size.m_Width/2,lastActive->m_Size.m_Height*0.5,lastActive->m_Size.m_Width/4,lastActive->m_Size.m_Height*0.2,size.m_AbsPosY))){
+m_inputDialog(CInputDialog(CSize(size))), m_ConfirmDialog(CConfirmDialog(CSize(size))){
 
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
