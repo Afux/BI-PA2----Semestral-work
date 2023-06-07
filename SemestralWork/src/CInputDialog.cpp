@@ -34,14 +34,20 @@ void CInputDialog::ReadKey() {
     term.c_lflag |= ECHO | ICANON;
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     cout<<bg::yellow<<m_Label<<": "<<bg::reset;
- std::getline(std::cin, m_input);
+
+     std::getline(std::cin, m_input);
+    if (cin.eof()) {
+        throw logic_error("EOF");
+    }
     if(m_input.empty()){
         op=0;
         m_lastActive->m_Scene=m_lastActive;
     }
 
     parseString(m_input,':');
-    Enter();
+   // Enter();
+    op=0;
+    m_lastActive->m_Scene=m_lastActive;
 }
 
 void CInputDialog::Enter() {

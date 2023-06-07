@@ -60,6 +60,8 @@ void CManager::ReadKey() {
 
     char c;
     std::cin >> c;
+    if(c==EOF)
+        m_runFlag=0;
 
 
     switch(c) {
@@ -159,7 +161,7 @@ void CManager::ReadKey() {
             break;
 
         case '7':
-        case 44:
+        case '\x04':
             m_runFlag= false;
             break;
 
