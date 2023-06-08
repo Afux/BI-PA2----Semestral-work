@@ -37,7 +37,7 @@ void CMenu::Print() {
             cout <<m_Content[i]<<setw(m_Size.m_Width-m_Content[i].size());
         }
     }
-    moveto(1,m_Size.m_AbsPosY+3);
+    moveto(1,m_Size.m_AbsPosY+2);
 
 }
 

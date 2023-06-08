@@ -24,7 +24,7 @@ void CInputDialog::Print() {
     PrintBorders();
     PrintLabel();
 
-    moveto(1,m_Size.m_AbsPosY+3);
+    moveto(1,m_Size.m_AbsPosY+2);
 
 }
 

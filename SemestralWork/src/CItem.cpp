@@ -58,6 +58,9 @@ bool CItem::IsWriteable(const std::filesystem::path &p) {
 bool CItem::IsReadable() {
     return IsReadable(m_Path);
 }
+bool CItem::IsWriteable() {
+    return IsWriteable(m_Path);
+}
 
 
 

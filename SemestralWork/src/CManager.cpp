@@ -59,8 +59,10 @@ void CManager::ReadKey() {
         case 'W':
             if(m_ActiveWindow->m_Selected!=0)
                 m_ActiveWindow->m_Selected--;
+
             if( m_ActiveWindow->iter!=m_ActiveWindow->m_Items->begin())
                  m_ActiveWindow->iter--;
+
             if(m_ActiveWindow->m_Selected>15){
                 m_ActiveWindow->m_FromItem--;
             }
@@ -71,6 +73,7 @@ void CManager::ReadKey() {
             if(m_ActiveWindow->m_Selected>15){
                 m_ActiveWindow->m_FromItem++;
             }
+
             if( m_ActiveWindow->m_Selected==1&&m_ActiveWindow->m_Selected!=0)
                 m_ActiveWindow->iter=m_ActiveWindow->m_Items->begin();
             else {
@@ -78,6 +81,7 @@ void CManager::ReadKey() {
                if( m_ActiveWindow->iter==m_ActiveWindow->m_Items->end())
                    m_ActiveWindow->iter--;
             }
+
 
             break;
         case 'n':

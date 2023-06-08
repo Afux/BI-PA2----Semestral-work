@@ -84,9 +84,7 @@ void CErrDialog::Setup(CAbsWidnow *lastActive, const string &Label) {
 }
 
 void CErrDialog::Run() {
-
         Print();
         ReadKey();
-
 
 }

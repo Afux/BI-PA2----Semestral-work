@@ -33,6 +33,7 @@ public:
     virtual std::string CreateDialog(std::string NewName)=0;
     virtual std::string RenameDialog(std::string NewName)=0;
     bool IsReadable();
+    bool IsWriteable();
 protected:
     bool IsReadable(const std::filesystem::path& p);
     bool IsWriteable(const std::filesystem::path& p);
