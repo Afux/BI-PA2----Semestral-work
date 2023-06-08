@@ -20,8 +20,21 @@ void CAbsWidnow::moveto(int x, int y) {
 CAbsWidnow::CAbsWidnow(CSize size, CAbsWidnow* Scene): m_Size(size),m_Scene(Scene){
     Oper=CManagerOPs();
     m_Selected=0;
+    m_isrunning= true;
 }
 
+void CAbsWidnow::cursorOff() {
+
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag &= ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void CAbsWidnow::cursorOn() {
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag |= ECHO | ICANON;
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
 
 
 CAbsWidnow::~CAbsWidnow() = default;

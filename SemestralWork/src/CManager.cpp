@@ -32,10 +32,11 @@ m_ErrorDialog(CErrDialog(CSize(size.m_Width/2,size.m_Height*0.7,size.m_Width/4,s
 }
 
 void CManager::Run() {
-    while (m_runFlag){
+    while (m_isrunning){
         m_Scene->Print();
         m_Scene->ReadKey();
     }
+    clear();
 }
 /*
  * OP---
@@ -46,16 +47,11 @@ void CManager::Run() {
 
 
 void CManager::ReadKey() {
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-
-    term.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    cursorOff();
 
     char c;
     std::cin >> c;
-    if(c==EOF)
-        m_runFlag=0;
+
 
 
     switch(c) {
@@ -152,15 +148,15 @@ void CManager::ReadKey() {
 
         case '7':
         case '\x04':
-            m_runFlag= false;
+            m_isrunning= false;
             break;
 
 
     }
+    cursorOn();
 
 
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
 }
 
 

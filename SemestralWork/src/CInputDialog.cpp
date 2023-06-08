@@ -29,15 +29,12 @@ void CInputDialog::Print() {
 }
 
 void CInputDialog::ReadKey() {
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+  cursorOn();
     cout<<bg::yellow<<m_Label<<": "<<bg::reset;
 
      std::getline(std::cin, m_input);
     if (cin.eof()) {
-        throw logic_error("EOF");
+        m_lastActive->m_isrunning= false;
     }
     if(m_input.empty()){
         op=0;

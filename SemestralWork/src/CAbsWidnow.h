@@ -10,7 +10,7 @@
 #include "CLink.h"
 #include <memory>
 #include "CManagerOPs.h"
-
+#include "termios.h"
 class CAbsWidnow {
 public:
     /**
@@ -32,10 +32,15 @@ public:
     CManagerOPs Oper;
     typedef std::map<std::string ,std::shared_ptr<CItem>>::iterator MyIterator;
     MyIterator iter;
-
+    bool m_isrunning;
     virtual void Print()=0;
     virtual void  ReadKey()=0;
+    termios term;
+
 protected:
+    void cursorOff();
+    void cursorOn();
+
     int clear() const;
     void moveto(int x = 1, int y = 1);
 private:

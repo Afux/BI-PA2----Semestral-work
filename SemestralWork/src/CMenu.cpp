@@ -42,12 +42,7 @@ void CMenu::Print() {
 }
 
 void CMenu::ReadKey() {
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-
-    term.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
+   cursorOff();
     char c;
     std::cin >> c;
 
@@ -62,7 +57,7 @@ void CMenu::ReadKey() {
             m_Selected++;
             break;
         case '\x04':
-
+            m_lastActive->m_isrunning= false;
             break;
         case 'e':
         case 'E':
@@ -74,8 +69,7 @@ void CMenu::ReadKey() {
 
 
 
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+cursorOn();
 }
 void CMenu::Enter() {
     switch (m_Selected) {

@@ -41,11 +41,7 @@ void CConfirmDialog::Print() {
 }
 
 void CConfirmDialog::ReadKey() {
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-
-    term.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    cursorOff();
 
     char c;
     std::cin >> c;
@@ -60,6 +56,9 @@ void CConfirmDialog::ReadKey() {
         case 'D':
             m_Selected++;
             break;
+        case '\x04':
+            m_lastActive->m_isrunning= false;
+        break;
         case 'E':
         case 'e':
             Enter();
@@ -68,8 +67,7 @@ void CConfirmDialog::ReadKey() {
 
     }
 
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    cursorOn();
 }
 
 void CConfirmDialog::Enter() {

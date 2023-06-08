@@ -61,12 +61,7 @@ void CErrDialog::PrintLabel() {
 }
 
 void CErrDialog::ReadKey() {
-    termios term;
-    tcgetattr(STDIN_FILENO, &term);
-
-    term.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
+   cursorOff();
     char c;
     std::cin >> c;
 
@@ -76,10 +71,11 @@ void CErrDialog::ReadKey() {
         case 'e':
             m_lastActive->m_Scene=m_lastActive;
             break;
+        case '\x04':
+            m_lastActive->m_isrunning= false;
     }
 
-    term.c_lflag |= ECHO | ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+  cursorOn();
 }
 
 void CErrDialog::Setup(CAbsWidnow *lastActive, const string &Label) {

@@ -11,7 +11,6 @@
 #include "CDir.h"
 
 
-
 class CManager: public CAbsWidnow{
 public:
     CManager( CSize size,std::string Path);
@@ -25,7 +24,6 @@ public:
     CErrDialog m_ErrorDialog;
     bool m_runFlag;
     CAbsWidnow * m_ActivePanel;
-
    // CDir m_Start;
 
 
