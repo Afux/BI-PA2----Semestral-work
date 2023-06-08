@@ -9,7 +9,7 @@
 using namespace rang;
 using namespace std;
 namespace fs = std::filesystem;
-CInputDialog::CInputDialog(CSize size) : CAbsWidnow(size,this),m_errDialog(size) {
+CInputDialog::CInputDialog(CSize size) : CAbsWidnow(size,this),m_errDialog(CErrDialog(size)) {
     op=0;
     m_Label="Enter input";
 }

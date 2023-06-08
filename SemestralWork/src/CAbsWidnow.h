@@ -13,6 +13,17 @@
 
 class CAbsWidnow {
 public:
+    /**
+ * @brief This is a brief description of the function or class.
+ *
+ * This is a more detailed description of the function or class.
+ * You can include information about parameters, return values, exceptions, etc.
+ *
+ * @param param1 Description of the first parameter.
+ * @param param2 Description of the second parameter.
+ * @return Description of the return value.
+ * @throws ExceptionType Description of when this function throws an exception.
+ */
     CAbsWidnow(CSize size, CAbsWidnow * Scene);
     virtual ~CAbsWidnow();
     CSize  m_Size;

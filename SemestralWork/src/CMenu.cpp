@@ -5,11 +5,12 @@
 #include <unistd.h>
 #include <termios.h>
 #include <iostream>
+
 using namespace rang;
 using namespace std;
 
 CMenu::CMenu(CSize size,CAbsWidnow* lastActive):  CAbsWidnow(size, this),m_lastActive(lastActive),
-m_inputDialog(CInputDialog(CSize(size))), m_ConfirmDialog(CConfirmDialog(CSize(size))){
+m_inputDialog(CInputDialog(CSize(size))), m_errorDialog(CErrDialog(size)){
 
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
@@ -36,7 +37,7 @@ void CMenu::Print() {
             cout <<m_Content[i]<<setw(m_Size.m_Width-m_Content[i].size());
         }
     }
-    moveto(1,m_Size.m_AbsPosY+2);
+    moveto(1,m_Size.m_AbsPosY+3);
 
 }
 
@@ -79,7 +80,7 @@ void CMenu::ReadKey() {
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
-            m_inputDialog.Setup(CurrDir,m_lastActive,1,"Enter Regex",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir, this,1,"Enter Regex",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 1:
@@ -109,12 +110,13 @@ void CMenu::Enter() {
             break;
         case 6:
             m_Selected=0;
-           // m_ConfirmDialog.Setup(m_lastActive,m_selectedItem,m_items,m,)
-            if(*m_windowSelected!=0){
-                m_inputDialog.Setup(CurrDir,m_lastActive,7,"FIX",m_selectedItem,m_windowSelected);
-                m_inputDialog.Run();
-            }
-
+                try{
+                    Oper.Deduplicate(m_selectedItem,&CurrDir->m_items);
+                }
+                catch (logic_error &e){
+                    m_errorDialog.Setup(m_lastActive,e.what());
+                    m_errorDialog.Run();
+                }
             break;
         case 7:
             m_Selected=0;

@@ -7,6 +7,8 @@
 #include "CConfirmDialog.h"
 #include "CInputDialog.h"
 #include "CAbsWidnow.h"
+#include "CErrDialog.h"
+
 class CMenu: public CAbsWidnow{
 public:
 
@@ -14,7 +16,7 @@ public:
     CItem * CurrDir;
     CAbsWidnow * m_lastActive;
     CInputDialog m_inputDialog;
-    CConfirmDialog m_ConfirmDialog;
+    CErrDialog m_errorDialog;
     CItem * m_selectedItem;
     unsigned int *m_windowSelected;
     void Print() override;

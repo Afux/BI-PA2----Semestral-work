@@ -1,6 +1,7 @@
 
 #include <iomanip>
 #include "CWindow.h"
+#include "filesystem"
 #include "../libs/rang.hpp"
 using namespace rang;
 using namespace std;
@@ -72,20 +73,31 @@ void CWindow::Enter() {
 
     if(m_Selected==0){
         if(m_CurrFile->m_inFolder!=NULL){
-            m_CurrFile->m_inFolder->Open(&m_Items,&m_CurrFile);
-            iter=m_Items->begin();
-            m_Selected=0;
+           if( filesystem::exists(m_CurrFile->m_inFolder->m_Path)){
+               m_CurrFile->m_inFolder->Open(&m_Items,&m_CurrFile);
+               iter=m_Items->begin();
+               m_Selected=0;
+           }
+           else
+               throw logic_error("Folder doesn't exists");
         }
         else{
-           string s="/";
-            m_Dir= CDir (filesystem::path(m_CurrFile->m_Path).parent_path(),2,NULL);
-            m_Dir.Open(&m_Items,&m_CurrFile);
+            if( filesystem::exists(filesystem::path(m_CurrFile->m_Path).parent_path())){
+                m_Dir= CDir (filesystem::path(m_CurrFile->m_Path).parent_path(),2,NULL);
+                m_Dir.Open(&m_Items,&m_CurrFile);
+                m_Selected=0;
+            } else
+                throw logic_error("Folder doesn't exists");
+
         }
     }
     else{
-         iter->second->Open(&m_Items,&m_CurrFile);
-         iter=m_Items->begin();
-         m_Selected=0;
+        if(iter->second->IsReadable()){
+            iter->second->Open(&m_Items,&m_CurrFile);
+            iter=m_Items->begin();
+            m_Selected=0;
+        }
+
     }
     m_Selecteditems.clear();
 

@@ -80,23 +80,11 @@ std::string CLink::RenameDialog(std::string NewName) {
 
 
 
-void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {
-    if(m_toFile!=NULL){
-       // m_toFile->Open(item,inFold);
-    }
-}
+void CLink::Open(std::map<std::string ,std::shared_ptr<CItem>> **item, CItem **inFold) {}
 
-void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){
-    if(m_toFile!=NULL){
-        //m_toFile->FindText(FindThis,Found);
-    }
-}
+void CLink::FindText(std::string FindThis,std::vector<CItem*> *Found){}
 
 void CLink::Deduplicate(CItem *DeduplicateMe) {}
 
-void CLink::ConCat(std::string To) {
-   if(m_toFile!=NULL){
-     //  m_toFile->ConCat(To);
-   }
-}
+void CLink::ConCat(std::string To) {}
 

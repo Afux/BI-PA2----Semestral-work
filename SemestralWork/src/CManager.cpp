@@ -89,7 +89,14 @@ void CManager::ReadKey() {
             break;
         case 'e':
         case 'E':
-            m_ActiveWindow->Enter();
+            try{
+                m_ActiveWindow->Enter();
+            }
+            catch (...){
+                moveto(1,m_Size.m_AbsPosY+1);
+                cout<<"Cant open dir";
+                m_runFlag= false;
+            }
             break;
         case 'j':
         case 'J':
@@ -127,12 +134,12 @@ void CManager::ReadKey() {
             }
             break;
         case '4':
-                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,10,"Enter file name",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,10,"Enter file name",nullptr,&m_ActiveWindow->m_Selected);
                 m_Scene=&m_Input;
             break;
 
         case '5':
-                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,12,"Enter folder name", nullptr,&m_ActiveWindow->m_Selected);
                 m_Scene=&m_Input;
             break;
         case '6':
