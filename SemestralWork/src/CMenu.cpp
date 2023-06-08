@@ -19,8 +19,6 @@ m_inputDialog(CInputDialog(CSize(size))), m_ConfirmDialog(CConfirmDialog(CSize(s
     m_Content.emplace_back("Concat files");
     m_Content.emplace_back("Deduplicate file");
     m_Content.emplace_back("Quit");
-
-
 }
 
 void CMenu::Print() {
@@ -62,6 +60,9 @@ void CMenu::ReadKey() {
         case 's':
             m_Selected++;
             break;
+        case '\x04':
+
+            break;
         case 'e':
         case 'E':
             Enter();
@@ -78,37 +79,42 @@ void CMenu::ReadKey() {
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
-            m_inputDialog.Setup(m_lastActive,1,"Enter Regex",m_selectedItem,m_items,win);
+            m_inputDialog.Setup(CurrDir,m_lastActive,1,"Enter Regex",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 1:
-            m_inputDialog.Setup(m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_items,win);
+            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 2:
-            m_inputDialog.Setup(m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_items,win);
+            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 3:
             m_Selected=0;
-            m_inputDialog.Setup(m_lastActive,13,"Enter name",m_selectedItem,m_items,win);
-            m_inputDialog.Run();
+            if(*m_windowSelected!=0) {
+                m_inputDialog.Setup(CurrDir, m_lastActive, 13, "Enter name", m_selectedItem, m_windowSelected);
+                m_inputDialog.Run();
+            }
             break;
         case 4:
             m_Selected=0;
-            m_inputDialog.Setup(m_lastActive,5,"Enter text",m_selectedItem,m_items,win);
+            m_inputDialog.Setup(CurrDir,m_lastActive,5,"Enter text",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 5:
             m_Selected=0;
-            m_inputDialog.Setup(m_lastActive,6,"Enter name",m_selectedItem,m_SelectedItems,win);
+            m_inputDialog.Setup(CurrDir,m_lastActive,6,"Enter name",m_selectedItem,m_windowSelected);
             m_inputDialog.Run();
             break;
         case 6:
             m_Selected=0;
            // m_ConfirmDialog.Setup(m_lastActive,m_selectedItem,m_items,m,)
-            m_inputDialog.Setup(m_lastActive,7,"FIX",m_selectedItem,m_items,win);
-            m_inputDialog.Run();
+            if(*m_windowSelected!=0){
+                m_inputDialog.Setup(CurrDir,m_lastActive,7,"FIX",m_selectedItem,m_windowSelected);
+                m_inputDialog.Run();
+            }
+
             break;
         case 7:
             m_Selected=0;
@@ -151,12 +157,16 @@ void CMenu::ClearDialogSpace() {
     }
 }
 
-void CMenu::Setup(CAbsWidnow *LastActive, std::map<std::string, std::shared_ptr<CItem>> *Items,
-                  std::map<std::string, std::shared_ptr<CItem>> *SelectedItems, CItem * SelectedItem,CAbsWidnow *Win) {
-m_lastActive=LastActive;
-m_items=Items;
-m_selectedItem=SelectedItem;
-m_SelectedItems=SelectedItems;
-win= Win;
+void CMenu::Setup(CItem * Curr,CAbsWidnow *LastActive) {
+    CurrDir=Curr;
+    m_lastActive=LastActive;
+    m_windowSelected= &m_lastActive->m_Selected;
+    if(*m_windowSelected!=0){
+        m_selectedItem=m_lastActive->iter->second.get();
+    }
+    else
+        m_selectedItem= nullptr;
+
+
 }
 

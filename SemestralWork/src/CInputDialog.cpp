@@ -11,7 +11,7 @@ using namespace std;
 namespace fs = std::filesystem;
 CInputDialog::CInputDialog(CSize size) : CAbsWidnow(size,this),m_errDialog(size) {
     op=0;
-    m_Label="Zadej Vstup";
+    m_Label="Enter input";
 }
 
 void CInputDialog::Print() {
@@ -55,18 +55,18 @@ void CInputDialog::Enter() {
         switch (op) {
             case 1:
                 try{
-                    Oper.Delete(m_input,m_items);
+                    Oper.Delete(m_input,&CurrDir->m_items);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                win->m_Selected=0;
+                *WinSelected=0;
 
                 break;
             case 2:
                 try{
-                    Oper.Copy(m_reg,m_path,m_items);
+                    Oper.Copy(m_reg,m_path,&CurrDir->m_items);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -75,20 +75,18 @@ void CInputDialog::Enter() {
                 break;
             case 3:
                 try{
-                    Oper.Move(m_reg,m_path,m_items);
+                    Oper.Move(m_reg,m_path,&CurrDir->m_items);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                win->m_Selected=0;
+                *WinSelected=0;
                 break;
-            case 4:
-                //Create();
-                break;
+
             case 5:
                 try{
-                    Oper.FindByText(m_input,m_items);
+                    Oper.FindByText(m_input,&CurrDir->m_items);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -97,7 +95,7 @@ void CInputDialog::Enter() {
                 break;
             case 6:
                 try{
-                    Oper.ConcatFiles(m_items,m_input);
+                    Oper.ConcatFiles(&CurrDir->m_items,m_input);
                 }
                catch (logic_error &e){
                    m_errDialog.Setup(m_lastActive,e.what());
@@ -107,7 +105,7 @@ void CInputDialog::Enter() {
                 break;
             case 7:
                 try{
-                    Oper.Deduplicate(m_SelectedItem,m_items);
+                    Oper.Deduplicate(m_SelectedItem,&CurrDir->m_items);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -132,11 +130,11 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                win->m_Selected=0;
+                *WinSelected=0;
                 break;
             case 10:
                 try{
-                    Oper.CreateFile(m_input,m_items);
+                    Oper.CreateFile(m_input,CurrDir);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -149,7 +147,7 @@ void CInputDialog::Enter() {
                 break;
             case 12:
                 try{
-                    Oper.CreateFolder(m_input,m_items);
+                    Oper.CreateFolder(m_input,CurrDir);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -158,7 +156,7 @@ void CInputDialog::Enter() {
                 break;
             case 13:
                 try{
-                    Oper.CreateLink(m_input,m_SelectedItem,m_items);
+                    Oper.CreateLink(m_input,m_SelectedItem,CurrDir);
                 }
                 catch (logic_error &e){
                     m_errDialog.Setup(m_lastActive,e.what());
@@ -197,13 +195,13 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
 }
 
-void CInputDialog::Setup(CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *items,CAbsWidnow *Win) {
+void CInputDialog::Setup(CItem *Curr,CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem,unsigned int *WinSel) {
+    CurrDir=Curr;
     m_lastActive=lastActive;
     op=Op;
     m_Label=Label;
     m_SelectedItem=SelectedItem;
-    m_items=items;
-    win=Win;
+    WinSelected=WinSel;
 }
 
 void CInputDialog::PrintBorders() {

@@ -63,8 +63,6 @@ void CManager::ReadKey() {
         case 'W':
             if(m_ActiveWindow->m_Selected!=0)
                 m_ActiveWindow->m_Selected--;
-            else
-                m_ActiveWindow->m_Selected=0;
             if( m_ActiveWindow->iter!=m_ActiveWindow->m_Items->begin())
                  m_ActiveWindow->iter--;
             if(m_ActiveWindow->m_Selected>15){
@@ -111,45 +109,36 @@ void CManager::ReadKey() {
 
         case '1':
         case '+':
-            if(m_ActiveWindow->m_Selected!=0){
-                m_Menu.Setup(this,m_ActiveWindow->m_Items,&m_ActiveWindow->m_Selecteditems,m_ActiveWindow->iter->second.get(),m_ActiveWindow);
+
+                m_Menu.Setup(m_ActiveWindow->m_CurrFile,this);
                 m_Scene=&m_Menu;
-            }
 
             break;
         case '2':
             if(m_ActiveWindow->m_Selected!=0){
                 m_Confirm.Setup(this,m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow,1);
                 m_Scene=&m_Confirm;
-
             }
             break;
         case '3':
             if(m_ActiveWindow->m_Selected!=0) {
-                m_Input.Setup(this,8,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,8,"Enter path",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
                 m_Scene = &m_Input;
             }
             break;
         case '4':
-            if(m_ActiveWindow->m_Selected!=0)
-            {
-                m_Input.Setup(this,10,"Enter file name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,10,"Enter file name",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
                 m_Scene=&m_Input;
-            }
             break;
 
         case '5':
-            if(m_ActiveWindow->m_Selected!=0)
-            {
-                m_Input.Setup(this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,12,"Enter folder name",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
                 m_Scene=&m_Input;
-            }
             break;
         case '6':
             if(m_ActiveWindow->m_Selected!=0)
             {
-                m_Input.Setup(this,9,"Enter path",m_ActiveWindow->iter->second.get(),m_ActiveWindow->m_Items,m_ActiveWindow);
-                m_Input.win=m_ActiveWindow;
+                m_Input.Setup(m_ActiveWindow->m_CurrFile,this,9,"Enter path",m_ActiveWindow->iter->second.get(),&m_ActiveWindow->m_Selected);
                 m_Scene=&m_Input;
             }
             break;

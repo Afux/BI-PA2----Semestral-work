@@ -14,9 +14,8 @@ public:
     CInputDialog(CSize size);
     std::string m_Label;
     CItem * m_SelectedItem;
-   // CItem *CurrDir
+    CItem *CurrDir;
     std::vector<std::string > m_Content;
-    CManager * m_manager;
     void Print() override;
     void ReadKey() override;
     void PrintBorders();
@@ -25,11 +24,11 @@ public:
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
-    CAbsWidnow * win;
+    unsigned int *WinSelected;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CErrDialog m_errDialog;
 
-    void Setup( CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,   std::map<std::string ,std::shared_ptr<CItem>> *items,CAbsWidnow *Win);
+    void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,unsigned int *WinSel);
 
 private:
     std::string  m_input;

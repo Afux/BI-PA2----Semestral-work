@@ -18,7 +18,6 @@ public:
     std::string m_Path;
     bool m_isSelected;
     void Select();
-    unsigned int m_Size;
     CItem* m_inFolder;
     std::map<std::string ,std::shared_ptr<CItem>> m_items;
 

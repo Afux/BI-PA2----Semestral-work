@@ -3,7 +3,6 @@
 //
 
 #include "CManagerOPs.h"
-#include "CSize.h"
 #include "CItem.h"
 #include "CDir.h"
 #include "CFile.h"
@@ -35,7 +34,6 @@ void CManagerOPs::Copy(const std::string &reg, const std::string &to,std::map<st
         }
     }
 }
-
 
 void CManagerOPs::Delete(CItem *item) {
         item->Delete();
@@ -81,7 +79,6 @@ void CManagerOPs::Move(std::string reg, std::string dest,std::map<std::string ,s
     else{
     }
 }
-
 
 void CManagerOPs::CreateFolder(std::string name, CItem *CurrDir) {
     shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(CurrDir->m_Path+"/"+name, 22, CurrDir));
