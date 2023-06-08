@@ -12,7 +12,7 @@ int CAbsWidnow::clear() const{
     return system("clear");
 }
 
-void CAbsWidnow::moveto(int x, int y) {
+void CAbsWidnow::moveto(int x, int y) const {
     std::cout << "\033[" << y << ";" << x << "H";
 
 }

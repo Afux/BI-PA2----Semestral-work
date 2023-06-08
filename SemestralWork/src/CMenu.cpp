@@ -27,14 +27,14 @@ void CMenu::Print() {
         m_Selected=0;
     }
     ClearDialogSpace();
-    PrintBorders();
+    PrintBorders('*');
     for (size_t i = 0; i < m_Content.size() ; ++i) {
         moveto(m_Size.m_PosX+2,m_Size.m_PosY+4+i);
         if(i==m_Selected){
-            cout << bg::blue<<m_Content[i]<< setw(m_Size.m_Width-m_Content[i].size())<<style::reset;
+            cout << bg::blue<<m_Content[i]<< setw(m_Size.m_Width-m_Content[i].size()-1)<<style::reset;
         }
         else{
-            cout <<m_Content[i]<<setw(m_Size.m_Width-m_Content[i].size());
+            cout <<m_Content[i]<<setw(m_Size.m_Width-m_Content[i].size()-1);
         }
     }
     moveto(1,m_Size.m_AbsPosY+2);
@@ -42,10 +42,9 @@ void CMenu::Print() {
 }
 
 void CMenu::ReadKey() {
-   cursorOff();
+    cursorOff();
     char c;
     std::cin >> c;
-
 
     switch(c) {
         case 'W':
@@ -63,14 +62,10 @@ void CMenu::ReadKey() {
         case 'E':
             Enter();
             break;
-
-
     }
-
-
-
-cursorOn();
+    cursorOn();
 }
+
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
@@ -124,22 +119,21 @@ void CMenu::Enter() {
 
 }
 
-void CMenu::PrintBorders() {
+void CMenu::PrintBorders(const char &c) const {
     moveto(m_Size.m_PosX,m_Size.m_PosY);
     for (size_t i =1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
 
     }
-
     for (size_t i =m_Size.m_PosY; i < m_Size.m_Height+m_Size.m_PosY; ++i) {
         moveto(m_Size.m_PosX,i);
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
         moveto((int)(m_Size.m_Width)+m_Size.m_PosX-1,i);
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
         moveto(m_Size.m_PosX,i);
     }
     for (size_t i = 1; i < m_Size.m_Width; ++i) {
-        cout<<bg::black<<"*"<<style::reset;
+        cout<<bg::black<<c<<style::reset;
 
     }
 

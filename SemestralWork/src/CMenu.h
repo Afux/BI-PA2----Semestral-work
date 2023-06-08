@@ -27,8 +27,8 @@ public:
     void Setup( CItem * Curr,CAbsWidnow * LastActive,CAbsWidnow *WinActive);
 
 private:
-   std::vector<std::string> m_Content;
-    void PrintBorders();
+     std::vector<std::string> m_Content;
+    void PrintBorders(const char &c) const;
     void ClearDialogSpace();
 };
 

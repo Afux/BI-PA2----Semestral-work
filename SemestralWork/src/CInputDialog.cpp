@@ -16,9 +16,7 @@ CInputDialog::CInputDialog(CSize size) : CAbsWidnow(size,this),m_errDialog(CErrD
 
 void CInputDialog::Print() {
 
-    if(m_Selected>=m_Content.size()){
-        m_Selected=0;
-    }
+
 
     ClearDialogSpace();
     PrintBorders();
@@ -31,8 +29,7 @@ void CInputDialog::Print() {
 void CInputDialog::ReadKey() {
   cursorOn();
     cout<<bg::yellow<<m_Label<<": "<<bg::reset;
-
-     std::getline(std::cin, m_input);
+    std::getline(std::cin, m_input);
     if (cin.eof()) {
         m_lastActive->m_isrunning= false;
     }
@@ -48,117 +45,43 @@ void CInputDialog::ReadKey() {
 }
 
 void CInputDialog::Enter() {
-
+    try{
         switch (op) {
             case 1:
-                try{
-                    Oper.Delete(m_input,&CurrDir->m_items);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.Delete(m_input,&CurrDir->m_items);
                 m_winActive->m_Selected=0;
-
                 break;
             case 2:
-                try{
-                    Oper.Copy(m_reg,m_path,&CurrDir->m_items);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.Copy(m_reg,m_path,&CurrDir->m_items);
                 break;
             case 3:
-                try{
-                    Oper.Move(m_reg,m_path,&CurrDir->m_items);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.Move(m_reg,m_path,&CurrDir->m_items);
                 m_winActive->m_Selected=0;
                 break;
-
             case 5:
-                try{
-                    Oper.FindByText(m_input,&CurrDir->m_items);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.FindByText(m_input,&CurrDir->m_items);
                 break;
             case 6:
-                try{
-                    Oper.ConcatFiles(&CurrDir->m_items,m_input);
-                }
-               catch (logic_error &e){
-                   m_errDialog.Setup(m_lastActive,e.what());
-                   m_errDialog.Run();
-               }
-
+                Oper.ConcatFiles(&CurrDir->m_items,m_input);
                 break;
             case 7:
-                try{
-                    Oper.Deduplicate(m_SelectedItem,&CurrDir->m_items);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
-
+                Oper.Deduplicate(m_SelectedItem,&CurrDir->m_items);
                 break;
             case 8:
-                try{
-                    Oper.Copy(m_SelectedItem,m_input);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.Copy(m_SelectedItem,m_input);
                 break;
             case 9:
-                try{
-                    Oper.Move(m_SelectedItem,m_input);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.Move(m_SelectedItem,m_input);
                 m_winActive->m_Selected=0;
                 break;
             case 10:
-                try{
-                    Oper.CreateFile(m_input,CurrDir);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
-                catch (const fs::filesystem_error &e){
-                    m_errDialog.Setup(m_lastActive,e.code().message());
-                    m_errDialog.Run();
-                }
+                Oper.CreateFile(m_input,CurrDir);
                 break;
             case 12:
-                try{
-                    Oper.CreateFolder(m_input,CurrDir);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.CreateFolder(m_input,CurrDir);
                 break;
             case 13:
-                try{
-                    Oper.CreateLink(m_input,m_SelectedItem,CurrDir);
-                }
-                catch (logic_error &e){
-                    m_errDialog.Setup(m_lastActive,e.what());
-                    m_errDialog.Run();
-                }
+                Oper.CreateLink(m_input,m_SelectedItem,CurrDir);
                 break;
             default:
                 op=0;
@@ -166,17 +89,28 @@ void CInputDialog::Enter() {
                 break;
 
         }
-        op=0;
-        m_lastActive->m_Scene=m_lastActive;
+    }
+    catch (logic_error &e){
+        m_errDialog.Setup(m_lastActive,e.what());
+        m_errDialog.Run();
+    }
+    catch (const fs::filesystem_error &e){
+        m_errDialog.Setup(m_lastActive,e.code().message());
+        m_errDialog.Run();
+    }
+
+    op=0;
+    m_lastActive->m_Scene=m_lastActive;
 
 
 }
 
 void CInputDialog::Run() {
-        Print();
-        ReadKey();
+    Print();
+    ReadKey();
 }
 
+//...
 void CInputDialog::parseString(const string &input, char delimiter) {
     std::string::size_type start = 0;
     std::string::size_type end = input.find(delimiter);

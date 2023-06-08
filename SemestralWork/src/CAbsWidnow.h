@@ -42,7 +42,7 @@ protected:
     void cursorOn();
 
     int clear() const;
-    void moveto(int x = 1, int y = 1);
+    void moveto(int x = 1, int y = 1) const;
 private:
 };
 

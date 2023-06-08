@@ -15,25 +15,22 @@ public:
     std::string m_Label;
     CItem * m_SelectedItem;
     CItem *CurrDir;
-    std::vector<std::string > m_Content;
+    int op;
+    CAbsWidnow * m_lastActive;
+    CAbsWidnow *m_winActive;
     void Print() override;
     void ReadKey() override;
     void PrintBorders();
     void ClearDialogSpace();
     void PrintLabel();
     void Run();
-    int op;
-    CAbsWidnow * m_lastActive;
-    CAbsWidnow *m_winActive;
-    std::map<std::string ,std::shared_ptr<CItem>> *m_items;
-    CErrDialog m_errDialog;
-
     void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,CAbsWidnow *lastWin);
 
 private:
     std::string  m_input;
     std::string  m_reg;
     std::string m_path;
+    CErrDialog m_errDialog;
     void parseString(const std::string& input, char delimiter);
     void Enter();
 };
