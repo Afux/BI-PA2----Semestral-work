@@ -10,8 +10,6 @@
 #include "CItem.h"
 
 
-
-
 class CManagerOPs {
 public:
     void Copy( CItem *item, const std::string &to);

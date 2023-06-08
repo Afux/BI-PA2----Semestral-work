@@ -31,7 +31,6 @@ public:
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
     virtual std::string RemoveDialog()=0;
     virtual std::string CreateDialog(std::string NewName)=0;
-    virtual std::string RenameDialog(std::string NewName)=0;
     bool IsReadable();
     bool IsWriteable();
 protected:

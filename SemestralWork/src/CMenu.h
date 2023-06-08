@@ -17,7 +17,6 @@ public:
     CAbsWidnow * m_lastActive;
     CAbsWidnow * m_winActive;
     CInputDialog m_inputDialog;
-    CConfirmDialog m_confirmDialog;
     CErrDialog m_errorDialog;
     CItem * m_selectedItem;
     std::map<std::string ,std::shared_ptr<CItem>> *m_SelectedItems;

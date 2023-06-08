@@ -33,7 +33,7 @@ void CDir::Copy(std::string to) {
            fs::copy(m_Path, to+"/"+m_Name, std::filesystem::copy_options::recursive);
        }
        catch (const fs::filesystem_error &e){
-           fs::remove_all(to+"/"+m_Name);
+           fs::remove(to+"/"+m_Name);
            throw logic_error(e.code().message());
 
        }
@@ -65,7 +65,6 @@ void CDir::Move(std::string dest) {
         Delete();
     }
     catch (const logic_error &e){
-        fs::remove_all(dest+"/"+m_Name);
         throw logic_error(e.what());
     }
 
@@ -115,7 +114,6 @@ void CDir::Deduplicate(CItem *DeduplicateMe) {
     Refresh();
 
 }
-
 
 void CDir::ConCat(std::string To) {}
 
@@ -187,6 +185,4 @@ void CDir::FillItems() {
 
 }
 
-std::string CDir::RenameDialog(std::string NewName) {
-    return std::string();
-}
+

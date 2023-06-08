@@ -116,16 +116,13 @@ void CManagerOPs::FindByText(const std::string &text, CItem *CurrDir) {
         MyFile.close();
     }
 
-    else
-        throw logic_error("Dir is empty");
 }
 
 void CManagerOPs::Deduplicate(CItem *item,CItem *CurrDir) {
     if(!CurrDir->m_items.empty()) {
         CurrDir->Deduplicate(item);
     }
-    else
-        throw logic_error("Nothing to deduplicate");
+
 }
 
 void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items, string to) {

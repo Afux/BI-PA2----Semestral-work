@@ -1,6 +1,5 @@
 
 #include "CLink.h"
-#include "CFile.h"
 #include "filesystem"
 namespace fs = std::filesystem;
 using namespace std;
@@ -15,7 +14,6 @@ CLink::CLink(std::string path, unsigned int size,CItem* toFile,CItem *parr) : CI
                 fs::create_symlink(toFile->m_Path,path);
         }
     }
-
 }
 
 
@@ -71,10 +69,6 @@ std::string CLink::RemoveDialog() {
 }
 
 std::string CLink::CreateDialog(std::string NewName) {
-    return std::string();
-}
-
-std::string CLink::RenameDialog(std::string NewName) {
     return std::string();
 }
 

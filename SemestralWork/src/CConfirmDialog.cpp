@@ -84,10 +84,6 @@ void CConfirmDialog::Enter() {
                   m_errDialog.Setup(m_lastActive,e.what());
               }
               break;
-          case 2:
-
-
-              break;
       }
       op=0;
       m_Selected=0;

@@ -5,7 +5,7 @@ using namespace rang;
 using namespace std;
 
 CMenu::CMenu(CSize size,CAbsWidnow* lastActive):  CAbsWidnow(size, this),m_lastActive(lastActive),
-m_inputDialog(CInputDialog(CSize(size))), m_errorDialog(CErrDialog(CSize(size))), m_confirmDialog(CConfirmDialog(CSize(size))){
+m_inputDialog(CInputDialog(CSize(size))), m_errorDialog(CErrDialog(CSize(size))){
 
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
@@ -68,11 +68,11 @@ void CMenu::Enter() {
             m_inputDialog.Run();
             break;
         case 1:
-            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_winActive,m_SelectedItems);
+            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex regex:path",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 2:
-            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_winActive,m_SelectedItems);
+            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex regex:path",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 3:
@@ -95,7 +95,6 @@ void CMenu::Enter() {
         case 6:
             m_Selected=0;
             if(m_winActive->m_Selected!=0) {
-               // m_confirmDialog.Setup(m_lastActive,m_selectedItem);
                 try {
                     Oper.Deduplicate(m_selectedItem, CurrDir);
                 }
