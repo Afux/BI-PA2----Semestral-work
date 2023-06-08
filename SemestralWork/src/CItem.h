@@ -46,8 +46,9 @@ public:
 
     bool IsWriteable();
 
-protected:
     bool IsReadable(const std::filesystem::path &p);
+
+protected:
 
     bool IsWriteable(const std::filesystem::path &p);
 

@@ -3,8 +3,9 @@ CXXFLAGS = -Wall -pedantic -std=c++17 -O2
 EXECUTABLE = korytale
 SOURCES := $(wildcard src/*.cpp)
 OBJECTS :=$(SOURCES:.cpp=.o)
-CHECK = valgrind
-CHECKFLAGS = --leak-check=full
+VALCHECK = -ggdb3
+VALRUN = valgrind --leak-check=full
+ASANPOSTFIX = -fsanitize=address -static-libasan -g
 LDLIBS=-lstdc++fs
 DOXYGEN=doxygen
 DOXYGENCONF=Doxyfile

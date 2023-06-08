@@ -69,14 +69,14 @@ void CWindow::Enter() {
 
     if (m_Selected == 0) {
         if (m_CurrFile->m_InFolder != NULL) {
-            if (filesystem::exists(m_CurrFile->m_InFolder->m_Path)) {
+            if (m_CurrFile->m_InFolder->IsReadable()) {
                 m_CurrFile->m_InFolder->Open(&m_Items, &m_CurrFile);
                 m_Iter = m_Items->begin();
                 m_Selected = 0;
             } else
                 throw logic_error("Folder doesn't exists");
         } else {
-            if (filesystem::exists(filesystem::path(m_CurrFile->m_Path).parent_path())) {
+            if (m_CurrFile->IsReadable(filesystem::path(m_CurrFile->m_Path).parent_path())) {
                 m_Dir = CDir(filesystem::path(m_CurrFile->m_Path).parent_path(), NULL);
                 m_Dir.Open(&m_Items, &m_CurrFile);
                 m_Selected = 0;

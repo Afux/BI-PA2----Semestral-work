@@ -35,7 +35,6 @@ public:
 private:
     std::vector<std::string> m_Content;
     void PrintBorders(const char &c) const;
-
     void ClearDialogSpace();
 };
 

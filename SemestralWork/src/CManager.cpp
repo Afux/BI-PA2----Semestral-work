@@ -1,8 +1,7 @@
 
 #include "CManager.h"
 #include "CDir.h"
-#include <unistd.h>
-#include <termios.h>
+#include "filesystem"
 #include <iostream>
 #include <regex>
 
@@ -25,6 +24,12 @@ m_Input(CInputDialog(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 
 m_Confirm(CConfirmDialog(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 4, size.m_Height * 0.1,size.m_Height))),
 m_ErrorDialog(CErrDialog(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 4, size.m_Height * 0.1,size.m_Height))) {
 
+    if(size.m_Width<100||size.m_Height<30||size.m_Width>150||size.m_Height>45||size.m_Width==0||size.m_Height==0||size.m_Height>size.m_Width){
+        throw logic_error ("Bad size");
+    }
+    if(!filesystem::exists(path)){
+        throw logic_error ("Path doesn't exists");
+    }
     m_ActivePanel = this;
     m_ActiveWindow = &m_LeftPanel;
 
