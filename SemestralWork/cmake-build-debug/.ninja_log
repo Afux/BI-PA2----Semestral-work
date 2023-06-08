@@ -1,0 +1,20 @@
+# ninja log v5
+6767	7015	1686100972403061143	SemestralWork	3ad11b9fdd919f9a
+1428	3682	1686100969071048878	CMakeFiles/SemestralWork.dir/src/CWindow.cpp.o	2bdd7e543361e516
+1	1417	1686100966803040478	CMakeFiles/SemestralWork.dir/src/CItem.cpp.o	37a4558257a0912b
+1	2381	1686100967759044021	CMakeFiles/SemestralWork.dir/src/CLink.cpp.o	2fb581ba66073f9c
+1	1630	1686100967019041279	CMakeFiles/SemestralWork.dir/src/CDir.cpp.o	92199a541222b42b
+970	1635	1685216803428494560	CMakeFiles/SemestralWork.dir/src/CDate.cpp.o	9a0c7e4faa7ea71
+21	154	1686212373422044775	build.ninja	bbcc11af45644871
+2	1859	1686100967243042108	CMakeFiles/SemestralWork.dir/src/CFile.cpp.o	f6186dbeaad7924d
+1733	3321	1686100968711047547	CMakeFiles/SemestralWork.dir/src/CHelpBar.cpp.o	6480e5bca1c80b0d
+2429	3995	1686100969379050017	CMakeFiles/SemestralWork.dir/src/CInputDialog.cpp.o	88d10774261b8e98
+1630	1700	1686100967087041530	CMakeFiles/SemestralWork.dir/src/CSize.cpp.o	4f590beede95c8ac
+3577	4623	1686100970011052351	CMakeFiles/SemestralWork.dir/src/CErrDialog.cpp.o	108bcca201a85f62
+1859	2429	1686100967815044229	CMakeFiles/SemestralWork.dir/src/CPermission.cpp.o	5fc5e385f1276732
+2600	4182	1686100969571050727	CMakeFiles/SemestralWork.dir/src/CAbsWidnow.cpp.o	1decbcd67b6d8d25
+1	1733	1686100967123041664	CMakeFiles/SemestralWork.dir/src/main.cpp.o	6bc930226af4538e
+3322	6767	1686100972151060218	CMakeFiles/SemestralWork.dir/src/CManagerOPs.cpp.o	141df486e1e62d8d
+1700	3576	1686100968963048479	CMakeFiles/SemestralWork.dir/src/CMenu.cpp.o	91e5ad97172104a3
+2	2599	1686100967987044867	CMakeFiles/SemestralWork.dir/src/CManager.cpp.o	4b4ab9c84881d319
+2381	3824	1686100969211049396	CMakeFiles/SemestralWork.dir/src/CConfirmDialog.cpp.o	aa0768b5ad9c612b
