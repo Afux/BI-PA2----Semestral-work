@@ -8,7 +8,7 @@ int main() {
     unsigned int Height=30;
     std::string Path="";
 
-    std::ifstream file("My_config.txt");
+    std::ifstream file("examples/My_config.txt");
     if (file.good()) {
         std::string line;
         while (std::getline(file, line)) {
