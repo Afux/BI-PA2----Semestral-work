@@ -3,84 +3,83 @@
 #include "filesystem"
 #include <fstream>
 #include "CLink.h"
+
 namespace fs = std::filesystem;
 using namespace std;
 
-CFile::CFile(std::string path, unsigned int size,CItem *parr) : CItem(path, size,parr) {
+CFile::CFile(std::string path, unsigned int size, CItem *parr) : CItem(path, size, parr) {
 
-    try{
-        if(!fs::exists(path)) {
-            try{
-                std::ofstream { path };
+    try {
+        if (!fs::exists(path)) {
+            try {
+                std::ofstream{path};
             }
             catch (...) {
                 throw logic_error("Cant create file");
             }
         }
     }
-    catch (...){
+    catch (...) {
         throw logic_error("Cant create file");
     }
 
 }
 
 void CFile::Print() {
-    cout<<m_Name;
+    cout << m_Name;
 
 }
 
-void CFile::Copy(string to) {
-    try{
+void CFile::Copy(const string &to) {
+    try {
         std::filesystem::copy(m_Path, to, std::filesystem::copy_options::recursive);
     }
-    catch (const fs::filesystem_error &e){
+    catch (const fs::filesystem_error &e) {
         throw logic_error(e.code().message());
     }
 
 }
 
 void CFile::Delete() {
-    try{
+    try {
         fs::remove_all(m_Path);
     }
-    catch (const fs::filesystem_error &e){
+    catch (const fs::filesystem_error &e) {
         throw logic_error(e.code().message());
     }
-    if(m_inFolder!=NULL&&m_inFolder->m_items.count(m_Path)){
-        m_inFolder->m_items.erase(m_Path);
+    if (m_InFolder != NULL && m_InFolder->m_Items.count(m_Path)) {
+        m_InFolder->m_Items.erase(m_Path);
     }
 }
 
 
-void CFile::Move(string dest) {
+void CFile::Move(const string &dest) {
 
-    try{
+    try {
         Copy(dest);
     }
-    catch (const logic_error &e){
+    catch (const logic_error &e) {
         throw logic_error(e.what());
     }
     try {
         Delete();
     }
-    catch (const logic_error &e){
-        fs::remove_all(dest+"/"+m_Name);
+    catch (const logic_error &e) {
+        fs::remove_all(dest + "/" + m_Name);
         throw logic_error(e.what());
     }
 }
 
 
-
-
 std::string CFile::RemoveDialog() {
-    std::string tmp="File "+m_Name+" will be removed";
+    std::string tmp = "File " + m_Name + " will be removed";
     return tmp;
 }
 
 
-void CFile::Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold) {}
+void CFile::Open(std::map<std::string, std::shared_ptr<CItem>> **item, CItem **inFold) {}
 
-void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
+void CFile::FindText(const string &FindThis, std::vector<CItem *> *Found) {
 
     ifstream inFile(m_Path, ios::in);
     if (inFile.good()) {
@@ -88,12 +87,10 @@ void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
         string temp;
         size_t pos;
 
-        while(inFile.good())
-        {
-            getline(inFile,temp);
-            pos=temp.find(FindThis);
-            if(pos!=string::npos)
-            {
+        while (inFile.good()) {
+            getline(inFile, temp);
+            pos = temp.find(FindThis);
+            if (pos != string::npos) {
                 Found->push_back(this);
                 break;
             }
@@ -104,21 +101,21 @@ void CFile:: FindText(std::string FindThis,std::vector<CItem*> *Found) {
 }
 
 void CFile::Deduplicate(CItem *DeduplicateMe) {
-    if(identicalFiles(m_Path,DeduplicateMe->m_Path)){
+    if (identicalFiles(m_Path, DeduplicateMe->m_Path)) {
 
-        try{
-            if(fs::exists(m_Path)) {
-                if (IsReadable(m_Path) && IsWriteable(m_Path)){
+        try {
+            if (fs::exists(m_Path)) {
+                if (IsReadable(m_Path) && IsWriteable(m_Path)) {
                     std::filesystem::remove_all(m_Path);
                 }
             }
         }
-        catch (const fs::filesystem_error &e){
+        catch (const fs::filesystem_error &e) {
             throw logic_error(e.code().message());
         }
 
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(m_Path, 22, DeduplicateMe, m_inFolder));
-        m_inFolder->m_items[m_Path]=tmp;
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(m_Path, 22, DeduplicateMe, m_InFolder));
+        m_InFolder->m_Items[m_Path] = tmp;
 
     }
 }
@@ -179,17 +176,17 @@ bool CFile::identicalFiles(string file1, string file2) {
         return false;
 }
 
-void CFile::ConCat(std::string To) {
+void CFile::ConCat(const string &To) {
     ifstream stream1(m_Path, ios::in);
-    fstream stream2(To, ios::out|ios::app);
+    fstream stream2(To, ios::out | ios::app);
     string temp;
-    if(stream1.good()&&stream2.good()){
-        while(getline(stream1, temp)){
-            stream2<<temp;
-            stream2<<endl;
+    if (stream1.good() && stream2.good()) {
+        while (getline(stream1, temp)) {
+            stream2 << temp;
+            stream2 << endl;
         }
     }
-    m_isSelected= false;
+    m_isSelected = false;
 
 }
 

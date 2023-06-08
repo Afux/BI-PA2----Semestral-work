@@ -1,6 +1,7 @@
 
 #ifndef SEMESTRALWORK_CMANAGER_H
 #define SEMESTRALWORK_CMANAGER_H
+
 #include "CSize.h"
 #include "CWindow.h"
 #include "CHelpBar.h"
@@ -11,9 +12,10 @@
 #include "CDir.h"
 
 
-class CManager: public CAbsWidnow{
+class CManager : public CAbsWidnow {
 public:
-    CManager( CSize size,std::string Path);
+    CManager(CSize size, std::string Path);
+
     CHelpBar m_HelpBar;
     CWindow m_LeftPanel;
     CWindow m_RightPanel;
@@ -22,14 +24,12 @@ public:
     CConfirmDialog m_Confirm;
     CWindow *m_ActiveWindow;
     CErrDialog m_ErrorDialog;
-    bool m_runFlag;
-    CAbsWidnow * m_ActivePanel;
-   // CDir m_Start;
-
-
-    void Print() override;
+    CAbsWidnow *m_ActivePanel;
     void Run();
     void ReadKey() override;
+
+private:
+    void Print() override;
     CWindow *NextWind();
 
 };

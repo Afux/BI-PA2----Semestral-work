@@ -7,12 +7,14 @@
 #include "vector"
 #include "CAbsWidnow.h"
 
-class CHelpBar: public CAbsWidnow{
+class CHelpBar : public CAbsWidnow {
 public:
     CHelpBar(CSize size);
 
     std::vector<std::string> m_Content;
+
     void Print() override;
+
     void ReadKey() override;
 };
 

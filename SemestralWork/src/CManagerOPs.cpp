@@ -10,130 +10,128 @@
 #include "filesystem"
 #include "regex"
 #include "fstream"
+
 using namespace std;
 namespace fs = std::filesystem;
 
 void CManagerOPs::Copy(CItem *item, const std::string &to) {
-    if(fs::exists(to))
+    if (fs::exists(to))
         item->Copy(to);
 
 }
 
 void CManagerOPs::Copy(const std::string &reg, const std::string &to, CItem *CurrDir) {
-    std::map<std::string ,std::shared_ptr<CItem>> items;
+    std::map<std::string, std::shared_ptr<CItem>> items;
     std::regex r(reg);
-    if(!CurrDir->m_items.empty()){
-        for (auto it = CurrDir->m_items.begin(); it !=CurrDir->m_items.end() ; ++it) {
-            if(regex_match( it->second->m_Name,r)){
-                items[it->second->m_Path]=it->second;
+    if (!CurrDir->m_Items.empty()) {
+        for (auto it = CurrDir->m_Items.begin(); it != CurrDir->m_Items.end(); ++it) {
+            if (regex_match(it->second->m_Name, r)) {
+                items[it->second->m_Path] = it->second;
             }
         }
-        for (auto i = items.begin(); i != items.end() ; ++i) {
+        for (auto i = items.begin(); i != items.end(); ++i) {
             i->second->Copy(to);
         }
     }
 }
 
 void CManagerOPs::Delete(CItem *item) {
-        item->Delete();
+    item->Delete();
 }
 
-void CManagerOPs::Delete(std::string reg,CItem *CurrDir) {
-    std::map<std::string ,std::shared_ptr<CItem>> items;
+void CManagerOPs::Delete(const string &reg, CItem *CurrDir) {
+    std::map<std::string, std::shared_ptr<CItem>> items;
     regex r(reg);
-    if(!CurrDir->m_items.empty()) {
-        for (auto it = CurrDir->m_items.begin(); it !=CurrDir->m_items.end() ; ++it) {
-            if(regex_match( it->second->m_Name,r)){
-                items[it->second->m_Path]=it->second;
+    if (!CurrDir->m_Items.empty()) {
+        for (auto it = CurrDir->m_Items.begin(); it != CurrDir->m_Items.end(); ++it) {
+            if (regex_match(it->second->m_Name, r)) {
+                items[it->second->m_Path] = it->second;
             }
         }
-        for (auto i = items.begin(); i != items.end() ; ++i) {
+        for (auto i = items.begin(); i != items.end(); ++i) {
             i->second->Delete();
         }
     }
 }
 
-void CManagerOPs::Move(CItem *item, std::string dest) {
+void CManagerOPs::Move(CItem *item, const string &dest) {
     item->Move(dest);
 
 }
 
-void CManagerOPs::Move(std::string reg,const std::string &to, CItem *CurrDir) {
-    std::map<std::string ,std::shared_ptr<CItem>> items;
+void CManagerOPs::Move(const string &reg, const std::string &to, CItem *CurrDir) {
+    std::map<std::string, std::shared_ptr<CItem>> items;
     regex r(reg);
-    if(!CurrDir->m_items.empty()) {
-        for (auto it = CurrDir->m_items.begin(); it !=CurrDir->m_items.end() ; ++it) {
-            if(regex_match( it->second->m_Name,r)){
-                items[it->second->m_Path]=it->second;
+    if (!CurrDir->m_Items.empty()) {
+        for (auto it = CurrDir->m_Items.begin(); it != CurrDir->m_Items.end(); ++it) {
+            if (regex_match(it->second->m_Name, r)) {
+                items[it->second->m_Path] = it->second;
             }
         }
-        for (auto i = items.begin(); i != items.end() ; ++i) {
+        for (auto i = items.begin(); i != items.end(); ++i) {
             i->second->Move(to);
         }
 
-    }
-    else{
+    } else {
     }
 }
 
-void CManagerOPs::CreateFolder(std::string name, CItem *CurrDir) {
-    if(CurrDir->IsWriteable()&&CurrDir->IsReadable()){
-    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CDir(CurrDir->m_Path+"/"+name, 22, CurrDir));
-    CurrDir->m_items.insert({ tmp->m_Path, tmp });
+void CManagerOPs::CreateFolder(const string &name, CItem *CurrDir) {
+    if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CDir(CurrDir->m_Path + "/" + name, 22, CurrDir));
+        CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create folder");
 }
 
-void CManagerOPs::CreateFile(std::string name, CItem *CurrDir) {
-    if(CurrDir->IsWriteable()&&CurrDir->IsReadable()){
-    shared_ptr<CItem> tmp = shared_ptr<CItem>( new CFile(CurrDir->m_Path+"/"+name, 22, CurrDir));
-    CurrDir->m_items.insert({ tmp->m_Path, tmp });
+void CManagerOPs::CreateFile(const string &name, CItem *CurrDir) {
+    if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CFile(CurrDir->m_Path + "/" + name, 22, CurrDir));
+        CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create file");
 }
 
-void CManagerOPs::CreateLink(std::string name, CItem *to, CItem *CurrDir) {
-    if(CurrDir->IsWriteable()&&CurrDir->IsReadable()){
-        shared_ptr<CItem> tmp = shared_ptr<CItem>( new CLink(CurrDir->m_Path+"/"+name, 22,to, CurrDir));
-        CurrDir->m_items.insert({ tmp->m_Path, tmp });
+void CManagerOPs::CreateLink(const string &name, CItem *to, CItem *CurrDir) {
+    if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(CurrDir->m_Path + "/" + name, 22, to, CurrDir));
+        CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create link");
 
 }
 
 
-
 void CManagerOPs::FindByText(const std::string &text, CItem *CurrDir) {
 
-    if(!CurrDir->m_items.empty()) {
+    if (!CurrDir->m_Items.empty()) {
 
-        vector<CItem*> found;
-        CurrDir->FindText(text,&found);
+        vector<CItem *> found;
+        CurrDir->FindText(text, &found);
         ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
-        for (size_t i = 0; i <found.size() ; ++i) {
-                MyFile<<found[i]->m_Path<<endl;
+        for (size_t i = 0; i < found.size(); ++i) {
+            MyFile << found[i]->m_Path << endl;
         }
         MyFile.close();
     }
 
 }
 
-void CManagerOPs::Deduplicate(CItem *item,CItem *CurrDir) {
-    if(!CurrDir->m_items.empty()) {
+void CManagerOPs::Deduplicate(CItem *item, CItem *CurrDir) {
+    if (!CurrDir->m_Items.empty()) {
         CurrDir->Deduplicate(item);
     }
 
 }
 
-void CManagerOPs::ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items, string to) {
-    if(Items->size()>1) {
-        auto itr=Items->begin();
-        CItem *item =itr->second->m_inFolder;
-        for (auto it = Items->begin(); it !=Items->end() ; ++it) {
-                it->second->ConCat(item->m_Path + "/" + to);
+void CManagerOPs::ConcatFiles(std::map<std::string, std::shared_ptr<CItem>> *Items, const string &to) {
+    if (Items->size() > 1) {
+        auto itr = Items->begin();
+        CItem *item = itr->second->m_InFolder;
+        for (auto it = Items->begin(); it != Items->end(); ++it) {
+            it->second->ConCat(item->m_Path + "/" + to);
         }
 
-    }
-    else
+    } else
         throw logic_error("Choose at least 2 files");
 }

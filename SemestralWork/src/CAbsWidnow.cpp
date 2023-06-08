@@ -1,5 +1,3 @@
-
-
 #include "CAbsWidnow.h"
 #include <unistd.h>
 #include <termios.h>
@@ -8,7 +6,7 @@
 
 using namespace std;
 
-int CAbsWidnow::clear() const{
+int CAbsWidnow::clear() const {
     return system("clear");
 }
 
@@ -17,10 +15,10 @@ void CAbsWidnow::moveto(int x, int y) const {
 
 }
 
-CAbsWidnow::CAbsWidnow(CSize size, CAbsWidnow* Scene): m_Size(size),m_Scene(Scene){
-    Oper=CManagerOPs();
-    m_Selected=0;
-    m_isrunning= true;
+CAbsWidnow::CAbsWidnow(CSize size, CAbsWidnow *Scene) : m_Size(size), m_Scene(Scene) {
+    m_OperMan = CManagerOPs();
+    m_Selected = 0;
+    mIsrunning = true;
 }
 
 void CAbsWidnow::cursorOff() {

@@ -2,6 +2,7 @@
 
 #ifndef SEMESTRALWORK_CABSWIDNOW_H
 #define SEMESTRALWORK_CABSWIDNOW_H
+
 #include "iostream"
 #include "CSize.h"
 #include "CItem.h"
@@ -11,6 +12,7 @@
 #include <memory>
 #include "CManagerOPs.h"
 #include "termios.h"
+
 class CAbsWidnow {
 public:
     /**
@@ -24,25 +26,34 @@ public:
  * @return Description of the return value.
  * @throws ExceptionType Description of when this function throws an exception.
  */
-    CAbsWidnow(CSize size, CAbsWidnow * Scene);
+    CAbsWidnow(CSize size, CAbsWidnow *Scene);
+
     virtual ~CAbsWidnow();
-    CSize  m_Size;
+
+    CSize m_Size;
     unsigned int m_Selected;
-    CAbsWidnow* m_Scene;
-    CManagerOPs Oper;
-    std::map<std::string ,std::shared_ptr<CItem>>::iterator iter;
-    bool m_isrunning;
-    virtual void Print()=0;
-    virtual void  ReadKey()=0;
-    termios term;
+    CAbsWidnow *m_Scene;
+    CManagerOPs m_OperMan;
+    std::map<std::string, std::shared_ptr<CItem>>::iterator iter;
+    bool mIsrunning;
+
+    virtual void Print() = 0;
+
+    virtual void ReadKey() = 0;
+
 
 protected:
     void cursorOff();
+
     void cursorOn();
 
     int clear() const;
+
     void moveto(int x = 1, int y = 1) const;
+
 private:
+    termios term;
+
 };
 
 

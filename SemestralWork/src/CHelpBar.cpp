@@ -1,6 +1,7 @@
 
 #include "CHelpBar.h"
 #include "iostream"
+
 CHelpBar::CHelpBar(CSize size) : CAbsWidnow(size, this) {
 
     m_Content.push_back("Menu");
@@ -12,17 +13,14 @@ CHelpBar::CHelpBar(CSize size) : CAbsWidnow(size, this) {
     m_Content.push_back("Quit");
 
 
-
-
-
 }
 
 void CHelpBar::Print() {
-    moveto(m_Size.m_PosX,m_Size.m_PosY);
+    moveto(m_Size.m_PosX, m_Size.m_PosY);
     for (size_t i = 0; i < m_Content.size(); ++i) {
-        std::cout<<i+1<<" "<<m_Content[i]<<"   ";
+        std::cout << i + 1 << " " << m_Content[i] << "   ";
     }
-    moveto(m_Size.m_PosX,m_Size.m_PosY+1);
+    moveto(m_Size.m_PosX, m_Size.m_PosY + 1);
 
 }
 
