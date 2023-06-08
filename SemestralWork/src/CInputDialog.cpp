@@ -63,7 +63,6 @@ void CInputDialog::Enter() {
                 m_OperMan.FindByText(m_Input, m_CurrDir);
                 break;
             case 6:
-                //selected
                 m_OperMan.ConcatFiles(m_SelectedItems, m_Input);
                 break;
             case 7:

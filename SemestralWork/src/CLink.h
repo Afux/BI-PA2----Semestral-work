@@ -7,7 +7,7 @@
 
 class CLink : public CItem {
 public:
-    CLink(std::string path, unsigned int size, CItem *toFile, CItem *parr);
+    CLink(std::string path, CItem *toFile, CItem *parr);
 
     CItem *m_toFile;
 
@@ -24,8 +24,6 @@ public:
     void Deduplicate(CItem *DeduplicateMe) override;
 
     void FindText(const std::string &FindThis, std::vector<CItem *> *Found) override;
-
-    std::string RemoveDialog() override;
 
     void ConCat(const std::string &To) override;
 

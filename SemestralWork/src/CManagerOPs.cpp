@@ -78,7 +78,7 @@ void CManagerOPs::Move(const string &reg, const std::string &to, CItem *CurrDir)
 
 void CManagerOPs::CreateFolder(const string &name, CItem *CurrDir) {
     if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
-        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CDir(CurrDir->m_Path + "/" + name, 22, CurrDir));
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CDir(CurrDir->m_Path + "/" + name, CurrDir));
         CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create folder");
@@ -86,7 +86,7 @@ void CManagerOPs::CreateFolder(const string &name, CItem *CurrDir) {
 
 void CManagerOPs::CreateFile(const string &name, CItem *CurrDir) {
     if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
-        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CFile(CurrDir->m_Path + "/" + name, 22, CurrDir));
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CFile(CurrDir->m_Path + "/" + name, CurrDir));
         CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create file");
@@ -94,7 +94,7 @@ void CManagerOPs::CreateFile(const string &name, CItem *CurrDir) {
 
 void CManagerOPs::CreateLink(const string &name, CItem *to, CItem *CurrDir) {
     if (CurrDir->IsWriteable() && CurrDir->IsReadable()) {
-        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(CurrDir->m_Path + "/" + name, 22, to, CurrDir));
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(CurrDir->m_Path + "/" + name, to, CurrDir));
         CurrDir->m_Items.insert({tmp->m_Path, tmp});
     } else
         throw logic_error("Can't create link");

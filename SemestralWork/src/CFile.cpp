@@ -7,7 +7,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-CFile::CFile(std::string path, unsigned int size, CItem *parr) : CItem(path, size, parr) {
+CFile::CFile(std::string path, CItem *parr) : CItem(path, parr) {
 
     try {
         if (!fs::exists(path)) {
@@ -71,11 +71,6 @@ void CFile::Move(const string &dest) {
 }
 
 
-std::string CFile::RemoveDialog() {
-    std::string tmp = "File " + m_Name + " will be removed";
-    return tmp;
-}
-
 
 void CFile::Open(std::map<std::string, std::shared_ptr<CItem>> **item, CItem **inFold) {}
 
@@ -114,13 +109,13 @@ void CFile::Deduplicate(CItem *DeduplicateMe) {
             throw logic_error(e.code().message());
         }
 
-        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(m_Path, 22, DeduplicateMe, m_InFolder));
+        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(m_Path, DeduplicateMe, m_InFolder));
         m_InFolder->m_Items[m_Path] = tmp;
 
     }
 }
 
-bool CFile::identicalFiles(string file1, string file2) {
+bool CFile::identicalFiles(const string &file1, const string &file2) {
     bool flag = false;
     ifstream stream1(file1, ios::in | ios::binary);
     ifstream stream2(file2, ios::in | ios::binary);

@@ -11,7 +11,7 @@ DOXYGENCONF=Doxyfile
 
 .PHONY: all compile run clean doc
 
-all: doc compile
+all: compile doc
 
 compile: $(EXECUTABLE)
 

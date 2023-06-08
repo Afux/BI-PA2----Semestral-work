@@ -4,12 +4,9 @@
 
 namespace fs = std::filesystem;
 
-CItem::CItem(std::string path, unsigned int size, CItem *inFolder) : m_Path(path), m_InFolder(inFolder) {
+CItem::CItem(std::string path, CItem *inFolder) : m_Path(path), m_InFolder(inFolder) {
     m_Name = fs::path(m_Path).filename();
     m_isSelected = false;
-    // m_Path=path;
-    // std::filesystem::file_time_type ftime = std::filesystem::last_write_time(path);
-    //  std::cout<<time_point_cast(ftime)<<std::endl
 }
 
 CItem::~CItem() {

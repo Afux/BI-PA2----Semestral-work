@@ -6,7 +6,7 @@
 
 class CDir : public CItem {
 public:
-    CDir(std::string path, unsigned int size, CItem *inFolder);
+    CDir(std::string path, CItem *inFolder);
 
 
     void Open(std::map<std::string, std::shared_ptr<CItem>> **item, CItem **inFold) override;
@@ -31,7 +31,6 @@ public:
     void FillItems();
 
 
-    std::string RemoveDialog() override;
 
 private:
     /**

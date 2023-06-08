@@ -57,7 +57,7 @@ void CWindow::Print() {
     moveto(2, m_Size.m_AbsPosY + 1);
 }
 
-CWindow::CWindow(CSize size, string path) : CAbsWidnow(size, this), m_Dir(CDir(path, 2, NULL)) {
+CWindow::CWindow(CSize size, string path) : CAbsWidnow(size, this), m_Dir(CDir(path, NULL)) {
     m_CurrFile = NULL;
     m_Dir.Open(&m_Items, &m_CurrFile);
     m_Iter = m_Items->begin();
@@ -77,7 +77,7 @@ void CWindow::Enter() {
                 throw logic_error("Folder doesn't exists");
         } else {
             if (filesystem::exists(filesystem::path(m_CurrFile->m_Path).parent_path())) {
-                m_Dir = CDir(filesystem::path(m_CurrFile->m_Path).parent_path(), 2, NULL);
+                m_Dir = CDir(filesystem::path(m_CurrFile->m_Path).parent_path(), NULL);
                 m_Dir.Open(&m_Items, &m_CurrFile);
                 m_Selected = 0;
             } else
@@ -129,7 +129,7 @@ void CWindow::PrintBorders() {
 }
 
 void CWindow::Jump(const string &to) {
-    m_Dir = CDir(to, 2, NULL);
+    m_Dir = CDir(to, NULL);
     m_Dir.Open(&m_Items, &m_CurrFile);
     m_Selected = 0;
 }

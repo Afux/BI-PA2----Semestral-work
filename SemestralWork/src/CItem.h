@@ -13,7 +13,7 @@ class CItem {
 
 
 public:
-    CItem(std::string path, unsigned int size, CItem *inFolder);
+    CItem(std::string path, CItem *inFolder);
 
     virtual ~CItem();
 
@@ -41,8 +41,6 @@ public:
     virtual void ConCat(const std::string &To) = 0;
 
     virtual void Deduplicate(CItem *DeduplicateMe) = 0;
-
-    virtual std::string RemoveDialog() = 0;
 
     bool IsReadable();
 

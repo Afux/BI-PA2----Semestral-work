@@ -10,7 +10,7 @@ using directory_iterator = std::filesystem::directory_iterator;
 namespace fs = std::filesystem;
 using namespace std;
 
-CDir::CDir(std::string path, unsigned int size, CItem *inFolder) : CItem(path, size, inFolder) {
+CDir::CDir(std::string path, CItem *inFolder) : CItem(path, inFolder) {
     if (IsReadable(fs::path(path).parent_path()) && IsWriteable(fs::path(path).parent_path()) && !fs::exists(path)) {
         try {
             fs::create_directory(path);
@@ -78,10 +78,6 @@ void CDir::Print() {
 
 }
 
-std::string CDir::RemoveDialog() {
-    return "Dir " + m_Name + " will be removed";
-}
-
 
 void CDir::Open(std::map<std::string, std::shared_ptr<CItem>> **items, CItem **inFold) {
     FillItems();
@@ -125,17 +121,17 @@ void CDir::Refresh() {
             if (IsReadable(s) && !m_Items.count(s)) {
                 if (dirEntry.is_symlink()) {
 
-                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CLink(s, 22, NULL, this));
+                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CLink(s, NULL, this));
                     m_Items[temp->m_Path] = temp;
 
                 } else if (dirEntry.is_directory()) {
 
-                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CDir(s, 22, this));
+                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CDir(s, this));
                     m_Items[temp->m_Path] = temp;
 
                 } else if (dirEntry.is_regular_file()) {
 
-                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CFile(CFile(s, 2, this)));
+                    shared_ptr<CItem> temp = shared_ptr<CItem>(new CFile(CFile(s,this)));
                     m_Items[temp->m_Path] = temp;
 
                 }
@@ -163,17 +159,17 @@ void CDir::FillItems() {
 
                 if (IsReadable(s)) {
                     if (dirEntry.is_symlink()) {
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(s, 22, NULL, this));
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CLink(s, NULL, this));
                         m_Items[tmp->m_Path] = tmp;
 
                     } else if (dirEntry.is_directory()) {
 
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CDir(s, 22, this));
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CDir(s, this));
                         m_Items[tmp->m_Path] = tmp;
 
                     } else if (dirEntry.is_regular_file()) {
 
-                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CFile(CFile(s, 2, this)));
+                        shared_ptr<CItem> tmp = shared_ptr<CItem>(new CFile(CFile(s, this)));
                         m_Items[tmp->m_Path] = tmp;
 
                     }

@@ -7,7 +7,7 @@
 
 class CFile : public CItem {
 public:
-    CFile(std::string path, unsigned int size, CItem *parr);
+    CFile(std::string path, CItem *parr);
 
     void Print() override;
 
@@ -21,14 +21,13 @@ public:
 
     void Deduplicate(CItem *DeduplicateMe) override;
 
-    std::string RemoveDialog() override;
 
     void Open(std::map<std::string, std::shared_ptr<CItem>> **item, CItem **inFold) override;
 
     void ConCat(const std::string &To) override;
 
 private:
-    bool identicalFiles(std::string file1, std::string file2);
+    bool identicalFiles(const std::string &file1, const std::string &file2);
 
 };
 

@@ -5,7 +5,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-CLink::CLink(std::string path, unsigned int size, CItem *toFile, CItem *parr) : CItem(path, size, parr),
+CLink::CLink(std::string path, CItem *toFile, CItem *parr) : CItem(path, parr),
                                                                                 m_toFile(toFile) {
 
     if (toFile != NULL) {
@@ -62,12 +62,6 @@ void CLink::Move(const string &dest) {
         throw logic_error(e.what());
     }
 }
-
-
-std::string CLink::RemoveDialog() {
-    return std::string();
-}
-
 
 void CLink::Open(std::map<std::string, std::shared_ptr<CItem>> **item, CItem **inFold) {}
 
