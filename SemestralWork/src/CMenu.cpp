@@ -1,16 +1,11 @@
 
 #include "CMenu.h"
 #include "../libs/rang.hpp"
-#include <iomanip>
-#include <unistd.h>
-#include <termios.h>
-#include <iostream>
-
 using namespace rang;
 using namespace std;
 
 CMenu::CMenu(CSize size,CAbsWidnow* lastActive):  CAbsWidnow(size, this),m_lastActive(lastActive),
-m_inputDialog(CInputDialog(CSize(size))), m_errorDialog(CErrDialog(size)){
+m_inputDialog(CInputDialog(CSize(size))), m_errorDialog(CErrDialog(CSize(size))), m_confirmDialog(CConfirmDialog(CSize(size))){
 
     m_Content.emplace_back("Remove by Regex");
     m_Content.emplace_back("Copy by Regex");
@@ -69,39 +64,40 @@ void CMenu::ReadKey() {
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
-            m_inputDialog.Setup(CurrDir, m_lastActive,1,"Enter Regex",m_selectedItem,m_winActive);
+            m_inputDialog.Setup(CurrDir, m_lastActive,1,"Enter Regex",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 1:
-            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_winActive);
+            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 2:
-            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_winActive);
+            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 3:
             m_Selected=0;
             if(m_winActive->m_Selected!=0) {
-                m_inputDialog.Setup(CurrDir, m_lastActive, 13, "Enter name", m_selectedItem, m_winActive);
+                m_inputDialog.Setup(CurrDir, m_lastActive, 13, "Enter name", m_selectedItem, m_winActive,m_SelectedItems);
                 m_inputDialog.Run();
             }
             break;
         case 4:
             m_Selected=0;
-            m_inputDialog.Setup(CurrDir,m_lastActive,5,"Enter text",m_selectedItem,m_winActive);
+            m_inputDialog.Setup(CurrDir,m_lastActive,5,"Enter text",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 5:
             m_Selected=0;
-            m_inputDialog.Setup(CurrDir,m_lastActive,6,"Enter name",m_selectedItem,m_winActive);
+            m_inputDialog.Setup(CurrDir,m_lastActive,6,"Enter name",m_selectedItem,m_winActive,m_SelectedItems);
             m_inputDialog.Run();
             break;
         case 6:
             m_Selected=0;
             if(m_winActive->m_Selected!=0) {
+               // m_confirmDialog.Setup(m_lastActive,m_selectedItem);
                 try {
-                    Oper.Deduplicate(m_selectedItem, &CurrDir->m_items);
+                    Oper.Deduplicate(m_selectedItem, CurrDir);
                 }
                 catch (logic_error &e) {
                     m_errorDialog.Setup(m_lastActive, e.what());
@@ -149,10 +145,11 @@ void CMenu::ClearDialogSpace() {
     }
 }
 
-void CMenu::Setup(CItem * Curr,CAbsWidnow *LastActive,CAbsWidnow *winActive) {
+void CMenu::Setup(CItem * Curr,CAbsWidnow *LastActive,CAbsWidnow *winActive,std::map<std::string ,std::shared_ptr<CItem>> *SelectedItems) {
     CurrDir=Curr;
     m_lastActive=LastActive;
     m_winActive=winActive;
+    m_SelectedItems=SelectedItems;
     if(m_winActive->m_Selected!=0){
         m_selectedItem=winActive->iter->second.get();
     }

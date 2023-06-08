@@ -40,8 +40,6 @@ void CWindow::Print() {
             moveto((int)(m_Size.m_Width)+m_Size.m_PosX,m_Size.m_PosY+5+cnt);
             cout<<bg::blue<<"|"<<style::reset;
         }
-
-
         else{
 
             if(it->second->m_isSelected){
@@ -111,8 +109,6 @@ void CWindow::PrintBorders() {
     cout<<m_CurrFile->m_Path;
     moveto(m_Size.m_PosX+2,m_Size.m_PosY+2);
     cout<<"  NAME  ";
-
-
     for (size_t i =0; i < m_Size.m_Height; ++i) {
         moveto(m_Size.m_PosX+1,i);
         cout<<"|";
@@ -128,10 +124,8 @@ void CWindow::PrintBorders() {
         cout<<"-";
     }
     moveto(m_Size.m_PosX+2,m_Size.m_Height*0.9+1);
-
     if(m_Selected!=0){
          cout <<(iter)->second->m_Name;
-
     }
     else{
         cout <<"/..";

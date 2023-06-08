@@ -48,24 +48,25 @@ void CInputDialog::Enter() {
     try{
         switch (op) {
             case 1:
-                Oper.Delete(m_input,&CurrDir->m_items);
+                Oper.Delete(m_input,CurrDir);
                 m_winActive->m_Selected=0;
                 break;
             case 2:
-                Oper.Copy(m_reg,m_path,&CurrDir->m_items);
+                Oper.Copy(m_reg,m_path,CurrDir);
                 break;
             case 3:
-                Oper.Move(m_reg,m_path,&CurrDir->m_items);
+                Oper.Move(m_reg,m_path, CurrDir);
                 m_winActive->m_Selected=0;
                 break;
             case 5:
-                Oper.FindByText(m_input,&CurrDir->m_items);
+                Oper.FindByText(m_input,CurrDir);
                 break;
             case 6:
-                Oper.ConcatFiles(&CurrDir->m_items,m_input);
+                //selected
+                Oper.ConcatFiles(m_SelectedItems,m_input);
                 break;
             case 7:
-                Oper.Deduplicate(m_SelectedItem,&CurrDir->m_items);
+                Oper.Deduplicate(m_SelectedItem,CurrDir);
                 break;
             case 8:
                 Oper.Copy(m_SelectedItem,m_input);
@@ -126,13 +127,14 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
 }
 
-void CInputDialog::Setup(CItem *Curr,CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem,CAbsWidnow *lastWin) {
+void CInputDialog::Setup(CItem *Curr,CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem,CAbsWidnow *lastWin, std::map<std::string ,std::shared_ptr<CItem>> *Selecteditems) {
     CurrDir=Curr;
     m_lastActive=lastActive;
     op=Op;
     m_Label=Label;
     m_SelectedItem=SelectedItem;
     m_winActive=lastWin;
+    m_SelectedItems=Selecteditems;
 }
 
 void CInputDialog::PrintBorders() {

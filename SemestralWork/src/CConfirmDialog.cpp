@@ -2,7 +2,6 @@
 
 #include "CConfirmDialog.h"
 #include <unistd.h>
-#include <termios.h>
 #include <iostream>
 #include "../libs/rang.hpp"
 using namespace rang;
@@ -75,11 +74,9 @@ void CConfirmDialog::Enter() {
       switch(op){
           case 1:
               win->m_Selected--;
-
              if(win->iter!=m_items->begin()){
                    win->iter--;
-              }
-
+             }
               try {
                   Oper.Delete(m_SelectedItem);
               }
@@ -88,6 +85,8 @@ void CConfirmDialog::Enter() {
               }
               break;
           case 2:
+
+
               break;
       }
       op=0;

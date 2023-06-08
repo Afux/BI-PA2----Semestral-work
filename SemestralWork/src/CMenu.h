@@ -17,17 +17,18 @@ public:
     CAbsWidnow * m_lastActive;
     CAbsWidnow * m_winActive;
     CInputDialog m_inputDialog;
+    CConfirmDialog m_confirmDialog;
     CErrDialog m_errorDialog;
     CItem * m_selectedItem;
-    unsigned int *m_windowSelected;
+    std::map<std::string ,std::shared_ptr<CItem>> *m_SelectedItems;
     void Print() override;
     void ReadKey() override;
     void Enter();
 
-    void Setup( CItem * Curr,CAbsWidnow * LastActive,CAbsWidnow *WinActive);
+    void Setup( CItem * Curr,CAbsWidnow * LastActive,CAbsWidnow *WinActive, std::map<std::string ,std::shared_ptr<CItem>> * SelectedItems);
 
 private:
-     std::vector<std::string> m_Content;
+    std::vector<std::string> m_Content;
     void PrintBorders(const char &c) const;
     void ClearDialogSpace();
 };

@@ -18,13 +18,15 @@ public:
     int op;
     CAbsWidnow * m_lastActive;
     CAbsWidnow *m_winActive;
+    std::map<std::string ,std::shared_ptr<CItem>> *m_SelectedItems;
+
     void Print() override;
     void ReadKey() override;
     void PrintBorders();
     void ClearDialogSpace();
     void PrintLabel();
     void Run();
-    void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,CAbsWidnow *lastWin);
+    void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,CAbsWidnow *lastWin,std::map<std::string ,std::shared_ptr<CItem>> *SelectedItems);
 
 private:
     std::string  m_input;

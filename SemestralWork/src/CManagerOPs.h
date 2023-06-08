@@ -15,16 +15,16 @@
 class CManagerOPs {
 public:
     void Copy( CItem *item, const std::string &to);
-    void Copy( const std::string &reg,const std::string &to,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void Copy(const std::string &reg, const std::string &to, CItem *CurrDir);
     void Delete( CItem *item);
-    void Delete(std::string reg,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
+    void Delete(std::string reg,CItem *CurrDir);
     void Move( CItem *item , std::string dest) ;
-    void Move(std::string reg, std::string dest,std::map<std::string ,std::shared_ptr<CItem>> *Items) ;
+    void Move(std::string reg,const std::string &to, CItem *CurrDir);
     void CreateFolder(std::string name,CItem *CurrDir);
     void CreateFile(std::string name,CItem *CurrDir);
     void CreateLink(std::string name,CItem * to,CItem *CurrDir);
-    void FindByText(const std::string &text,std::map<std::string ,std::shared_ptr<CItem>> *Items);
-    void Deduplicate(CItem* item,std::map<std::string ,std::shared_ptr<CItem>> *Items);
+    void FindByText(const std::string &text, CItem *CurrDir);
+    void Deduplicate(CItem *item,CItem *CurrDir);
     void ConcatFiles(std::map<std::string ,std::shared_ptr<CItem>> *Items,std::string to);
 };
 
