@@ -24,11 +24,11 @@ public:
     void Run();
 
 private:
-    void PrintBorders();
+    void PrintBorders(const char &c) const;
 
-    void ClearDialogSpace();
+    void ClearDialogSpace() const;
 
-    void PrintLabel();
+    void PrintLabel() const;
 
 };
 

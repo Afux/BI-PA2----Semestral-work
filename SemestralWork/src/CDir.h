@@ -24,13 +24,20 @@ public:
     void FindText(const std::string &FindThis, std::vector<CItem *> *Found) override;
 
     void ConCat(const std::string &To) override;
-
+    /**
+     * @brief void FillItems()
+     *  Insert items in this folder to map
+     */
     void FillItems();
 
 
     std::string RemoveDialog() override;
 
 private:
+    /**
+    * @brief void Refresh()
+    *  Update map with items
+    */
     void Refresh();
 
 };

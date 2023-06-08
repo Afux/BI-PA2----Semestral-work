@@ -14,7 +14,16 @@ public:
     CConfirmDialog(CSize size);
 
     void Print() override;
-
+    /**
+       * @brief void Setup(CAbsWidnow *LastActive, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *Items,
+               CAbsWidnow *Win, const int &Op);
+       * Func. that set up variable for op's
+       * @param LastActive represents Manager window
+       * @param SelectedItem represents selected item
+       * @param Items represent items in directory
+       * @param Win represent current active window
+       * @param Op represent key for operation
+       */
     void Setup(CAbsWidnow *LastActive, CItem *SelectedItem, std::map<std::string, std::shared_ptr<CItem>> *Items,
                CAbsWidnow *Win, const int &Op);
 

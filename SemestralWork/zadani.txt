@@ -35,46 +35,14 @@ V této úloze si můžete vyhrát i s GUI a navrhnout zobrazení pro dva sloupc
 
 ### Doplneni Zadani
 Jako téma pro semestrální práci jsem si vybral aplikaci správce souborů.
-Aplikace bude mít podobné uživatelské rozhraní jako má již existující aplikace Midnight Commander. Veškerý interface bude implementován jako výpis v konzoli. Prohlížeč souboru bude rozdělen na dvě obrazovky, kdy každá bude pracovat samostatně (na každé se může zobrazovat jiná cesta). Při spuštění se načtou všechny disky, po vybrání disku se zobrazí obsah na disku. Jednotlivé položky budou rozlišitelné podle typu a uživatel uvidí jaká položka je momentálně vybraná. Uživatel bude moct provádět operace, které jsou součásti zadání, tedy: mazání, kopírování, přesun, vytváření, spojování textových souboru do jednoho souboru, nahrazování duplicitních souboru symbolickými linky. Dále jsem se rozhodl přidat možnost provádění základních operací (kromě vytváření) nad množinou souboru/složek/linků (jiný než regex), uživatel označí všechny soubory/složky/linky a nad touto množinou se provede operace. Uživatel bude mít rovněž možnost přejmenovat jednotlivé položky. Pokud je uživateli dovoleno měnit práva k jednotlivým položkám, bude je moct změnit/nastavit. V dolní části terminálu bude menu bar, s operacemi a klávesami, kterými se operace provede. V menu baru bude i samotná položka menu, která se zobrazí jako dialogové okno a bude obsahovat složitější operace, jako například spojování, deduplikace, operace pomocí regexu, nastavení práv. Po zvolení operace se uživateli zobrazí dialogové okno, které bude potvrzovací (Chcete provést tuto operaci ANO/NE). Pokud si uživatel vybral operaci, kde je zapotřebí vstup, např. pro regex, zobrazí se mu dialogové okno s možností zadat vstup.
+Aplikace bude mít podobné uživatelské rozhraní jako má již existující aplikace Midnight Commander.
+Veškerý interface bude implementován jako výpis v konzoli.
+Prohlížeč souboru bude rozdělen na dvě obrazovky, kdy každá bude pracovat samostatně (na každé se může zobrazovat jiná cesta).
+Uživatel uvidí jaká položka je momentálně vybraná. Uživatel bude moct provádět operace, které jsou součásti zadání.
+V dolní části terminálu bude menu bar, s operacemi a klávesami, kterými se operace provede.
+V menu baru bude i samotná položka menu, která se zobrazí jako dialogové okno a bude obsahovat složitější operace, jako například spojování, deduplikace, operace pomocí regexu.
+Po zvolení operace se uživateli zobrazí dialogové okno, které bude potvrzovací (Chcete provést tuto operaci ANO/NE). Pokud si uživatel vybral operaci, kde je zapotřebí vstup, např. pro regex, zobrazí se mu dialogové okno s možností zadat vstup.
 
-### Popis Trid
-Popis tříd a metod k diagramu tříd:
-
-Citem
-Jedná se o hlavní třídu, která reprezentuje jednu položku soubor/link/složka. Je rodičem tříd: CFile, CDir, CLink. Obsahuje abstraktní metody pro jednotlivé operace, které mají všichni potomci. Operace jsou přetížené metody, které se aplikují buď na jednotlivé položky, nebo na množinu vybraných položek. Dále obsahuje proměnnou CDate, která reprezentuje datum poslední modifikace souboru, a proměnnou Permissions, která reprezentuje nastavená práva pro jednotlivé položky
-
-CFile
-Potomek třídy CItem, obsahuje vlastní implementaci abstraktních metod a metodu pro spojování souborů, která vrací nový, již spojený soubor
-
-CDir
-Potomek třídy CItem, obsahuje a vlastní implementaci abstraktních metod. Metoda GetSize projde všechny položky uvnitř složky a vrátí sumu jejich velikosti. Metoda Move/Copy/Delete se provede i na všechny podpoložky této složky
-
-CLink
-Potomek třídy CItem, obsahuje ukazatel na položku a vlastní implementaci abstraktních metod.
-
-CMenu
-Třída, která reprezentuje dialogové okno, které se zobrazí, pomocí metody Print, po zvolení položky menu v help baru, v dolní častí konzole. Obsahuje velikost a pozici okna, seznam dostupných operací a odkaz na vybranou položku
-
-CConfirmDialog/CInputDialog
-Třídy, reprezentující dialogová okna, které se zobrazí, pomocí metody Print, po zvolení jednotlivých operací v help baru nebo v dialogu CMenu. Obsahuje velikost a pozici okna, název dialogu (Chcete smazat/přesunout, atd..). V případě input dialogu, obsahuje možnost zadání vstupu od uživatele (např pro regex nebo název položky)
-
-CWindow
-Třída, která reprezentuje jedno okno, obsahuje seznam všech položek na aktuální cestě, seznam vybraných položek, dialogová okna, menu, odkaz na vybranou položku
-
-CHelpBar
-Třída, která reprezentuje HelpBar, který se zobrazí v dolní částí konzole a obsahuje seznam operací a klávesu, pomocí které si uživatel operaci vybere.
-
-CManager
-Hlavní třída, která reprezentuje samotný prohlížeč souboru, obsahuje dvě proměnné typu CWindow, odkaz na aktuální CWindow( zda je uživatel na levé nebo pravé straně prohlížeče), HelpBar se seznamem operací a vykreslovací metodu Print.
-
-CDate
-Reprezentuje Datum modifikace položek
-
-CPermision
-Reprezentuje práva položek
-
-CSize
-Reprezentuje velikost a polohu oken
 
 
 
