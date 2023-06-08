@@ -30,8 +30,7 @@ public:
     unsigned int m_Selected;
     CAbsWidnow* m_Scene;
     CManagerOPs Oper;
-    typedef std::map<std::string ,std::shared_ptr<CItem>>::iterator MyIterator;
-    MyIterator iter;
+    std::map<std::string ,std::shared_ptr<CItem>>::iterator iter;
     bool m_isrunning;
     virtual void Print()=0;
     virtual void  ReadKey()=0;

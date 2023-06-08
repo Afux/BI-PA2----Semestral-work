@@ -16,7 +16,6 @@ public:
 
      void Deduplicate(CItem * DeduplicateMe) override;
      std::string RemoveDialog() override;
-     std::string CreateDialog(std::string NewName) override;
      void Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold)override;
     bool identicalFiles(std::string file1, std::string file2);
     void ConCat(std::string To) override;

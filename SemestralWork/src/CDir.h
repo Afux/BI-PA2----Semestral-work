@@ -20,7 +20,6 @@ public:
     void FillItems();
     void Refresh();
      std::string RemoveDialog() override;
-     std::string CreateDialog(std::string NewName) override;
 
 protected:
 

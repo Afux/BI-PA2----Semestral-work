@@ -17,7 +17,6 @@ public:
      void Deduplicate(CItem * DeduplicateMe) override;
      void FindText(std::string FindThis,std::vector<CItem*> *Found) override;
      std::string RemoveDialog() override;
-     std::string CreateDialog(std::string NewName) override;
      void ConCat(std::string To) override;
 
 

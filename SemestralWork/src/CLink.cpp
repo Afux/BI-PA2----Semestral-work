@@ -68,9 +68,6 @@ std::string CLink::RemoveDialog() {
     return std::string();
 }
 
-std::string CLink::CreateDialog(std::string NewName) {
-    return std::string();
-}
 
 
 

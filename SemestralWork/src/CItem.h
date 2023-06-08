@@ -30,7 +30,6 @@ public:
     virtual void ConCat(std::string To)=0;
     virtual void Deduplicate(CItem * DeduplicateMe)=0;
     virtual std::string RemoveDialog()=0;
-    virtual std::string CreateDialog(std::string NewName)=0;
     bool IsReadable();
     bool IsWriteable();
 protected:

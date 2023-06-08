@@ -77,10 +77,6 @@ std::string CFile::RemoveDialog() {
     return tmp;
 }
 
-std::string CFile::CreateDialog(std::string NewName) {
-    std::string tmp="File "+NewName+" will be created";
-    return tmp;
-}
 
 void CFile::Open(std::map<std::string ,std::shared_ptr<CItem>> **item,CItem ** inFold) {}
 

@@ -80,10 +80,6 @@ std::string CDir::RemoveDialog() {
     return "Dir "+m_Name+" will be removed";
 }
 
-std::string CDir::CreateDialog(std::string NewName) {
-    return "Dir "+m_Name+" will be created";
-}
-
 
 void CDir::Open(std::map<std::string ,std::shared_ptr<CItem>> **items,CItem ** inFold) {
     FillItems();
