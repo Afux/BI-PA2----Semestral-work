@@ -108,7 +108,7 @@ void CManagerOPs::FindByText(const std::string &text, CItem *CurrDir) {
 
         vector<CItem *> found;
         CurrDir->FindText(text, &found);
-        ofstream MyFile("/home/afu/PA1/df/TESTER/filename.txt");
+        ofstream MyFile(CurrDir->m_Path+"/foundItems.txt");
         for (size_t i = 0; i < found.size(); ++i) {
             MyFile << found[i]->m_Path << endl;
         }
@@ -128,9 +128,12 @@ void CManagerOPs::ConcatFiles(std::map<std::string, std::shared_ptr<CItem>> *Ite
     if (Items->size() > 1) {
         auto itr = Items->begin();
         CItem *item = itr->second->m_InFolder;
+        CreateFolder(item->m_Path + "/" + to,item);
+
         for (auto it = Items->begin(); it != Items->end(); ++it) {
             it->second->ConCat(item->m_Path + "/" + to);
         }
+
 
     } else
         throw logic_error("Choose at least 2 files");

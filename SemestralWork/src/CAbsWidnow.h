@@ -12,43 +12,72 @@
 #include <memory>
 #include "CManagerOPs.h"
 #include "termios.h"
-
+/**
+ * @brief class CAbsWindow
+ *
+ * This class is parent of all UI classes int his project
+ *
+ */
 class CAbsWidnow {
 public:
-    /**
- * @brief This is a brief description of the function or class.
- *
- * This is a more detailed description of the function or class.
- * You can include information about parameters, return values, exceptions, etc.
- *
- * @param param1 Description of the first parameter.
- * @param param2 Description of the second parameter.
- * @return Description of the return value.
- * @throws ExceptionType Description of when this function throws an exception.
- */
+
     CAbsWidnow(CSize size, CAbsWidnow *Scene);
 
     virtual ~CAbsWidnow();
 
-    CSize m_Size;
-    unsigned int m_Selected;
-    CAbsWidnow *m_Scene;
-    CManagerOPs m_OperMan;
-    std::map<std::string, std::shared_ptr<CItem>>::iterator iter;
-    bool mIsrunning;
-
+    /**
+     * @brief Print func. Prints the object
+     */
     virtual void Print() = 0;
 
+    /**
+     * @brief ReadKey func. Reads user input
+     */
     virtual void ReadKey() = 0;
+
+    CSize m_Size;
+    /**
+     * @brief Var. m_Selected, represents selected index of a class container
+     */
+    unsigned int m_Selected;
+    /**
+     * @brief Var. m_Scene, represents scene to display
+     */
+    CAbsWidnow *m_Scene;
+    /**
+    * @brief Var. m_OperMan, represents class CManagerOPs,to call operation on a item
+    */
+    CManagerOPs m_OperMan;
+    /**
+     * @brief Var. m_Iter, represents iterator for container of items
+     */
+    std::map<std::string, std::shared_ptr<CItem>>::iterator m_Iter;
+    /**
+     * @brief Var. m_Iter, represents iterator for container of items
+     */
+    bool mIsrunning;
+
+
 
 
 protected:
+    /**
+     * @brief Func. cursorOff, makes cursor invisible
+     */
     void cursorOff();
-
+    /**
+     * @brief Func. cursorOn, makes cursor visible
+     */
     void cursorOn();
-
+    /**
+     * @brief Func. clear, call system func "clear"
+     */
     int clear() const;
-
+    /**
+     * @brief Func. moveto, sets cursor to coordinates (x,y)
+     * @param x sets x coordinate for a cursor
+     * @param y sets y coordinate for a cursor
+     */
     void moveto(int x = 1, int y = 1) const;
 
 private:

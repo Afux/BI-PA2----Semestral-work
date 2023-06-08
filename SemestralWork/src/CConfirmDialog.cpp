@@ -74,8 +74,8 @@ void CConfirmDialog::Enter() {
         switch (m_Op) {
             case 1:
                 m_Win->m_Selected--;
-                if (m_Win->iter != m_Items->begin()) {
-                    m_Win->iter--;
+                if (m_Win->m_Iter != m_Items->begin()) {
+                    m_Win->m_Iter--;
                 }
                 try {
                     m_OperMan.Delete(m_SelectedItem);

@@ -155,7 +155,7 @@ void CMenu::Setup(CItem *Curr, CAbsWidnow *LastActive, CAbsWidnow *winActive,
     m_winActive = winActive;
     m_SelectedItems = SelectedItems;
     if (m_winActive->m_Selected != 0) {
-        m_selectedItem = winActive->iter->second.get();
+        m_selectedItem = winActive->m_Iter->second.get();
     } else
         m_selectedItem = nullptr;
 

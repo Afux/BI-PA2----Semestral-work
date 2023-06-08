@@ -51,8 +51,8 @@ void CManager::ReadKey() {
             if (m_ActiveWindow->m_Selected != 0)
                 m_ActiveWindow->m_Selected--;
 
-            if (m_ActiveWindow->iter != m_ActiveWindow->m_Items->begin())
-                m_ActiveWindow->iter--;
+            if (m_ActiveWindow->m_Iter != m_ActiveWindow->m_Items->begin())
+                m_ActiveWindow->m_Iter--;
 
             if (m_ActiveWindow->m_Selected > 15) {
                 m_ActiveWindow->m_FromItem--;
@@ -66,11 +66,11 @@ void CManager::ReadKey() {
             }
 
             if (m_ActiveWindow->m_Selected == 1 && m_ActiveWindow->m_Selected != 0)
-                m_ActiveWindow->iter = m_ActiveWindow->m_Items->begin();
+                m_ActiveWindow->m_Iter = m_ActiveWindow->m_Items->begin();
             else {
-                m_ActiveWindow->iter++;
-                if (m_ActiveWindow->iter == m_ActiveWindow->m_Items->end())
-                    m_ActiveWindow->iter--;
+                m_ActiveWindow->m_Iter++;
+                if (m_ActiveWindow->m_Iter == m_ActiveWindow->m_Items->end())
+                    m_ActiveWindow->m_Iter--;
             }
 
 
@@ -96,11 +96,11 @@ void CManager::ReadKey() {
         case 'k':
         case 'K':
             if (m_ActiveWindow->m_Selected != 0) {
-                m_ActiveWindow->iter->second->Select();
-                if (m_ActiveWindow->iter->second->m_isSelected)
-                    m_ActiveWindow->m_Selecteditems.insert({m_ActiveWindow->iter->first, m_ActiveWindow->iter->second});
+                m_ActiveWindow->m_Iter->second->Select();
+                if (m_ActiveWindow->m_Iter->second->m_isSelected)
+                    m_ActiveWindow->m_Selecteditems.insert({m_ActiveWindow->m_Iter->first, m_ActiveWindow->m_Iter->second});
                 else {
-                    m_ActiveWindow->m_Selecteditems.erase(m_ActiveWindow->iter->first);
+                    m_ActiveWindow->m_Selecteditems.erase(m_ActiveWindow->m_Iter->first);
                 }
             }
             break;
@@ -114,13 +114,13 @@ void CManager::ReadKey() {
             break;
         case '2':
             if (m_ActiveWindow->m_Selected != 0) {
-                m_Confirm.Setup(this, m_ActiveWindow->iter->second.get(), m_ActiveWindow->m_Items, m_ActiveWindow, 1);
+                m_Confirm.Setup(this, m_ActiveWindow->m_Iter->second.get(), m_ActiveWindow->m_Items, m_ActiveWindow, 1);
                 m_Scene = &m_Confirm;
             }
             break;
         case '3':
             if (m_ActiveWindow->m_Selected != 0) {
-                m_Input.Setup(m_ActiveWindow->m_CurrFile, this, 8, "Enter path", m_ActiveWindow->iter->second.get(),
+                m_Input.Setup(m_ActiveWindow->m_CurrFile, this, 8, "Enter path", m_ActiveWindow->m_Iter->second.get(),
                               m_ActiveWindow, &m_ActiveWindow->m_Selecteditems);
                 m_Scene = &m_Input;
             }
@@ -138,7 +138,7 @@ void CManager::ReadKey() {
             break;
         case '6':
             if (m_ActiveWindow->m_Selected != 0) {
-                m_Input.Setup(m_ActiveWindow->m_CurrFile, this, 9, "Enter path", m_ActiveWindow->iter->second.get(),
+                m_Input.Setup(m_ActiveWindow->m_CurrFile, this, 9, "Enter path", m_ActiveWindow->m_Iter->second.get(),
                               m_ActiveWindow, &m_ActiveWindow->m_Selecteditems);
                 m_Scene = &m_Input;
             }

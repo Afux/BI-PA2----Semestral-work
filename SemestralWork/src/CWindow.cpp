@@ -14,7 +14,7 @@ void CWindow::Print() {
     }
     if (m_Selected >= m_Items->size() + 1) {
         m_Selected = 0;
-        iter = m_Items->begin();
+        m_Iter = m_Items->begin();
         m_FromItem = m_Items->begin();
     }
     PrintBorders();
@@ -33,7 +33,7 @@ void CWindow::Print() {
         }
 
         moveto(m_Size.m_PosX + 2, m_Size.m_PosY + 5 + cnt);
-        if (m_Selected != 0 && (it->second.get() == iter->second.get())) {
+        if (m_Selected != 0 && (it->second.get() == m_Iter->second.get())) {
             cout << bg::blue;
             it->second->Print();
             cout << setw(m_Size.m_Width - it->second->m_Name.size()) << style::reset;
@@ -57,10 +57,10 @@ void CWindow::Print() {
     moveto(2, m_Size.m_AbsPosY + 1);
 }
 
-CWindow::CWindow(CSize size, string Path) : CAbsWidnow(size, this), m_Dir(CDir(Path, 2, NULL)) {
+CWindow::CWindow(CSize size, string path) : CAbsWidnow(size, this), m_Dir(CDir(path, 2, NULL)) {
     m_CurrFile = NULL;
     m_Dir.Open(&m_Items, &m_CurrFile);
-    iter = m_Items->begin();
+    m_Iter = m_Items->begin();
     m_FromItem = m_Items->begin();
 
 }
@@ -71,7 +71,7 @@ void CWindow::Enter() {
         if (m_CurrFile->m_InFolder != NULL) {
             if (filesystem::exists(m_CurrFile->m_InFolder->m_Path)) {
                 m_CurrFile->m_InFolder->Open(&m_Items, &m_CurrFile);
-                iter = m_Items->begin();
+                m_Iter = m_Items->begin();
                 m_Selected = 0;
             } else
                 throw logic_error("Folder doesn't exists");
@@ -85,9 +85,9 @@ void CWindow::Enter() {
 
         }
     } else {
-        if (iter->second->IsReadable()) {
-            iter->second->Open(&m_Items, &m_CurrFile);
-            iter = m_Items->begin();
+        if (m_Iter->second->IsReadable()) {
+            m_Iter->second->Open(&m_Items, &m_CurrFile);
+            m_Iter = m_Items->begin();
             m_Selected = 0;
         }
 
@@ -121,14 +121,14 @@ void CWindow::PrintBorders() {
     }
     moveto(m_Size.m_PosX + 2, m_Size.m_Height * 0.9 + 1);
     if (m_Selected != 0) {
-        cout << (iter)->second->m_Name;
+        cout << (m_Iter)->second->m_Name;
     } else {
         cout << "/..";
     }
 
 }
 
-void CWindow::Jump(string to) {
+void CWindow::Jump(const string &to) {
     m_Dir = CDir(to, 2, NULL);
     m_Dir.Open(&m_Items, &m_CurrFile);
     m_Selected = 0;
