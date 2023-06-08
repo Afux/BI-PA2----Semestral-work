@@ -15,6 +15,7 @@ public:
     CMenu(CSize size,CAbsWidnow * lastActive);
     CItem * CurrDir;
     CAbsWidnow * m_lastActive;
+    CAbsWidnow * m_winActive;
     CInputDialog m_inputDialog;
     CErrDialog m_errorDialog;
     CItem * m_selectedItem;
@@ -23,7 +24,7 @@ public:
     void ReadKey() override;
     void Enter();
 
-    void Setup( CItem * Curr,CAbsWidnow * LastActive);
+    void Setup( CItem * Curr,CAbsWidnow * LastActive,CAbsWidnow *WinActive);
 
 private:
    std::vector<std::string> m_Content;

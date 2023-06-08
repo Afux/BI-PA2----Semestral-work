@@ -24,11 +24,11 @@ public:
     void Run();
     int op;
     CAbsWidnow * m_lastActive;
-    unsigned int *WinSelected;
+    CAbsWidnow *m_winActive;
     std::map<std::string ,std::shared_ptr<CItem>> *m_items;
     CErrDialog m_errDialog;
 
-    void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,unsigned int *WinSel);
+    void Setup(CItem * Curr ,CAbsWidnow * lastActive,const int &Op, const std::string &Label,CItem * SelectedItem,CAbsWidnow *lastWin);
 
 private:
     std::string  m_input;

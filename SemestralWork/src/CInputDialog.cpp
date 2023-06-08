@@ -61,7 +61,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                *WinSelected=0;
+                m_winActive->m_Selected=0;
 
                 break;
             case 2:
@@ -81,7 +81,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                *WinSelected=0;
+                m_winActive->m_Selected=0;
                 break;
 
             case 5:
@@ -130,7 +130,7 @@ void CInputDialog::Enter() {
                     m_errDialog.Setup(m_lastActive,e.what());
                     m_errDialog.Run();
                 }
-                *WinSelected=0;
+                m_winActive->m_Selected=0;
                 break;
             case 10:
                 try{
@@ -195,13 +195,13 @@ void CInputDialog::parseString(const string &input, char delimiter) {
 
 }
 
-void CInputDialog::Setup(CItem *Curr,CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem,unsigned int *WinSel) {
+void CInputDialog::Setup(CItem *Curr,CAbsWidnow *lastActive, const int &Op, const string &Label, CItem *SelectedItem,CAbsWidnow *lastWin) {
     CurrDir=Curr;
     m_lastActive=lastActive;
     op=Op;
     m_Label=Label;
     m_SelectedItem=SelectedItem;
-    WinSelected=WinSel;
+    m_winActive=lastWin;
 }
 
 void CInputDialog::PrintBorders() {

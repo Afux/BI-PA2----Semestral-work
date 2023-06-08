@@ -80,43 +80,45 @@ void CMenu::ReadKey() {
 void CMenu::Enter() {
     switch (m_Selected) {
         case 0:
-            m_inputDialog.Setup(CurrDir, this,1,"Enter Regex",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir, m_lastActive,1,"Enter Regex",m_selectedItem,m_winActive);
             m_inputDialog.Run();
             break;
         case 1:
-            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir,m_lastActive,2,"Enter Regex n:l",m_selectedItem,m_winActive);
             m_inputDialog.Run();
             break;
         case 2:
-            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir,m_lastActive,3,"Enter Regex n:l",m_selectedItem,m_winActive);
             m_inputDialog.Run();
             break;
         case 3:
             m_Selected=0;
-            if(*m_windowSelected!=0) {
-                m_inputDialog.Setup(CurrDir, m_lastActive, 13, "Enter name", m_selectedItem, m_windowSelected);
+            if(m_winActive->m_Selected!=0) {
+                m_inputDialog.Setup(CurrDir, m_lastActive, 13, "Enter name", m_selectedItem, m_winActive);
                 m_inputDialog.Run();
             }
             break;
         case 4:
             m_Selected=0;
-            m_inputDialog.Setup(CurrDir,m_lastActive,5,"Enter text",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir,m_lastActive,5,"Enter text",m_selectedItem,m_winActive);
             m_inputDialog.Run();
             break;
         case 5:
             m_Selected=0;
-            m_inputDialog.Setup(CurrDir,m_lastActive,6,"Enter name",m_selectedItem,m_windowSelected);
+            m_inputDialog.Setup(CurrDir,m_lastActive,6,"Enter name",m_selectedItem,m_winActive);
             m_inputDialog.Run();
             break;
         case 6:
             m_Selected=0;
-                try{
-                    Oper.Deduplicate(m_selectedItem,&CurrDir->m_items);
+            if(m_winActive->m_Selected!=0) {
+                try {
+                    Oper.Deduplicate(m_selectedItem, &CurrDir->m_items);
                 }
-                catch (logic_error &e){
-                    m_errorDialog.Setup(m_lastActive,e.what());
+                catch (logic_error &e) {
+                    m_errorDialog.Setup(m_lastActive, e.what());
                     m_errorDialog.Run();
                 }
+            }
             break;
         case 7:
             m_Selected=0;
@@ -159,12 +161,12 @@ void CMenu::ClearDialogSpace() {
     }
 }
 
-void CMenu::Setup(CItem * Curr,CAbsWidnow *LastActive) {
+void CMenu::Setup(CItem * Curr,CAbsWidnow *LastActive,CAbsWidnow *winActive) {
     CurrDir=Curr;
     m_lastActive=LastActive;
-    m_windowSelected= &m_lastActive->m_Selected;
-    if(*m_windowSelected!=0){
-        m_selectedItem=m_lastActive->iter->second.get();
+    m_winActive=winActive;
+    if(m_winActive->m_Selected!=0){
+        m_selectedItem=winActive->iter->second.get();
     }
     else
         m_selectedItem= nullptr;
