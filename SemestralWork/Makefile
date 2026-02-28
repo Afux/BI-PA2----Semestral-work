@@ -1,30 +1,48 @@
 CXX = g++
 CXXFLAGS = -Wall -pedantic -std=c++17 -O2
-EXECUTABLE = korytale
+EXECUTABLE = main
 SOURCES := $(wildcard src/*.cpp)
-OBJECTS :=$(SOURCES:.cpp=.o)
-VALCHECK = -ggdb3
-VALRUN = valgrind --leak-check=full
-ASANPOSTFIX = -fsanitize=address -static-libasan -g
-LDLIBS=-lstdc++fs
-DOXYGEN=doxygen
-DOXYGENCONF=Doxyfile
+OBJECTS := $(SOURCES:.cpp=.o)
+LDLIBS = -lstdc++fs
+DOXYGEN = doxygen
+DOXYGENCONF = Doxyfile
 
-.PHONY: all compile run clean doc
+CONFIG_FILE = My_config.txt
 
-all: compile doc
+SRC_DIR = examples/src
+TEST_DIR = examples/TESTER
 
-compile: $(EXECUTABLE)
+WIDTH = $(shell tput cols 2>/dev/null || echo 100)
+HEIGHT = $(shell tput lines 2>/dev/null || echo 30)
 
-$(EXECUTABLE):$(OBJECTS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+.PHONY: all compile run clean doc config-gen prepare-tester
+
+all: compile
+
+compile: prepare-tester config-gen $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDLIBS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+prepare-tester:
+	rm -rf $(TEST_DIR)
+	mkdir -p examples
+	cp -r $(SRC_DIR) $(TEST_DIR)
+
+config-gen:
+	@echo "path=$(shell pwd)/$(TEST_DIR)" > $(CONFIG_FILE)
+	@echo "width=$(WIDTH)" >> $(CONFIG_FILE)
+	@echo "height=$(HEIGHT)" >> $(CONFIG_FILE)
+
 run: compile
 	./$(EXECUTABLE)
+
 doc:
 	$(DOXYGEN) $(DOXYGENCONF)
 
 clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE)
+	rm -rf $(OBJECTS) $(EXECUTABLE) $(CONFIG_FILE)
+	rm -rf $(TEST_DIR)
