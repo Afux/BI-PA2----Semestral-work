@@ -4,7 +4,7 @@ Console-based file manager inspired by Midnight Commander. Implemented in C++ as
 
 It supports basic file and directory operations, regex-based multi-file selection, content search, text file concatenation, and deduplication using symbolic links.
 
-
+![Image](/SemestralWork/DemoFM.PNG)
 ## Navigation
 
 - W/S – move selection
