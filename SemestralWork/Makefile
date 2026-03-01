@@ -17,7 +17,7 @@ HEIGHT = $(shell tput lines 2>/dev/null || echo 30)
 
 .PHONY: all compile run clean doc config-gen prepare-tester
 
-all: compile
+all: run
 
 compile: prepare-tester config-gen $(EXECUTABLE)
 
