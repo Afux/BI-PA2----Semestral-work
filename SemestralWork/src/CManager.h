@@ -18,7 +18,7 @@ public:
 
     CHelpBar m_HelpBar;
     CWindow m_LeftPanel;
-    CWindow m_RightPanel;
+
     CMenu m_Menu;
     CInputDialog m_Input;
     CConfirmDialog m_Confirm;
@@ -30,7 +30,7 @@ public:
 
 private:
     void Print() override;
-    CWindow *NextWind();
+
 
 };
 

@@ -10,15 +10,13 @@ using namespace std;
 void CManager::Print() {
     clear();
     m_LeftPanel.Print();
-    m_RightPanel.Print();
     m_HelpBar.Print();
 
 }
 
 CManager::CManager(CSize size, std::string path) : CAbsWidnow(size, this),
 m_HelpBar(CHelpBar(CSize(size.m_Width / 2, size.m_Height, 1,size.m_Height * 0.8 + 1, size.m_Height))),
-m_LeftPanel(CWindow(CSize(size.m_Width / 2, size.m_Height * 0.8, 1, 1,size.m_Width), path)),
-m_RightPanel(CWindow(CSize(size.m_Width / 2, size.m_Height * 0.8,size.m_Width / 2, 1, size.m_Height),path)),
+m_LeftPanel(CWindow(CSize(size.m_Width, size.m_Height * 0.8, 1, 1,size.m_Width), path)),
 m_Menu(CMenu(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 4, size.m_Height * 0.1,size.m_Height), this)),
 m_Input(CInputDialog(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 4, size.m_Height * 0.1,size.m_Height))),
 m_Confirm(CConfirmDialog(CSize(size.m_Width / 2, size.m_Height * 0.7,size.m_Width / 4, size.m_Height * 0.1,size.m_Height))),
@@ -79,10 +77,6 @@ void CManager::ReadKey() {
             }
 
 
-            break;
-        case 'd':
-        case 'a':
-            m_ActiveWindow = NextWind();
             break;
         case 'e':
         case 'E':
@@ -163,12 +157,7 @@ void CManager::ReadKey() {
 }
 
 
-CWindow *CManager::NextWind() {
-    if (m_ActiveWindow == &m_LeftPanel)
-        return &m_RightPanel;
-    else
-        return &m_LeftPanel;
-}
+
 
 
 
